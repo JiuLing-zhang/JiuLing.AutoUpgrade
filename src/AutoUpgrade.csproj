@@ -9,6 +9,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="AutoUpgrade.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="AutoUpgrade.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="JiuLing.CommonLibs" Version="1.1.13" />
   </ItemGroup>
 
