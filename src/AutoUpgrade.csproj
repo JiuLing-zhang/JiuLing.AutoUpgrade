@@ -9,11 +9,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="AutoUpgrade.config.json" />
     <None Remove="AutoUpgrade.json" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="AutoUpgrade.json">
+    <Content Include="AutoUpgrade.config.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
