@@ -1,4 +1,4 @@
 {
-  "MainAppName": "重复文件查找",
-  "UpgradeUrl": "http://162.14.66.2:9090/api/app/find-duplicate-files/windows"
+  "MainAppName": "主程序名称，更新时会结束该程序进程，更新完成后再自动启动。",
+  "UpgradeUrl": "检查自动更新的地址"
 }
