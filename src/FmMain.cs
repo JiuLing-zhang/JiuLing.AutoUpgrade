@@ -11,6 +11,10 @@ namespace AutoUpgrade
     public partial class FmMain : Form
     {
         private readonly HttpClientHelper _clientHelper = new();
+        /// <summary>
+        /// 是否运行主程序运行（初始化为true，防止更新程序出现异常关闭时将主程序误杀）
+        /// </summary>
+        private bool _isAllowMainAppRun = true;
         public FmMain()
         {
             InitializeComponent();
@@ -21,13 +25,18 @@ namespace AutoUpgrade
             try
             {
                 LoadingAppConfig();
-                string version = GetMainAppVersion();
+                string currentVersion = GetMainAppVersion();
                 var upgradeInfo = await GetAppUpgradeInfo();
-                var (isNeedUpdate, isAllowUse) = CheckNeedUpdate(upgradeInfo, version);
+                (bool isNeedUpdate, _isAllowMainAppRun) = CheckNeedUpdate(upgradeInfo, currentVersion);
                 if (isNeedUpdate == false)
                 {
+                    MessageHelper.ShowInfo("当前版本为最新版");
                     Application.Exit();
                 }
+
+                LblCurrentVersion.Text = currentVersion;
+                LblNewVersion.Text = upgradeInfo.Version;
+                TxtLog.Text = upgradeInfo.Log;
             }
             catch (Exception ex)
             {
@@ -106,6 +115,33 @@ namespace AutoUpgrade
             }
 
             return JiuLing.CommonLibs.VersionUtils.CheckNeedUpdate(currentVersion, upgradeInfo.Version, upgradeInfo.MinVersion);
+        }
+
+        private void BtnUpgrade_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void BtnCancel_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void FmMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (_isAllowMainAppRun == false)
+            {
+                KillMainApp();
+            }
+        }
+
+        private void KillMainApp()
+        {
+            Process[] process = Process.GetProcessesByName(GlobalArgs.AppConfig.MainAppName);
+            foreach (Process p in process)
+            {
+                p.Kill();
+            }
         }
     }
 }
