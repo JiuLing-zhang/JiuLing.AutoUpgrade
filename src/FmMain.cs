@@ -46,9 +46,6 @@ namespace AutoUpgrade
                 if (!GlobalArgs.MainProcess.AllowRun)
                 {
                     LblVersionOverdue.Visible = true;
-                }
-                else
-                {
                     BtnCancel.Visible = false;
                 }
             }

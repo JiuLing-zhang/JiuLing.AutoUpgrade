@@ -91,19 +91,18 @@
             // BtnCancel
             // 
             this.BtnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.BtnCancel.Location = new System.Drawing.Point(150, 354);
+            this.BtnCancel.Location = new System.Drawing.Point(150, 249);
             this.BtnCancel.Name = "BtnCancel";
             this.BtnCancel.Size = new System.Drawing.Size(75, 23);
             this.BtnCancel.TabIndex = 4;
             this.BtnCancel.Text = "忽略";
             this.BtnCancel.UseVisualStyleBackColor = true;
-            this.BtnCancel.Visible = false;
             this.BtnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
             // 
             // BtnUpgrade
             // 
             this.BtnUpgrade.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.BtnUpgrade.Location = new System.Drawing.Point(231, 354);
+            this.BtnUpgrade.Location = new System.Drawing.Point(231, 249);
             this.BtnUpgrade.Name = "BtnUpgrade";
             this.BtnUpgrade.Size = new System.Drawing.Size(75, 23);
             this.BtnUpgrade.TabIndex = 5;
@@ -113,11 +112,14 @@
             // 
             // TxtLog
             // 
+            this.TxtLog.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.TxtLog.Location = new System.Drawing.Point(12, 46);
             this.TxtLog.Name = "TxtLog";
             this.TxtLog.ReadOnly = true;
             this.TxtLog.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.TxtLog.Size = new System.Drawing.Size(294, 302);
+            this.TxtLog.Size = new System.Drawing.Size(294, 197);
             this.TxtLog.TabIndex = 6;
             this.TxtLog.Text = "";
             // 
@@ -127,7 +129,7 @@
             this.LblVersionOverdue.AutoSize = true;
             this.LblVersionOverdue.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.LblVersionOverdue.ForeColor = System.Drawing.Color.Red;
-            this.LblVersionOverdue.Location = new System.Drawing.Point(12, 357);
+            this.LblVersionOverdue.Location = new System.Drawing.Point(12, 252);
             this.LblVersionOverdue.Name = "LblVersionOverdue";
             this.LblVersionOverdue.Size = new System.Drawing.Size(104, 17);
             this.LblVersionOverdue.TabIndex = 7;
@@ -138,7 +140,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(318, 389);
+            this.ClientSize = new System.Drawing.Size(318, 284);
             this.Controls.Add(this.LblVersionOverdue);
             this.Controls.Add(this.TxtLog);
             this.Controls.Add(this.BtnUpgrade);
