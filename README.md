@@ -9,16 +9,14 @@
 ```json
 {
   "MainAppName": "主程序名称，更新时会结束该程序进程，更新完成后再自动启动。",
-  "UpgradeUrl": "检查自动更新的地址",
-  "AutoInstall": "是否自动安装（bool类型），如果为true，下载后自动关闭主程序进程，更新后再启动；如果为false，则会弹出对话框询问用户是否安装。"
+  "UpgradeUrl": "检查自动更新的地址"
 }
 ```
 例如：  
 ```json
 {
   "MainAppName": "text.exe",
-  "UpgradeUrl": "检查自动更新的地址",
-  "AutoInstall": false
+  "UpgradeUrl": "检查自动更新的地址"
 }
 ```
 
