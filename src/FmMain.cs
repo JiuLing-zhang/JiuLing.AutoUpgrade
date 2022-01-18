@@ -22,7 +22,7 @@ namespace AutoUpgrade
             try
             {
                 HideWindow();
-      
+
                 LoadingAppConfig();
                 GetMainProcess();
                 string currentVersion = GetMainAppVersion();
@@ -51,7 +51,7 @@ namespace AutoUpgrade
             }
             catch (Exception ex)
             {
-                MessageHelper.ShowError($"初始化失败：{ex.Message}");
+                MessageHelper.ShowError($"自动更新任务失败：{ex.Message}");
                 Application.Exit();
             }
         }
@@ -97,10 +97,18 @@ namespace AutoUpgrade
 
             foreach (Process p in process)
             {
+                string fileName = p.MainModule?.FileName ?? throw new ArgumentException("未找到主进程启动路径");
+                string processDirectory = Path.GetDirectoryName(fileName) ?? throw new ArgumentException("未找到主进程启动目录");
+                string? myDirectory = Path.GetDirectoryName(GlobalArgs.AppPath);
+                if (myDirectory != processDirectory)
+                {
+                    throw new ApplicationException("主程序和自动更新程序不在同一目录");
+                }
+
                 GlobalArgs.MainProcess = new ProcessInfo()
                 {
                     Id = p.Id,
-                    FileName = p.MainModule?.FileName ?? throw new ArgumentException("未找到主进程启动路径")
+                    FileName = fileName
                 };
                 return;
             }
