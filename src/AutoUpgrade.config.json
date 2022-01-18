@@ -1,5 +1,4 @@
 {
   "MainAppName": "主程序名称",
-  "UpgradeUrl": "自动更新的检查地址",
-  "AutoInstall": true
+  "UpgradeUrl": "自动更新的检查地址"
 }

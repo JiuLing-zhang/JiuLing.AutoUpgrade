@@ -16,9 +16,5 @@ namespace AutoUpgrade.Models
         /// 自动更新的检查地址
         /// </summary>
         public string UpgradeUrl { get; set; } = "";
-        /// <summary>
-        /// 是否自动安装
-        /// </summary>
-        public bool AutoInstall { get; set; } = false;
     }
 }

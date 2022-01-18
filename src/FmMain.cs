@@ -1,21 +1,33 @@
+using System.Diagnostics;
 using System.Text.Json;
 using AutoUpgrade.Common;
 using AutoUpgrade.Models;
+using JiuLing.CommonLibs.ExtensionMethods;
+using JiuLing.CommonLibs.Model;
+using JiuLing.CommonLibs.Net;
 
 namespace AutoUpgrade
 {
     public partial class FmMain : Form
     {
+        private readonly HttpClientHelper _clientHelper = new();
         public FmMain()
         {
             InitializeComponent();
         }
 
-        private void FmMain_Load(object sender, EventArgs e)
+        private async void FmMain_Load(object sender, EventArgs e)
         {
             try
             {
                 LoadingAppConfig();
+                string version = GetMainAppVersion();
+                var upgradeInfo = await GetAppUpgradeInfo();
+                var (isNeedUpdate, isAllowUse) = CheckNeedUpdate(upgradeInfo, version);
+                if (isNeedUpdate == false)
+                {
+                    Application.Exit();
+                }
             }
             catch (Exception ex)
             {
@@ -24,6 +36,9 @@ namespace AutoUpgrade
             }
         }
 
+        /// <summary>
+        /// 加载本地配置文件
+        /// </summary>
         private void LoadingAppConfig()
         {
             if (!File.Exists(GlobalArgs.AppConfigPath))
@@ -39,6 +54,58 @@ namespace AutoUpgrade
             {
                 throw new JsonException($"配置文件格式错误{GlobalArgs.AppConfigPath}");
             }
+        }
+        /// <summary>
+        /// 获取主程序版本
+        /// </summary>
+        private string GetMainAppVersion()
+        {
+            string mainAppPath = Path.Combine(GlobalArgs.AppPath, GlobalArgs.AppConfig.MainAppName);
+            if (!File.Exists(mainAppPath))
+            {
+                throw new FileNotFoundException($"未找到主程序{GlobalArgs.AppConfigPath}");
+            }
+            FileVersionInfo info = FileVersionInfo.GetVersionInfo(mainAppPath);
+            if (info.ProductVersion == null)
+            {
+                throw new ArgumentException($"主程序版本号异常");
+            }
+            return info.ProductVersion;
+        }
+
+        /// <summary>
+        /// 获取自动更新信息
+        /// </summary>
+        private async Task<AppUpgradeInfo> GetAppUpgradeInfo()
+        {
+            try
+            {
+                var result = await _clientHelper.GetReadString(GlobalArgs.AppConfig.UpgradeUrl);
+                var upgradeInfo = JsonSerializer.Deserialize<AppUpgradeInfo>(result);
+                if (upgradeInfo == null)
+                {
+                    throw new Exception("自动更新信息解析失败");
+                }
+                return upgradeInfo;
+            }
+            catch (Exception)
+            {
+                throw new Exception("自动更新信息获取失败");
+            }
+        }
+        /// <summary>
+        /// 检查是否需要更新
+        /// </summary>
+        private (bool IsNeedUpdate, bool IsAllowUse) CheckNeedUpdate(AppUpgradeInfo upgradeInfo, string currentVersion)
+        {
+            if (upgradeInfo.MinVersion.IsEmpty())
+            {
+                //如果没有指定最小版本号，则认为当前版本可以使用
+                var isNeedUpdate = JiuLing.CommonLibs.VersionUtils.CheckNeedUpdate(currentVersion, upgradeInfo.Version);
+                return (isNeedUpdate, true);
+            }
+
+            return JiuLing.CommonLibs.VersionUtils.CheckNeedUpdate(currentVersion, upgradeInfo.Version, upgradeInfo.MinVersion);
         }
     }
 }
