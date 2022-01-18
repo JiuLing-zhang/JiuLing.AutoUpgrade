@@ -1,0 +1,2 @@
+AppInfo.json的配置为非必须更新。
+AppInfo2.json的配置为必须更新。

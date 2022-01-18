@@ -1,8 +1,8 @@
 {
   "Name": "AutoUpgrade.Test",
   "Version": "1.2.0",
-  "MinVersion": "1.0.0",
+  "MinVersion": "1.1.0",
   "DownloadUrl": "https://github.com/JiuLing-zhang/AutoUpgrade/raw/main/test/UpgradePackage1.2.0.zip",
-  "Log": "1、新增了若干功能。\n\n\n\n\n\n\n\n2、修改了若干bug。\n\n\n\n\n\n\n\n\n3、这个是用来测试滚动条的。",
+  "Log": "1、新增了若干功能。\n2、修改了若干bug。",
   "CreateTime": "2022-01-18T11:11:11"
 }
