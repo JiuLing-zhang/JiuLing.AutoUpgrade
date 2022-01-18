@@ -54,9 +54,9 @@
             this.LblCurrentVersion.AutoSize = true;
             this.LblCurrentVersion.Location = new System.Drawing.Point(74, 9);
             this.LblCurrentVersion.Name = "LblCurrentVersion";
-            this.LblCurrentVersion.Size = new System.Drawing.Size(35, 17);
+            this.LblCurrentVersion.Size = new System.Drawing.Size(13, 17);
             this.LblCurrentVersion.TabIndex = 1;
-            this.LblCurrentVersion.Text = "1.0.0";
+            this.LblCurrentVersion.Text = "-";
             // 
             // label2
             // 
@@ -73,9 +73,9 @@
             this.LblNewVersion.AutoSize = true;
             this.LblNewVersion.Location = new System.Drawing.Point(186, 9);
             this.LblNewVersion.Name = "LblNewVersion";
-            this.LblNewVersion.Size = new System.Drawing.Size(35, 17);
+            this.LblNewVersion.Size = new System.Drawing.Size(13, 17);
             this.LblNewVersion.TabIndex = 1;
-            this.LblNewVersion.Text = "1.0.1";
+            this.LblNewVersion.Text = "-";
             // 
             // label3
             // 

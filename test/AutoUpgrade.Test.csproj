@@ -8,4 +8,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\src\AutoUpgrade.csproj" />
+  </ItemGroup>
+
 </Project>
