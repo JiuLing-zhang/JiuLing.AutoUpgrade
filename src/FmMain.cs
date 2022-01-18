@@ -10,11 +10,8 @@ namespace AutoUpgrade
 {
     public partial class FmMain : Form
     {
+        private readonly FmLoading _fmLoading = new FmLoading();
         private readonly HttpClientHelper _clientHelper = new();
-        /// <summary>
-        /// 是否运行主程序运行（初始化为true，防止更新程序出现异常关闭时将主程序误杀）
-        /// </summary>
-        private bool _isAllowMainAppRun = true;
         public FmMain()
         {
             InitializeComponent();
@@ -24,25 +21,54 @@ namespace AutoUpgrade
         {
             try
             {
+                HideWindow();
+      
                 LoadingAppConfig();
+                GetMainProcess();
                 string currentVersion = GetMainAppVersion();
+                _fmLoading.Show();
+                _fmLoading.SetMessage("正在检查更新");
                 var upgradeInfo = await GetAppUpgradeInfo();
-                (bool isNeedUpdate, _isAllowMainAppRun) = CheckNeedUpdate(upgradeInfo, currentVersion);
+
+                (bool isNeedUpdate, GlobalArgs.MainProcess.AllowRun) = CheckNeedUpdate(upgradeInfo, currentVersion);
                 if (isNeedUpdate == false)
                 {
                     MessageHelper.ShowInfo("当前版本为最新版");
                     Application.Exit();
                 }
 
+                _fmLoading.Visible = false;
+                ShowWindow();
+
                 LblCurrentVersion.Text = currentVersion;
                 LblNewVersion.Text = upgradeInfo.Version;
                 TxtLog.Text = upgradeInfo.Log;
+                if (!GlobalArgs.MainProcess.AllowRun)
+                {
+                    LblVersionOverdue.Visible = true;
+                }
+                else
+                {
+                    BtnCancel.Visible = false;
+                }
             }
             catch (Exception ex)
             {
                 MessageHelper.ShowError($"初始化失败：{ex.Message}");
                 Application.Exit();
             }
+        }
+
+        private void HideWindow()
+        {
+            this.WindowState = FormWindowState.Minimized;
+            this.ShowInTaskbar = false;
+        }
+
+        private void ShowWindow()
+        {
+            this.WindowState = FormWindowState.Normal;
+            this.ShowInTaskbar = true;
         }
 
         /// <summary>
@@ -64,17 +90,36 @@ namespace AutoUpgrade
                 throw new JsonException($"配置文件格式错误{GlobalArgs.AppConfigPath}");
             }
         }
+
+        /// <summary>
+        /// 获取主程序的进程
+        /// </summary>
+        private void GetMainProcess()
+        {
+            Process[] process = Process.GetProcessesByName(GlobalArgs.AppConfig.MainProcessName);
+
+            foreach (Process p in process)
+            {
+                GlobalArgs.MainProcess = new ProcessInfo()
+                {
+                    Id = p.Id,
+                    FileName = p.MainModule?.FileName ?? throw new ArgumentException("未找到主进程启动路径")
+                };
+                return;
+            }
+            throw new ApplicationException($"未找到主进程{GlobalArgs.AppConfig.MainProcessName}");
+        }
+
         /// <summary>
         /// 获取主程序版本
         /// </summary>
         private string GetMainAppVersion()
         {
-            string mainAppPath = Path.Combine(GlobalArgs.AppPath, GlobalArgs.AppConfig.MainAppName);
-            if (!File.Exists(mainAppPath))
+            if (GlobalArgs.MainProcess == null)
             {
-                throw new FileNotFoundException($"未找到主程序{GlobalArgs.AppConfigPath}");
+                throw new ApplicationException($"未找到主进程{GlobalArgs.AppConfig.MainProcessName}");
             }
-            FileVersionInfo info = FileVersionInfo.GetVersionInfo(mainAppPath);
+            FileVersionInfo info = FileVersionInfo.GetVersionInfo(GlobalArgs.MainProcess.FileName);
             if (info.ProductVersion == null)
             {
                 throw new ArgumentException($"主程序版本号异常");
@@ -129,19 +174,12 @@ namespace AutoUpgrade
 
         private void FmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (_isAllowMainAppRun == false)
-            {
-                KillMainApp();
-            }
+
         }
 
         private void KillMainApp()
         {
-            Process[] process = Process.GetProcessesByName(GlobalArgs.AppConfig.MainAppName);
-            foreach (Process p in process)
-            {
-                p.Kill();
-            }
+
         }
     }
 }

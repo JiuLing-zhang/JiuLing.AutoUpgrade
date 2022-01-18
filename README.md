@@ -8,15 +8,15 @@
 
 ```json
 {
-  "MainAppName": "主程序名称，更新时会结束该程序进程，更新完成后再自动启动。",
+  "MainProcessName": "主进程名称，更新时会结束该进程，更新完成后再自动启动。",
   "UpgradeUrl": "检查自动更新的地址"
 }
 ```
 例如：  
 ```json
 {
-  "MainAppName": "text.exe",
-  "UpgradeUrl": "检查自动更新的地址"
+  "MainProcessName": "AutoUpgrade.Test",
+  "UpgradeUrl": "https://raw.githubusercontent.com/JiuLing-zhang/AutoUpgrade/main/test/AppInfo.json"
 }
 ```
 
