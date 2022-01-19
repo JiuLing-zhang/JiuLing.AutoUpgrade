@@ -33,7 +33,7 @@ namespace AutoUpgrade
                 (bool isNeedUpdate, GlobalArgs.MainProcess.AllowRun) = CheckNeedUpdate(upgradeInfo, currentVersion);
                 if (isNeedUpdate == false)
                 {
-                    MessageHelper.ShowInfo("当前版本为最新版");
+                    MessageUtils.ShowInfo("当前版本为最新版");
                     Application.Exit();
                 }
 
@@ -51,7 +51,7 @@ namespace AutoUpgrade
             }
             catch (Exception ex)
             {
-                MessageHelper.ShowError($"自动更新任务失败：{ex.Message}");
+                MessageUtils.ShowError($"更新失败：{ex.Message}");
                 Application.Exit();
             }
         }

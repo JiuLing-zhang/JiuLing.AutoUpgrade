@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AutoUpgrade.Common
 {
-    internal class MessageHelper
+    internal class MessageUtils
     {
         private const string Title = "自动更新";
         public static void ShowInfo(string msg)
