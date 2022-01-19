@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.IO.Compression;
 using System.Text.Json;
 using AutoUpgrade.Common;
 using AutoUpgrade.Models;
@@ -175,7 +176,24 @@ namespace AutoUpgrade
 
         private async void BtnUpgrade_Click(object sender, EventArgs e)
         {
-            await DownloadApp(GlobalArgs.UpgradeInfo.DownloadUrl, GlobalArgs.TempPackagePath);
+            try
+            {
+                BtnUpgrade.Enabled = false;
+
+                KillMainApp();
+                await DownloadApp(GlobalArgs.UpgradeInfo.DownloadUrl, GlobalArgs.TempPackagePath);
+                PublishZipFile(GlobalArgs.TempPackagePath, GlobalArgs.TempZipDirectory);
+                CopyFiles(GlobalArgs.TempZipDirectory, GlobalArgs.AppPath);
+                ClearFileCache();
+
+                MessageUtils.ShowInfo("更新完成");
+                Application.Exit();
+                RunMainApp();
+            }
+            catch (Exception ex)
+            {
+                MessageUtils.ShowError($"更新失败：{ex.Message}");
+            }
         }
 
         private void BtnCancel_Click(object sender, EventArgs e)
@@ -203,9 +221,16 @@ namespace AutoUpgrade
                 MessageUtils.ShowError("主程序未被正确关闭");
             }
         }
-
+        private void RunMainApp()
+        {
+            Process.Start(GlobalArgs.MainProcess.FileName);
+        }
         private async Task DownloadApp(string url, string filePath)
         {
+            if (File.Exists(filePath))
+            {
+                File.Delete(filePath);
+            }
             byte[] result;
             try
             {
@@ -226,6 +251,31 @@ namespace AutoUpgrade
                 _fmLoading.HideLoading();
             }
             await File.WriteAllBytesAsync(filePath, result);
+        }
+
+        private void PublishZipFile(string filePath, string dstPath)
+        {
+            if (Directory.Exists(dstPath))
+            {
+                Directory.Delete(dstPath, true);
+            }
+            ZipFile.ExtractToDirectory(filePath, dstPath);
+        }
+
+        private void CopyFiles(string sourcePath, string destinationPath)
+        {
+            var files = Directory.GetFiles(sourcePath);
+            foreach (var file in files)
+            {
+                var fi = new FileInfo(file);
+                File.Copy(file, Path.Combine(destinationPath, fi.Name));
+            }
+        }
+
+        private void ClearFileCache()
+        {
+            File.Delete(GlobalArgs.TempPackagePath);
+            Directory.Delete(GlobalArgs.TempZipDirectory, true);
         }
     }
 }

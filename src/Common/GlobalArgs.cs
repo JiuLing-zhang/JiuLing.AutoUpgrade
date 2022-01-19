@@ -12,6 +12,11 @@ namespace AutoUpgrade.Common
         /// </summary>
         public static string TempPackagePath = Path.Combine(AppPath, "AutoUpgrade.temp.zip");
 
+        /// <summary>
+        /// 更新文件解压的路径
+        /// </summary>
+        public static string TempZipDirectory = Path.Combine(AppPath, "AutoUpgrade.temp");
+
         public static AppConfigInfo AppConfig = new();
         /// <summary>
         /// 更新信息
