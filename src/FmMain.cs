@@ -268,7 +268,14 @@ namespace AutoUpgrade
             foreach (var file in files)
             {
                 var fi = new FileInfo(file);
-                File.Copy(file, Path.Combine(destinationPath, fi.Name));
+                File.Copy(file, Path.Combine(destinationPath, fi.Name), true);
+            }
+
+            var directories = Directory.GetDirectories(sourcePath);
+            foreach (var directory in directories)
+            {
+                var di = new DirectoryInfo(directory);
+                CopyFiles(directory, Path.Combine(destinationPath, di.Name));
             }
         }
 
