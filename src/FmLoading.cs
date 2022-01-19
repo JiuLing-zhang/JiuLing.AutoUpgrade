@@ -22,6 +22,16 @@ namespace AutoUpgrade
             LblMsg.Text = "";
         }
 
+        public void ShowLoading()
+        {
+            this.Visible = true;
+        }
+
+        public void HideLoading()
+        {
+            this.Visible = false;
+        }
+
         public void SetMessage(string text)
         {
             if (LblMsg.InvokeRequired)

@@ -10,7 +10,7 @@ namespace AutoUpgrade
 {
     public partial class FmMain : Form
     {
-        private readonly FmLoading _fmLoading = new FmLoading();
+        private readonly FmLoading _fmLoading = new();
         private readonly HttpClientHelper _clientHelper = new();
         public FmMain()
         {
@@ -26,28 +26,21 @@ namespace AutoUpgrade
                 LoadingAppConfig();
                 GetMainProcess();
                 string currentVersion = GetMainAppVersion();
-                _fmLoading.Show();
+                _fmLoading.ShowLoading();
                 _fmLoading.SetMessage("正在检查更新");
-                var upgradeInfo = await GetAppUpgradeInfo();
+                GlobalArgs.UpgradeInfo = await GetAppUpgradeInfo();
 
-                (bool isNeedUpdate, GlobalArgs.MainProcess.AllowRun) = CheckNeedUpdate(upgradeInfo, currentVersion);
+                (bool isNeedUpdate, GlobalArgs.MainProcess.AllowRun) = CheckNeedUpdate(GlobalArgs.UpgradeInfo, currentVersion);
                 if (isNeedUpdate == false)
                 {
                     MessageUtils.ShowInfo("当前版本为最新版");
                     Application.Exit();
                 }
 
-                _fmLoading.Visible = false;
+                _fmLoading.HideLoading();
                 ShowWindow();
+                BindingUi(currentVersion, GlobalArgs.UpgradeInfo);
 
-                LblCurrentVersion.Text = currentVersion;
-                LblNewVersion.Text = upgradeInfo.Version;
-                TxtLog.Text = upgradeInfo.Log;
-                if (!GlobalArgs.MainProcess.AllowRun)
-                {
-                    LblVersionOverdue.Visible = true;
-                    BtnCancel.Visible = false;
-                }
             }
             catch (Exception ex)
             {
@@ -66,6 +59,18 @@ namespace AutoUpgrade
         {
             this.WindowState = FormWindowState.Normal;
             this.ShowInTaskbar = true;
+        }
+
+        private void BindingUi(string currentVersion, AppUpgradeInfo upgradeInfo)
+        {
+            LblCurrentVersion.Text = currentVersion;
+            LblNewVersion.Text = upgradeInfo.Version;
+            TxtLog.Text = upgradeInfo.Log;
+            if (!GlobalArgs.MainProcess.AllowRun)
+            {
+                LblVersionOverdue.Visible = true;
+                BtnCancel.Visible = false;
+            }
         }
 
         /// <summary>
@@ -100,6 +105,7 @@ namespace AutoUpgrade
                 string fileName = p.MainModule?.FileName ?? throw new ArgumentException("未找到主进程启动路径");
                 string processDirectory = Path.GetDirectoryName(fileName) ?? throw new ArgumentException("未找到主进程启动目录");
                 string? myDirectory = Path.GetDirectoryName(GlobalArgs.AppPath);
+
                 if (myDirectory != processDirectory)
                 {
                     throw new ApplicationException("主程序和自动更新程序不在同一目录");
@@ -167,9 +173,9 @@ namespace AutoUpgrade
             return JiuLing.CommonLibs.VersionUtils.CheckNeedUpdate(currentVersion, upgradeInfo.Version, upgradeInfo.MinVersion);
         }
 
-        private void BtnUpgrade_Click(object sender, EventArgs e)
+        private async void BtnUpgrade_Click(object sender, EventArgs e)
         {
-
+            await DownloadApp(GlobalArgs.UpgradeInfo.DownloadUrl, GlobalArgs.TempPackagePath);
         }
 
         private void BtnCancel_Click(object sender, EventArgs e)
@@ -196,6 +202,30 @@ namespace AutoUpgrade
             {
                 MessageUtils.ShowError("主程序未被正确关闭");
             }
+        }
+
+        private async Task DownloadApp(string url, string filePath)
+        {
+            byte[] result;
+            try
+            {
+                _fmLoading.ShowLoading();
+                _fmLoading.SetMessage("准备下载");
+                var process = new Progress<float>((percent) =>
+                {
+                    _fmLoading.SetMessage($"正在下载：{percent:f2}%");
+                });
+                result = await _clientHelper.GetFileByteArray(url, process);
+            }
+            catch (Exception)
+            {
+                throw new Exception("服务器响应异常");
+            }
+            finally
+            {
+                _fmLoading.HideLoading();
+            }
+            await File.WriteAllBytesAsync(filePath, result);
         }
     }
 }
