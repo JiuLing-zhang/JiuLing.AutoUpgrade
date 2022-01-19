@@ -143,13 +143,13 @@ namespace AutoUpgrade
                 var upgradeInfo = JsonSerializer.Deserialize<AppUpgradeInfo>(result);
                 if (upgradeInfo == null)
                 {
-                    throw new Exception("自动更新信息解析失败");
+                    throw new Exception("服务器响应错误");
                 }
                 return upgradeInfo;
             }
             catch (Exception)
             {
-                throw new Exception("自动更新信息获取失败");
+                throw new Exception("服务器响应异常");
             }
         }
         /// <summary>
@@ -179,12 +179,23 @@ namespace AutoUpgrade
 
         private void FmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-
+            if (GlobalArgs.MainProcess.AllowRun == false)
+            {
+                KillMainApp();
+            }
         }
 
         private void KillMainApp()
         {
-
+            try
+            {
+                Process process = Process.GetProcessById(GlobalArgs.MainProcess.Id);
+                process.Kill();
+            }
+            catch (Exception)
+            {
+                MessageUtils.ShowError("主程序未被正确关闭");
+            }
         }
     }
 }
