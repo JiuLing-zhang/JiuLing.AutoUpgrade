@@ -218,6 +218,16 @@ namespace AutoUpgrade
                 KillMainApp();
                 await DownloadApp(GlobalArgs.UpgradeInfo.DownloadUrl, GlobalArgs.TempPackagePath);
                 PublishZipFile(GlobalArgs.TempPackagePath, GlobalArgs.TempZipDirectory);
+
+                if (CheckSelfNeedUpgrade(GlobalArgs.TempZipDirectory))
+                {
+                    //自动更新本身需要更新时，提示用户手动更新
+                    MessageUtils.ShowInfo($"自动更新失败，请手动进行更新操作，将{GlobalArgs.TempZipDirectory}文件夹中的所有内容拷贝到程序目录。");
+                    Application.Exit();
+                    return;
+                }
+
+                DeleteSelfUpgrade(GlobalArgs.TempZipDirectory);
                 CopyFiles(GlobalArgs.TempZipDirectory, GlobalArgs.AppPath);
                 ClearFileCache();
 
@@ -295,6 +305,49 @@ namespace AutoUpgrade
                 Directory.Delete(dstPath, true);
             }
             ZipFile.ExtractToDirectory(filePath, dstPath);
+        }
+
+        /// <summary>
+        /// 检查自动更新程序自身版本是否需要升级
+        /// </summary>
+        /// <param name="upgradeDirectory"></param>
+        private bool CheckSelfNeedUpgrade(string upgradeDirectory)
+        {
+            string newSelfExePath = Path.Combine(upgradeDirectory, GlobalArgs.AppName);
+
+            if (File.Exists(newSelfExePath))
+            {
+                FileVersionInfo info = FileVersionInfo.GetVersionInfo(newSelfExePath);
+                if (info.FileVersion == null)
+                {
+                    throw new ArgumentException($"新的自动更新程序版本获取异常");
+                }
+
+                if (info.FileVersion != GlobalArgs.AppVersion)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// 如果安装包中包含自动更新程序本身，则删除
+        /// </summary>
+        /// <param name="upgradeDirectory"></param>
+        private void DeleteSelfUpgrade(string upgradeDirectory)
+        {
+            string newSelfExePath = Path.Combine(upgradeDirectory, GlobalArgs.AppName);
+            if (File.Exists(newSelfExePath))
+            {
+                File.Delete(newSelfExePath);
+            }
+
+            string newSelfDllPath = Path.Combine(upgradeDirectory, GlobalArgs.DllName);
+            if (File.Exists(newSelfDllPath))
+            {
+                File.Delete(newSelfDllPath);
+            }
         }
 
         private void CopyFiles(string sourcePath, string destinationPath)
