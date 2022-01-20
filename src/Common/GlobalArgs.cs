@@ -1,5 +1,4 @@
 ﻿using AutoUpgrade.Models;
-using JiuLing.CommonLibs.Model;
 
 namespace AutoUpgrade.Common
 {

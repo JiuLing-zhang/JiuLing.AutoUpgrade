@@ -2,10 +2,9 @@ using System.Diagnostics;
 using System.IO.Compression;
 using System.Text.Json;
 using AutoUpgrade.Common;
+using AutoUpgrade.ExtensionMethods;
 using AutoUpgrade.Models;
-using JiuLing.CommonLibs.ExtensionMethods;
-using JiuLing.CommonLibs.Model;
-using JiuLing.CommonLibs.Net;
+using AutoUpgrade.Net;
 
 namespace AutoUpgrade
 {
@@ -169,11 +168,11 @@ namespace AutoUpgrade
             if (upgradeInfo.MinVersion.IsEmpty())
             {
                 //如果没有指定最小版本号，则认为当前版本可以使用
-                var isNeedUpdate = JiuLing.CommonLibs.VersionUtils.CheckNeedUpdate(currentVersion, upgradeInfo.Version);
+                var isNeedUpdate = VersionUtils.CheckNeedUpdate(currentVersion, upgradeInfo.Version);
                 return (isNeedUpdate, true);
             }
 
-            return JiuLing.CommonLibs.VersionUtils.CheckNeedUpdate(currentVersion, upgradeInfo.Version, upgradeInfo.MinVersion);
+            return VersionUtils.CheckNeedUpdate(currentVersion, upgradeInfo.Version, upgradeInfo.MinVersion);
         }
 
         private async void BtnUpgrade_Click(object sender, EventArgs e)
