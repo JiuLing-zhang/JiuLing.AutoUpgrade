@@ -1,2 +1,5 @@
+1、配置MainProcessName节点：AutoUpgrade.Test。
+2、配置UpgradeUrl节点：https://raw.githubusercontent.com/JiuLing-zhang/AutoUpgrade/main/test/AppInfo.json。
+其中链接中的文件信息对应如下：
 AppInfo.json的配置为非必须更新。
 AppInfo2.json的配置为必须更新。
