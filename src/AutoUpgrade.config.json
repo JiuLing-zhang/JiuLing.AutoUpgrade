@@ -1,4 +1,0 @@
-{
-  "MainProcessName": "AutoUpgrade.Test",
-  "UpgradeUrl": "https://raw.githubusercontent.com/JiuLing-zhang/AutoUpgrade/main/test/AppInfo.json"
-}

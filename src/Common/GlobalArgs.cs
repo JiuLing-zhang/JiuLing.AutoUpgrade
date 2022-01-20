@@ -5,7 +5,7 @@ namespace AutoUpgrade.Common
     internal class GlobalArgs
     {
         public static string AppPath = AppDomain.CurrentDomain.BaseDirectory;
-        public static string AppConfigPath = Path.Combine(AppPath, "AutoUpgrade.config.json");
+        public static string AppConfigPath = Path.Combine(AppPath, "AutoUpgrade.config");
         /// <summary>
         /// 临时下载的更新包位置
         /// </summary>

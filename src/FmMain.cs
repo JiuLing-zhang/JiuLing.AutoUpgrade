@@ -1,6 +1,8 @@
+using System.Configuration;
 using System.Diagnostics;
 using System.IO.Compression;
 using System.Text.Json;
+using System.Xml;
 using AutoUpgrade.Common;
 using AutoUpgrade.ExtensionMethods;
 using AutoUpgrade.Models;
@@ -46,7 +48,7 @@ namespace AutoUpgrade
             }
             catch (Exception ex)
             {
-                MessageUtils.ShowError($"更新失败：{ex.Message}");
+                MessageUtils.ShowError($"更新失败，{ex.Message}");
                 Application.Exit();
             }
         }
@@ -84,15 +86,47 @@ namespace AutoUpgrade
             {
                 throw new FileNotFoundException($"未找到配置文件{GlobalArgs.AppConfigPath}");
             }
-            string configString = File.ReadAllText(GlobalArgs.AppConfigPath);
+
             try
             {
-                GlobalArgs.AppConfig = JsonSerializer.Deserialize<AppConfigInfo>(configString) ?? throw new JsonException($"配置文件解析失败{GlobalArgs.AppConfigPath}");
+                ConfigXmlDocument configXmlDocument = new ConfigXmlDocument();
+                configXmlDocument.Load(GlobalArgs.AppConfigPath);
+                XmlNode? appSettings = configXmlDocument.SelectSingleNode("//appSettings");
+                if (appSettings == null)
+                {
+                    throw new ArgumentException("appSettings节点不存在");
+                }
+
+                string mainProcessName = GetAppSettingValue(appSettings, "MainProcessName");
+                if (mainProcessName.IsEmpty())
+                {
+                    throw new ArgumentException("MainProcessName参数不能为空");
+                }
+
+                string upgradeUrl = GetAppSettingValue(appSettings, "UpgradeUrl");
+                if (upgradeUrl.IsEmpty())
+                {
+                    throw new ArgumentException("UpgradeUrl参数不能为空");
+                }
+
+                GlobalArgs.AppConfig.MainProcessName = mainProcessName;
+                GlobalArgs.AppConfig.UpgradeUrl = upgradeUrl;
             }
-            catch (JsonException)
+            catch (Exception ex)
             {
-                throw new JsonException($"配置文件格式错误{GlobalArgs.AppConfigPath}");
+                throw new JsonException($"配置文件错误：{ex.Message}");
             }
+        }
+
+        private string GetAppSettingValue(XmlNode appSettings, string key)
+        {
+            var node = appSettings.SelectSingleNode($"//add[@key='{key}']");
+            if (node == null)
+            {
+                throw new ArgumentException($"{key}节点不存在");
+            }
+
+            return ((XmlElement)node).GetAttribute("value");
         }
 
         /// <summary>
