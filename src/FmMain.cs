@@ -238,6 +238,7 @@ namespace AutoUpgrade
             catch (Exception ex)
             {
                 MessageUtils.ShowError($"更新失败：{ex.Message}");
+                BtnUpgrade.Enabled = true;
             }
         }
 
@@ -256,14 +257,13 @@ namespace AutoUpgrade
 
         private void KillMainApp()
         {
-            try
+            foreach (var process in Process.GetProcesses())
             {
-                Process process = Process.GetProcessById(GlobalArgs.MainProcess.Id);
-                process.Kill();
-            }
-            catch (Exception)
-            {
-                MessageUtils.ShowError("主程序未被正确关闭");
+                if (process.Id == GlobalArgs.MainProcess.Id)
+                {
+                    process.Kill();
+                    break;
+                }
             }
         }
         private void RunMainApp()
@@ -283,7 +283,7 @@ namespace AutoUpgrade
                 _fmLoading.SetMessage("准备下载");
                 var process = new Progress<float>((percent) =>
                 {
-                    _fmLoading.SetMessage($"正在下载：{percent:f2}%");
+                    _fmLoading.SetMessage($"正在下载：{(percent * 100):f2}%");
                 });
                 result = await _clientHelper.GetFileByteArray(url, process);
             }

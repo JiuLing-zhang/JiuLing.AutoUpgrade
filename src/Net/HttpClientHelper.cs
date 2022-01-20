@@ -29,7 +29,7 @@
         /// 以byte数组的形式下载文件
         /// </summary>
         /// <param name="url">请求的URL</param>
-        /// <param name="progress">下载的进度（百分比）</param>
+        /// <param name="progress">下载的进度（范围0-1）</param>
         /// <param name="bufferSize">下载时缓冲区的字节大小</param>
         /// <returns>返回服务器请求得到的字节数组</returns>
         public async Task<byte[]> GetFileByteArray(string url, IProgress<float> progress = null, int bufferSize = 8192)
