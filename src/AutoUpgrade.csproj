@@ -7,6 +7,12 @@
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
     <ApplicationIcon>Images\icons8_buy_upgrade.ico</ApplicationIcon>
+    <PackageId>JiuLing.AutoUpgrade</PackageId>
+    <Authors>九零</Authors>
+    <Product>JiuLing.AutoUpgrade</Product>
+    <Description>一个简单的.Net下的自动更新组件。</Description>
+    <PackageProjectUrl>https://github.com/JiuLing-zhang/AutoUpgrade</PackageProjectUrl>
+    <PackageIcon>nuget_icon.png</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,6 +22,13 @@
 
   <ItemGroup>
     <Content Include="Images\icons8_buy_upgrade.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\nuget_icon.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>    
   </ItemGroup>
 
   <ItemGroup>
