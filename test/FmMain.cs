@@ -18,7 +18,7 @@ namespace AutoUpgrade.Test
         {
             try
             {
-                Process.Start("AutoUpgrade");
+                Process.Start(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "AutoUpgrade.exe"));
             }
             catch (Exception ex)
             {

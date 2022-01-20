@@ -34,8 +34,10 @@ namespace AutoUpgrade
                 (bool isNeedUpdate, GlobalArgs.MainProcess.AllowRun) = CheckNeedUpdate(GlobalArgs.UpgradeInfo, currentVersion);
                 if (isNeedUpdate == false)
                 {
+                    _fmLoading.HideLoading();
                     MessageUtils.ShowInfo("当前版本为最新版");
                     Application.Exit();
+                    return;
                 }
 
                 _fmLoading.HideLoading();
@@ -132,11 +134,11 @@ namespace AutoUpgrade
                 throw new ApplicationException($"未找到主进程{GlobalArgs.AppConfig.MainProcessName}");
             }
             FileVersionInfo info = FileVersionInfo.GetVersionInfo(GlobalArgs.MainProcess.FileName);
-            if (info.ProductVersion == null)
+            if (info.FileVersion == null)
             {
                 throw new ArgumentException($"主程序版本号异常");
             }
-            return info.ProductVersion;
+            return info.FileVersion;
         }
 
         /// <summary>
@@ -264,6 +266,11 @@ namespace AutoUpgrade
 
         private void CopyFiles(string sourcePath, string destinationPath)
         {
+            if (!Directory.Exists(destinationPath))
+            {
+                Directory.CreateDirectory(destinationPath);
+            }
+
             var files = Directory.GetFiles(sourcePath);
             foreach (var file in files)
             {
