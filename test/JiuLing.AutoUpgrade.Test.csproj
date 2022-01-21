@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\AutoUpgrade.csproj" />
+    <ProjectReference Include="..\src\JiuLing.AutoUpgrade.csproj" />
   </ItemGroup>
 
 </Project>
