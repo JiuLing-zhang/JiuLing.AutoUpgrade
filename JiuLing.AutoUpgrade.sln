@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JiuLing.AutoUpgrade.Test", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JiuLing.AutoUpgrade", "src\JiuLing.AutoUpgrade\JiuLing.AutoUpgrade.csproj", "{60A1E27A-D014-414A-ADAE-A09981B7AB3F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JiuLing.AutoUpgrade.Shell", "src\JiuLing.AutoUpgrade.Shell\JiuLing.AutoUpgrade.Shell.csproj", "{7E5C5D11-F5B4-403E-925A-4697544982FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JiuLing.AutoUpgrade.Shell", "src\JiuLing.AutoUpgrade.Shell\JiuLing.AutoUpgrade.Shell.csproj", "{7E5C5D11-F5B4-403E-925A-4697544982FC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

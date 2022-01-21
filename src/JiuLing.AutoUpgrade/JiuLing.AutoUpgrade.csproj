@@ -13,7 +13,7 @@
     <Description>一个简单的.Net下的自动更新组件。</Description>
     <PackageProjectUrl>https://github.com/JiuLing-zhang/JiuLing.AutoUpgrade</PackageProjectUrl>
     <PackageIcon>nuget_icon.png</PackageIcon>
-    <Version>0.0.4</Version>
+    <Version>0.0.5</Version>
   </PropertyGroup>
 
   <ItemGroup>
