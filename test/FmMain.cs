@@ -18,7 +18,8 @@ namespace JiuLing.AutoUpgrade.Test
         {
             try
             {
-                Process.Start(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "AutoUpgrade.exe"));
+                string upgradeUrl = "https://raw.githubusercontent.com/JiuLing-zhang/AutoUpgrade/main/test/AppInfo.json";
+                JiuLing.AutoUpgrade.Shell.App.Run(upgradeUrl);
             }
             catch (Exception ex)
             {

@@ -11,12 +11,13 @@
     <Authors>九零</Authors>
     <Product>JiuLing.AutoUpgrade</Product>
     <Description>一个简单的.Net下的自动更新组件。</Description>
-    <PackageProjectUrl>https://github.com/JiuLing-zhang/AutoUpgrade</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/JiuLing-zhang/JiuLing.AutoUpgrade</PackageProjectUrl>
     <PackageIcon>nuget_icon.png</PackageIcon>
-    <Version>1.0.0</Version>
+    <Version>0.0.4</Version>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="AutoUpgrade.config" />
     <None Remove="AutoUpgrade.config.json" />
     <None Remove="AutoUpgrade.json" />
   </ItemGroup>
@@ -26,7 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\nuget_icon.png">
+    <None Include="..\..\nuget_icon.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>    
@@ -45,12 +46,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="AutoUpgrade.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>
