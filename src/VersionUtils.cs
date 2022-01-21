@@ -1,4 +1,4 @@
-﻿namespace AutoUpgrade
+﻿namespace JiuLing.AutoUpgrade
 {
     /// <summary>
     /// 程序版本帮助类

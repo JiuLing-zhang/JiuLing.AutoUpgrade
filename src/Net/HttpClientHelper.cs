@@ -1,4 +1,4 @@
-﻿namespace AutoUpgrade.Net
+﻿namespace JiuLing.AutoUpgrade.Net
 {
     /// <summary>
     /// 网络请求工具

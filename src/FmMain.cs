@@ -3,12 +3,12 @@ using System.Diagnostics;
 using System.IO.Compression;
 using System.Text.Json;
 using System.Xml;
-using AutoUpgrade.Common;
-using AutoUpgrade.ExtensionMethods;
-using AutoUpgrade.Models;
-using AutoUpgrade.Net;
+using JiuLing.AutoUpgrade.Common;
+using JiuLing.AutoUpgrade.ExtensionMethods;
+using JiuLing.AutoUpgrade.Models;
+using JiuLing.AutoUpgrade.Net;
 
-namespace AutoUpgrade
+namespace JiuLing.AutoUpgrade
 {
     public partial class FmMain : Form
     {

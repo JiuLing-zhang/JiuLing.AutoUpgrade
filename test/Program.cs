@@ -1,4 +1,4 @@
-namespace AutoUpgrade.Test
+namespace JiuLing.AutoUpgrade.Test
 {
     internal static class Program
     {

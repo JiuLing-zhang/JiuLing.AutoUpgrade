@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AutoUpgrade.Common
+namespace JiuLing.AutoUpgrade.Common
 {
     internal class MessageUtils
     {

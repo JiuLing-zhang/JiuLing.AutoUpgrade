@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace AutoUpgrade
+namespace JiuLing.AutoUpgrade
 {
     public partial class FmLoading : Form
     {

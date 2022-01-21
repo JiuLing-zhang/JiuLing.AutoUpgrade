@@ -1,6 +1,6 @@
 using System.Diagnostics;
 
-namespace AutoUpgrade.Test
+namespace JiuLing.AutoUpgrade.Test
 {
     public partial class FmMain : Form
     {

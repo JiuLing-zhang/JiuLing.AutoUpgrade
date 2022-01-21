@@ -1,4 +1,4 @@
-﻿namespace AutoUpgrade
+﻿namespace JiuLing.AutoUpgrade
 {
     partial class FmMain
     {

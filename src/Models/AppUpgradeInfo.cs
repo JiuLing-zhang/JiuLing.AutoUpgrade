@@ -1,4 +1,4 @@
-﻿namespace AutoUpgrade.Models
+﻿namespace JiuLing.AutoUpgrade.Models
 {
     /// <summary>
     /// 一个通用的App自动更新所需的模型

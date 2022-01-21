@@ -1,6 +1,6 @@
-﻿using AutoUpgrade.Models;
+﻿using JiuLing.AutoUpgrade.Models;
 
-namespace AutoUpgrade.Common
+namespace JiuLing.AutoUpgrade.Common
 {
     internal class GlobalArgs
     {

@@ -1,4 +1,4 @@
-﻿namespace AutoUpgrade.ExtensionMethods
+﻿namespace JiuLing.AutoUpgrade.ExtensionMethods
 {
     /// <summary>
     /// 字符串类型的扩展方法
