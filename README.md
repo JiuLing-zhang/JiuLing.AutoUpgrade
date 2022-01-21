@@ -1,26 +1,24 @@
-# AutoUpgrade
-一个`.net 6`写的自动更新组件，目前处于开发中。  
+![](https://img.shields.io/github/license/JiuLing-zhang/JiuLing.AutoUpgrade)
+![](https://img.shields.io/github/workflow/status/JiuLing-zhang/JiuLing.AutoUpgrade/Publish)
+[![](https://img.shields.io/nuget/v/JiuLing.AutoUpgrade)](https://www.nuget.org/packages/JiuLing.AutoUpgrade)
+[![](https://img.shields.io/github/v/release/JiuLing-zhang/JiuLing.AutoUpgrade)](https://github.com/JiuLing-zhang/JiuLing.AutoUpgrade/releases)  
+
+# 介绍
+`JiuLing.AutoUpgrade`是一个`.net 6`写的自动更新组件。  
+目前功能比较简单，仅支持`.zip`压缩包形式的自动更新。组件运行后，会通过`Http`去服务端下载自动更新的压缩包，完成后关闭主程序，将压缩包的内容解压后复制到程序根目录。  
+
+**检查更新时，如果指定了最小运行版本，并且主程序版本低于最小版本，那么自动更新程序将不允许跳过本次更新，不更新直接关闭自动更新程序时，同时也会关闭主程序**  
+
+![main1.png](https://s2.loli.net/2022/01/21/CoOMVHLTvQAPu5X.png)  
+![main2.png](https://s2.loli.net/2022/01/21/xC6jka4vGdgptTq.png)  
+![download.png](https://s2.loli.net/2022/01/21/94nGMBNJpQUzYTR.png)  
+
+# 安装  
+* 通过`Nuget`直接安装。👉👉👉[`JiuLing.AutoUpgrade`](https://www.nuget.org/packages/JiuLing.AutoUpgrade)  
+* 下载最新的`Release`版本自己引用到项目。👉👉👉[`下载`](https://github.com/JiuLing-zhang/JiuLing.AutoUpgrade/releases)  
 
 # 使用  
-该程序目前仅支持`.zip`压缩包形式的自动更新。
-## 配置：
-将自动更新程序放入程序的目录，填写配置文件`AutoUpgrade.config.json`。自动更新程序运行后会自动去配置的地址检查是否有可用更新，如果发现新版本，下载后自动解压到当前路径，如果文件存在，则覆盖。    
-
-```json
-{
-  "MainProcessName": "主进程名称，更新时会结束该进程，更新完成后再自动启动。",
-  "UpgradeUrl": "检查自动更新的地址"
-}
-```
-例如：  
-```json
-{
-  "MainProcessName": "AutoUpgrade.Test",
-  "UpgradeUrl": "https://raw.githubusercontent.com/JiuLing-zhang/AutoUpgrade/main/test/AppInfo.json"
-}
-```
-
-自动更新检查接口（`UpgradeUrl`）需要返回如下格式的`json`内容
+直接调用`JiuLing.AutoUpgrade.Shell.App.Run()`方法即可，方法参数为检查自动更新的地址（该地址需要返回如下格式的`json`内容）。  
 ```json
 {
     "Version":"最新的版本号（必须返回）",
@@ -30,7 +28,6 @@
     "CreateTime":"时间"
 }
 ```
-例如：  
 ```json
 {
     "Version":"1.2.0",
@@ -40,8 +37,26 @@
     "CreateTime":"2022-01-16 12:12:12"
 }
 ```
-## 运行：
-直接启动`AutoUpgrade.exe`进程即可。  
+
+例如：
 ```C#
-Process.Start("AutoUpgrade.exe");
+string upgradeUrl = "https://raw.githubusercontent.com/JiuLing-zhang/AutoUpgrade/main/test/AppInfo.json";
+JiuLing.AutoUpgrade.Shell.App.Run(upgradeUrl);
 ```
+
+# 项目说明  
+## 1、`JiuLing.AutoUpgrade`
+自动更新的核心程序，用于完成整个更新的过程。
+
+## 2、`JiuLing.AutoUpgrade.Shell`
+这是一个很简单的壳程序。该程序将核心程序作为**资源文件**引入，调用自动更新时，释放并启动主更新程序。  
+
+这样做有以下两个好处：
+* `Shell`程序打包后可发布`Nuget`，便于版本管理。  
+* 自动更新主程序的版本可实现自动升级（主程序是作为资源文件打包，因此只要替换资源文件并重新发布`Shell`程序即可）。  
+
+## 3、`JiuLing.AutoUpgrade.Test`
+自动更新的测试程序。
+
+# License
+MIT License
