@@ -18,7 +18,8 @@
 * 下载最新的`Release`版本自己引用到项目。👉👉👉[`下载`](https://github.com/JiuLing-zhang/JiuLing.AutoUpgrade/releases)  
 
 # 使用  
-直接调用`JiuLing.AutoUpgrade.Shell.App.Run()`方法即可，方法参数为检查自动更新的地址（该地址需要返回如下格式的`json`内容）。  
+1. 导入命名空间`using JiuLing.AutoUpgrade.Shell;`
+2. 准备自动更新检查接口，该接口需要返回如下格式的`json`内容。  
 ```json
 {
     "Version":"最新的版本号（必须返回）",
@@ -38,10 +39,13 @@
 }
 ```
 
-例如：
+3. 启动更新
 ```C#
 string upgradeUrl = "https://raw.githubusercontent.com/JiuLing-zhang/AutoUpgrade/main/test/AppInfo.json";
-JiuLing.AutoUpgrade.Shell.App.Run(upgradeUrl);
+AutoUpgradeFactory
+    .Create()
+    .SetUpgradeUrl(upgradeUrl)//配置自动更新检查接口
+    .Run();
 ```
 
 # 项目说明  

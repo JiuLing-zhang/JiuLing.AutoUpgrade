@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using JiuLing.AutoUpgrade.Shell;
 
 namespace JiuLing.AutoUpgrade.Test
 {
@@ -19,7 +20,10 @@ namespace JiuLing.AutoUpgrade.Test
             try
             {
                 string upgradeUrl = "https://raw.githubusercontent.com/JiuLing-zhang/AutoUpgrade/main/test/AppInfo.json";
-                JiuLing.AutoUpgrade.Shell.App.Run(upgradeUrl);
+                AutoUpgradeFactory
+                    .Create()
+                    .SetUpgradeUrl(upgradeUrl)
+                    .Run();
             }
             catch (Exception ex)
             {
