@@ -4,6 +4,7 @@ using System.IO.Compression;
 using System.Text.Json;
 using System.Xml;
 using JiuLing.AutoUpgrade.Common;
+using JiuLing.AutoUpgrade.Enums;
 using JiuLing.AutoUpgrade.ExtensionMethods;
 using JiuLing.AutoUpgrade.Models;
 using JiuLing.AutoUpgrade.Net;
@@ -23,16 +24,8 @@ namespace JiuLing.AutoUpgrade
         {
             try
             {
-                string[] cmdArgs = System.Environment.GetCommandLineArgs();
-                if (cmdArgs.Length != 3)
-                {
-                    throw new ArgumentException("启动参数不正确");
-                }
-                GlobalArgs.AppConfig.MainProcessName = cmdArgs[1];
-                GlobalArgs.AppConfig.UpgradeUrl = cmdArgs[2];
-
                 HideWindow();
-
+                GetAppArgs();
                 GetMainProcess();
                 string currentVersion = GetMainAppVersion();
                 _fmLoading.ShowLoading();
@@ -60,6 +53,30 @@ namespace JiuLing.AutoUpgrade
             }
         }
 
+        private void GetAppArgs()
+        {
+            string[] cmdArgs = System.Environment.GetCommandLineArgs();
+            if (cmdArgs.Length < 3)
+            {
+                throw new ArgumentException("启动参数不正确");
+            }
+
+            GlobalArgs.AppConfig.MainProcessName = cmdArgs[1];
+
+            if (!Enum.TryParse(cmdArgs[2], out GlobalArgs.AppConfig.UpgradeMode))
+            {
+                throw new ArgumentException("更新方式配置错误");
+            }
+
+            switch (GlobalArgs.AppConfig.UpgradeMode)
+            {
+                case UpgradeModeEnum.Http:
+                    GlobalArgs.AppConfig.UpgradeUrl = cmdArgs[3];
+                    break;
+                default:
+                    throw new ArgumentException("不支持的更新方式");
+            }
+        }
         private void HideWindow()
         {
             this.WindowState = FormWindowState.Minimized;

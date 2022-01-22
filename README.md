@@ -41,10 +41,9 @@
 
 3. 启动更新
 ```C#
-string upgradeUrl = "https://raw.githubusercontent.com/JiuLing-zhang/AutoUpgrade/main/test/AppInfo.json";
 AutoUpgradeFactory
     .Create()
-    .SetUpgradeUrl(upgradeUrl)//配置自动更新检查接口
+    .UseHttpMode("https://raw.githubusercontent.com/JiuLing-zhang/AutoUpgrade/main/test/AppInfo.json")//使用Http方式更新，参数为自动更新的检查接口
     .Run();
 ```
 

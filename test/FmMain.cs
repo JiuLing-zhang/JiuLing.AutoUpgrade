@@ -19,10 +19,9 @@ namespace JiuLing.AutoUpgrade.Test
         {
             try
             {
-                string upgradeUrl = "https://raw.githubusercontent.com/JiuLing-zhang/AutoUpgrade/main/test/AppInfo.json";
                 AutoUpgradeFactory
                     .Create()
-                    .SetUpgradeUrl(upgradeUrl)
+                    .UseHttpMode("https://raw.githubusercontent.com/JiuLing-zhang/AutoUpgrade/main/test/AppInfo.json")
                     .Run();
             }
             catch (Exception ex)
