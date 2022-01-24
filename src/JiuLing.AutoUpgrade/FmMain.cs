@@ -63,10 +63,11 @@ namespace JiuLing.AutoUpgrade
 
             GlobalArgs.AppConfig.MainProcessName = cmdArgs[1];
 
-            if (!Enum.TryParse(cmdArgs[2], out GlobalArgs.AppConfig.UpgradeMode))
+            if (!Enum.TryParse(cmdArgs[2], out UpgradeModeEnum upgradeMode))
             {
                 throw new ArgumentException("更新方式配置错误");
             }
+            GlobalArgs.AppConfig.UpgradeMode = upgradeMode;
 
             switch (GlobalArgs.AppConfig.UpgradeMode)
             {
