@@ -1,4 +1,4 @@
-name: build-job
+name: publish-job
 
 on:
   push:
@@ -23,3 +23,9 @@ jobs:
       run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
+    - name: Publish  
+      uses: rohith/publish-nuget@v2  
+      with:   
+        PROJECT_FILE_PATH: src/JiuLing.AutoUpgrade.Shell/JiuLing.AutoUpgrade.Shell.csproj        
+        PACKAGE_NAME: JiuLing.AutoUpgrade
+        NUGET_KEY: ${{secrets.NUGET_API_KEY}}  
