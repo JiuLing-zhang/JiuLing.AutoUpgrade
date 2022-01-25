@@ -1,4 +1,4 @@
-name: Publish
+name: build-job
 
 on:
   push:
@@ -23,8 +23,3 @@ jobs:
       run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
-    - name: Publish  
-      uses: brandedoutcast/publish-nuget@v2.5.2  
-      with:   
-        PROJECT_FILE_PATH: src/JiuLing.AutoUpgrade.Shell/JiuLing.AutoUpgrade.Shell.csproj  
-        NUGET_KEY: ${{secrets.NUGET_API_KEY}} 
