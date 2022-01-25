@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using JiuLing.AutoUpgrade.Enums;
+﻿using JiuLing.AutoUpgrade.Enums;
 
 namespace JiuLing.AutoUpgrade.Models
 {
@@ -17,7 +12,7 @@ namespace JiuLing.AutoUpgrade.Models
         /// <summary>
         /// 更新方式
         /// </summary>
-        public UpgradeModeEnum UpgradeMode;
+        public UpgradeModeEnum UpgradeMode { get; set; }
         /// <summary>
         /// 自动更新的检查地址
         /// </summary>
