@@ -17,7 +17,7 @@ namespace JiuLing.AutoUpgrade.Models
         /// <summary>
         /// 更新方式
         /// </summary>
-        public UpgradeModeEnum UpgradeMode;
+        public UpgradeModeEnum UpgradeMode { get; set; }
         /// <summary>
         /// 自动更新的检查地址
         /// </summary>
