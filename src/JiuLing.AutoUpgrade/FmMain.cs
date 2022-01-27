@@ -159,10 +159,12 @@ namespace JiuLing.AutoUpgrade
                 KillMainApp();
                 _fmLoading.ShowLoading();
                 _fmLoading.SetMessage("准备下载");
-                var process =
-                    new Progress<float>((percent) => { _fmLoading.SetMessage($"正在下载：{(percent * 100):f2}%"); });
+                var process = new Progress<float>((percent) =>
+                {
+                    _fmLoading.SetMessage($"正在下载：{(percent * 100):f2}%");
+                });
                 await UpgradeTemplateFactory.Create(_upgradeConfig)
-                    .Update(GlobalArgs.AppPath, GlobalArgs.TempPackagePath, GlobalArgs.TempZipDirectory, process);
+                    .Update(_upgradeInfo.DownloadUrl, GlobalArgs.AppPath, GlobalArgs.TempPackagePath, GlobalArgs.TempZipDirectory, process);
 
                 MessageUtils.ShowInfo("更新完成");
                 Application.Exit();

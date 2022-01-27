@@ -7,18 +7,19 @@ namespace JiuLing.AutoUpgrade.Templates
         /// <summary>
         /// 更新
         /// </summary>
+        /// <param name="downloadUrl">更新包的下载地址</param>
         /// <param name="appPath">程序运行路径</param>
         /// <param name="updatePackPath">更新包的路径</param>
         /// <param name="tempZipDirectory">更新文件的临时解压路径</param>
-        public async Task Update(string appPath, string updatePackPath, string tempZipDirectory, IProgress<float> progress = null)
+        public async Task Update(string downloadUrl, string appPath, string updatePackPath, string tempZipDirectory, IProgress<float> progress = null)
         {
-            await DownloadApp(updatePackPath, progress);
+            await DownloadApp(downloadUrl, updatePackPath, progress);
             PublishZipFile(updatePackPath, tempZipDirectory);
             CopyFiles(tempZipDirectory, appPath);
             ClearFileCache(updatePackPath, tempZipDirectory);
         }
 
-        public abstract Task DownloadApp(string updatePackPath, IProgress<float> progress);
+        public abstract Task DownloadApp(string downloadUrl, string updatePackPath, IProgress<float> progress);
 
         public void PublishZipFile(string filePath, string dstPath)
         {
@@ -54,7 +55,7 @@ namespace JiuLing.AutoUpgrade.Templates
         private void ClearFileCache(string updatePackPath, string tempZipDirectory)
         {
             File.Delete(updatePackPath);
-            Directory.Delete(tempZipDirectory);
+            Directory.Delete(tempZipDirectory, true);
         }
     }
 }

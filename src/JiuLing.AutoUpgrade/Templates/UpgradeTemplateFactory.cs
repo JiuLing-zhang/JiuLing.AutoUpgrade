@@ -14,9 +14,9 @@ namespace JiuLing.AutoUpgrade.Templates
             switch (config.UpgradeMode)
             {
                 case UpgradeModeEnum.Http:
-                    return new UpgradeUsingHttp(config.ConnectionConfig);
+                    return new UpgradeUsingHttp();
                 case UpgradeModeEnum.Ftp:
-                    return new UpgradeUsingHttp(config.ConnectionConfig);
+                    throw new NotImplementedException("暂时不支持该方式");
                 default:
                     throw new ArgumentException("创建更新策略失败：更新方式不正确");
             }

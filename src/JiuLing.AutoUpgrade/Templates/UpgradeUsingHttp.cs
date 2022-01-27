@@ -5,19 +5,17 @@ namespace JiuLing.AutoUpgrade.Templates
 {
     internal class UpgradeUsingHttp : UpgradeAbstract
     {
-        private readonly HttpConnectionConfig _connectionConfig;
         private readonly HttpClientHelper _clientHelper = new();
-        public UpgradeUsingHttp(HttpConnectionConfig connectionConfig)
+        public UpgradeUsingHttp()
         {
-            _connectionConfig = connectionConfig;
         }
-        public override async Task DownloadApp(string updatePackPath, IProgress<float> progress)
+        public override async Task DownloadApp(string downloadUrl, string updatePackPath, IProgress<float> progress)
         {
             if (File.Exists(updatePackPath))
             {
                 File.Delete(updatePackPath);
             }
-            var result = await _clientHelper.GetFileByteArray(_connectionConfig.UpgradeUrl, progress);
+            var result = await _clientHelper.GetFileByteArray(downloadUrl, progress);
             await File.WriteAllBytesAsync(updatePackPath, result);
         }
     }
