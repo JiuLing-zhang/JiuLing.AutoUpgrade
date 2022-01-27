@@ -19,9 +19,10 @@ namespace JiuLing.AutoUpgrade.Test
         {
             try
             {
-                AutoUpgradeFactory
-                    .Create()
+                var app = AutoUpgradeFactory.Create();
+                app
                     .UseHttpMode("https://raw.githubusercontent.com/JiuLing-zhang/AutoUpgrade/main/test/AppInfo.json")
+                //.UseFtpMode("userName", "password", "upgradePath")
                     .Run();
             }
             catch (Exception ex)

@@ -20,13 +20,5 @@ namespace JiuLing.AutoUpgrade.Common
         public static string TempZipDirectory = Path.Combine(AppPath, "AutoUpgrade.temp");
 
         public static AppConfigInfo AppConfig = new();
-        /// <summary>
-        /// 更新信息
-        /// </summary>
-        public static AppUpgradeInfo UpgradeInfo = new();
-        /// <summary>
-        /// 主进程信息（待更新的程序进程）
-        /// </summary>
-        public static ProcessInfo MainProcess;
     }
 }

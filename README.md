@@ -5,7 +5,8 @@
 
 ## :one:.介绍
 `JiuLing.AutoUpgrade`是一个`.net 6`写的自动更新组件。  
-目前功能比较简单，仅支持`.zip`压缩包形式的自动更新。组件运行后，会通过`Http`去服务端下载自动更新的压缩包，完成后关闭主程序，将压缩包的内容解压后复制到程序根目录。  
+
+目前支持`Http`和`Ftp`两种更新方式，更新包仅支持`.zip`压缩包。组件运行后，会去服务端下载自动更新的压缩包，完成后关闭主程序，将压缩包的内容解压后复制到程序根目录。  
 
 **检查更新时，如果指定了最小运行版本，并且主程序版本低于最小版本，那么自动更新程序将不允许跳过本次更新，不更新直接关闭自动更新程序时，同时也会关闭主程序**  
 
@@ -19,14 +20,19 @@
 
 ## :three:.使用  
 1. 导入命名空间`using JiuLing.AutoUpgrade.Shell;`
-2. 启动更新（目前仅支持Http形式）
+2. 启动更新
 ```C#
-AutoUpgradeFactory
-    .Create()
-    .UseHttpMode("https://raw.githubusercontent.com/JiuLing-zhang/AutoUpgrade/main/test/AppInfo.json")//使用Http方式更新，参数为自动更新的检查接口
+//Http方式更新
+var app = AutoUpgradeFactory.Create();
+app.UseHttpMode("https://raw.githubusercontent.com/JiuLing-zhang/AutoUpgrade/main/test/AppInfo.json")
+    .Run();
+
+//Ftp方式更新
+var app = AutoUpgradeFactory.Create();
+app.UseFtpMode("userName", "password", "upgradePath")
     .Run();
 ```
-***自动更新检查接口需要返回如下格式的`json`内容。***  
+***更新信息需要返回如下格式的`json`内容。***  
 ```json
 {
     "Version":"最新的版本号（必须返回）",

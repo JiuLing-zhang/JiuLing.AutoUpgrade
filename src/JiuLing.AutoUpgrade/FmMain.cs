@@ -1,20 +1,31 @@
-using System.Configuration;
 using System.Diagnostics;
-using System.IO.Compression;
-using System.Text.Json;
-using System.Xml;
 using JiuLing.AutoUpgrade.Common;
 using JiuLing.AutoUpgrade.Enums;
-using JiuLing.AutoUpgrade.ExtensionMethods;
 using JiuLing.AutoUpgrade.Models;
-using JiuLing.AutoUpgrade.Net;
+using JiuLing.AutoUpgrade.Strategies;
+using JiuLing.AutoUpgrade.Templates;
 
 namespace JiuLing.AutoUpgrade
 {
     public partial class FmMain : Form
     {
         private readonly FmLoading _fmLoading = new();
-        private readonly HttpClientHelper _clientHelper = new();
+        /// <summary>
+        /// 自动更新的配置信息
+        /// </summary>
+        private UpgradeConfigInfo _upgradeConfig;
+        /// <summary>
+        /// 主进程信息（待更新的程序进程）
+        /// </summary>
+        private ProcessInfo _mainProcess;
+        /// <summary>
+        /// 主进程版本
+        /// </summary>
+        private string _mainAppVersion;
+        /// <summary>
+        /// 新版本更新信息
+        /// </summary>
+        public AppUpgradeInfo _upgradeInfo;
         public FmMain()
         {
             InitializeComponent();
@@ -25,14 +36,19 @@ namespace JiuLing.AutoUpgrade
             try
             {
                 HideWindow();
-                GetAppArgs();
-                GetMainProcess();
-                string currentVersion = GetMainAppVersion();
+
+                _upgradeConfig = ReadUpgradeConfigFromCommandArgs();
+                _mainProcess = AppUtils.GetMainProcess(_upgradeConfig.MainProcessName);
+
+                _mainAppVersion = AppUtils.GetMainAppVersion(_mainProcess);
                 _fmLoading.ShowLoading();
                 _fmLoading.SetMessage("正在检查更新");
-                GlobalArgs.UpgradeInfo = await GetAppUpgradeInfo();
 
-                (bool isNeedUpdate, GlobalArgs.MainProcess.AllowRun) = CheckNeedUpdate(GlobalArgs.UpgradeInfo, currentVersion);
+                var upgradeStrategy = UpgradeStrategyFactory.Create(_upgradeConfig);
+                _upgradeInfo = await new UpgradeStrategyContext(upgradeStrategy).GetUpgradeInfo();
+
+
+                (bool isNeedUpdate, _mainProcess.AllowRun) = VersionUtils.CheckNeedUpdate(_upgradeInfo, _mainAppVersion);
                 if (isNeedUpdate == false)
                 {
                     _fmLoading.HideLoading();
@@ -42,8 +58,9 @@ namespace JiuLing.AutoUpgrade
                 }
 
                 _fmLoading.HideLoading();
+
+                BindingUi();
                 ShowWindow();
-                BindingUi(currentVersion, GlobalArgs.UpgradeInfo);
 
             }
             catch (Exception ex)
@@ -53,27 +70,58 @@ namespace JiuLing.AutoUpgrade
             }
         }
 
-        private void GetAppArgs()
+        /// <summary>
+        /// 解析本次的更新方式
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
+        private UpgradeConfigInfo ReadUpgradeConfigFromCommandArgs()
         {
-            string[] cmdArgs = System.Environment.GetCommandLineArgs();
-            if (cmdArgs.Length < 3)
+            var upgradeConfig = new UpgradeConfigInfo();
+            string[] cmdArgs = Environment.GetCommandLineArgs();
+            if (cmdArgs.Length < 2)
             {
                 throw new ArgumentException("启动参数不正确");
             }
 
-            GlobalArgs.AppConfig.MainProcessName = cmdArgs[1];
+            upgradeConfig.MainProcessName = cmdArgs[1];
 
             if (!Enum.TryParse(cmdArgs[2], out UpgradeModeEnum upgradeMode))
             {
                 throw new ArgumentException("更新方式配置错误");
             }
-            GlobalArgs.AppConfig.UpgradeMode = upgradeMode;
+            upgradeConfig.UpgradeMode = upgradeMode;
 
-            switch (GlobalArgs.AppConfig.UpgradeMode)
+            switch (upgradeMode)
             {
                 case UpgradeModeEnum.Http:
-                    GlobalArgs.AppConfig.UpgradeUrl = cmdArgs[3];
-                    break;
+                    try
+                    {
+                        upgradeConfig.ConnectionConfig = new HttpConnectionConfig()
+                        {
+                            UpgradeUrl = cmdArgs[3]
+                        };
+                        return upgradeConfig;
+                    }
+                    catch (Exception)
+                    {
+                        throw new ArgumentException("Http参数配置异常");
+                    }
+                case UpgradeModeEnum.Ftp:
+                    try
+                    {
+                        upgradeConfig.ConnectionConfig = new FtpConnectionConfig()
+                        {
+                            UserName = cmdArgs[3],
+                            Password = cmdArgs[4],
+                            UpgradePath = cmdArgs[5]
+                        };
+                        return upgradeConfig;
+                    }
+                    catch (Exception)
+                    {
+                        throw new ArgumentException("Ftp参数配置异常");
+                    }
                 default:
                     throw new ArgumentException("不支持的更新方式");
             }
@@ -90,107 +138,16 @@ namespace JiuLing.AutoUpgrade
             this.ShowInTaskbar = true;
         }
 
-        private void BindingUi(string currentVersion, AppUpgradeInfo upgradeInfo)
+        private void BindingUi()
         {
-            LblCurrentVersion.Text = currentVersion;
-            LblNewVersion.Text = upgradeInfo.Version;
-            TxtLog.Text = upgradeInfo.Log;
-            if (!GlobalArgs.MainProcess.AllowRun)
+            LblCurrentVersion.Text = _mainAppVersion;
+            LblNewVersion.Text = _upgradeInfo.Version;
+            TxtLog.Text = _upgradeInfo.Log;
+            if (!_mainProcess.AllowRun)
             {
                 LblVersionOverdue.Visible = true;
                 BtnCancel.Visible = false;
             }
-        }
-
-        private string GetAppSettingValue(XmlNode appSettings, string key)
-        {
-            var node = appSettings.SelectSingleNode($"//add[@key='{key}']");
-            if (node == null)
-            {
-                throw new ArgumentException($"{key}节点不存在");
-            }
-
-            return ((XmlElement)node).GetAttribute("value");
-        }
-
-        /// <summary>
-        /// 获取主程序的进程
-        /// </summary>
-        private void GetMainProcess()
-        {
-            Process[] process = Process.GetProcessesByName(GlobalArgs.AppConfig.MainProcessName);
-
-            foreach (Process p in process)
-            {
-                string fileName = p.MainModule?.FileName ?? throw new ArgumentException("未找到主进程启动路径");
-                string processDirectory = Path.GetDirectoryName(fileName) ?? throw new ArgumentException("未找到主进程启动目录");
-                string? myDirectory = Path.GetDirectoryName(GlobalArgs.AppPath);
-
-                if (myDirectory != processDirectory)
-                {
-                    throw new ApplicationException("主程序和自动更新程序不在同一目录");
-                }
-
-                GlobalArgs.MainProcess = new ProcessInfo()
-                {
-                    Id = p.Id,
-                    FileName = fileName
-                };
-                return;
-            }
-            throw new ApplicationException($"未找到主进程{GlobalArgs.AppConfig.MainProcessName}");
-        }
-
-        /// <summary>
-        /// 获取主程序版本
-        /// </summary>
-        private string GetMainAppVersion()
-        {
-            if (GlobalArgs.MainProcess == null)
-            {
-                throw new ApplicationException($"未找到主进程{GlobalArgs.AppConfig.MainProcessName}");
-            }
-            FileVersionInfo info = FileVersionInfo.GetVersionInfo(GlobalArgs.MainProcess.FileName);
-            if (info.FileVersion == null)
-            {
-                throw new ArgumentException($"主程序版本号异常");
-            }
-            return info.FileVersion;
-        }
-
-        /// <summary>
-        /// 获取自动更新信息
-        /// </summary>
-        private async Task<AppUpgradeInfo> GetAppUpgradeInfo()
-        {
-            try
-            {
-                var result = await _clientHelper.GetReadString(GlobalArgs.AppConfig.UpgradeUrl);
-                var upgradeInfo = JsonSerializer.Deserialize<AppUpgradeInfo>(result);
-                if (upgradeInfo == null)
-                {
-                    throw new Exception("服务器响应错误");
-                }
-                return upgradeInfo;
-            }
-            catch (Exception)
-            {
-                throw new Exception("服务器响应异常");
-            }
-        }
-        /// <summary>
-        /// 检查是否需要更新
-        /// </summary>
-        private (bool IsNeedUpdate, bool IsAllowUse) CheckNeedUpdate(AppUpgradeInfo upgradeInfo, string currentVersion)
-        {
-            if (upgradeInfo.MinVersion.IsEmpty())
-            {
-                //如果没有指定最小版本号，则认为当前版本可以使用
-                var isNeedUpdate = VersionUtils.CheckNeedUpdate(currentVersion, upgradeInfo.Version);
-                return (isNeedUpdate, true);
-            }
-
-            return VersionUtils.CheckNeedUpdate(currentVersion, upgradeInfo.Version, upgradeInfo.MinVersion);
         }
 
         private async void BtnUpgrade_Click(object sender, EventArgs e)
@@ -200,11 +157,12 @@ namespace JiuLing.AutoUpgrade
                 BtnUpgrade.Enabled = false;
 
                 KillMainApp();
-                await DownloadApp(GlobalArgs.UpgradeInfo.DownloadUrl, GlobalArgs.TempPackagePath);
-                PublishZipFile(GlobalArgs.TempPackagePath, GlobalArgs.TempZipDirectory);
-
-                CopyFiles(GlobalArgs.TempZipDirectory, GlobalArgs.AppPath);
-                ClearFileCache();
+                _fmLoading.ShowLoading();
+                _fmLoading.SetMessage("准备下载");
+                var process =
+                    new Progress<float>((percent) => { _fmLoading.SetMessage($"正在下载：{(percent * 100):f2}%"); });
+                await UpgradeTemplateFactory.Create(_upgradeConfig)
+                    .Update(GlobalArgs.AppPath, GlobalArgs.TempPackagePath, GlobalArgs.TempZipDirectory, process);
 
                 MessageUtils.ShowInfo("更新完成");
                 Application.Exit();
@@ -214,6 +172,10 @@ namespace JiuLing.AutoUpgrade
             {
                 MessageUtils.ShowError($"更新失败：{ex.Message}");
                 BtnUpgrade.Enabled = true;
+            }
+            finally
+            {
+                _fmLoading.HideLoading();
             }
         }
 
@@ -226,7 +188,7 @@ namespace JiuLing.AutoUpgrade
         {
             try
             {
-                if (GlobalArgs.MainProcess.AllowRun == false)
+                if (_mainProcess.AllowRun == false)
                 {
                     KillMainApp();
                 }
@@ -242,7 +204,7 @@ namespace JiuLing.AutoUpgrade
         {
             foreach (var process in Process.GetProcesses())
             {
-                if (process.Id == GlobalArgs.MainProcess.Id)
+                if (process.Id == _mainProcess.Id)
                 {
                     process.Kill();
                     break;
@@ -251,71 +213,7 @@ namespace JiuLing.AutoUpgrade
         }
         private void RunMainApp()
         {
-            Process.Start(GlobalArgs.MainProcess.FileName);
-        }
-        private async Task DownloadApp(string url, string filePath)
-        {
-            if (File.Exists(filePath))
-            {
-                File.Delete(filePath);
-            }
-            byte[] result;
-            try
-            {
-                _fmLoading.ShowLoading();
-                _fmLoading.SetMessage("准备下载");
-                var process = new Progress<float>((percent) =>
-                {
-                    _fmLoading.SetMessage($"正在下载：{(percent * 100):f2}%");
-                });
-                result = await _clientHelper.GetFileByteArray(url, process);
-            }
-            catch (Exception)
-            {
-                throw new Exception("服务器响应异常");
-            }
-            finally
-            {
-                _fmLoading.HideLoading();
-            }
-            await File.WriteAllBytesAsync(filePath, result);
-        }
-
-        private void PublishZipFile(string filePath, string dstPath)
-        {
-            if (Directory.Exists(dstPath))
-            {
-                Directory.Delete(dstPath, true);
-            }
-            ZipFile.ExtractToDirectory(filePath, dstPath);
-        }
-
-        private void CopyFiles(string sourcePath, string destinationPath)
-        {
-            if (!Directory.Exists(destinationPath))
-            {
-                Directory.CreateDirectory(destinationPath);
-            }
-
-            var files = Directory.GetFiles(sourcePath);
-            foreach (var file in files)
-            {
-                var fi = new FileInfo(file);
-                File.Copy(file, Path.Combine(destinationPath, fi.Name), true);
-            }
-
-            var directories = Directory.GetDirectories(sourcePath);
-            foreach (var directory in directories)
-            {
-                var di = new DirectoryInfo(directory);
-                CopyFiles(directory, Path.Combine(destinationPath, di.Name));
-            }
-        }
-
-        private void ClearFileCache()
-        {
-            File.Delete(GlobalArgs.TempPackagePath);
-            Directory.Delete(GlobalArgs.TempZipDirectory, true);
+            Process.Start(_mainProcess.FileName);
         }
     }
 }
