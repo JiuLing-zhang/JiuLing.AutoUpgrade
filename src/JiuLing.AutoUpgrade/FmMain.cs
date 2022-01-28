@@ -25,7 +25,7 @@ namespace JiuLing.AutoUpgrade
         /// <summary>
         /// 新版本更新信息
         /// </summary>
-        private AppUpgradeInfo _upgradeInfo = null!;
+        private AppVersionInfo _appNewVersion = null!;
         public FmMain()
         {
             InitializeComponent();
@@ -49,10 +49,10 @@ namespace JiuLing.AutoUpgrade
                 _fmLoading.SetMessage("正在检查更新");
 
                 var upgradeStrategy = UpgradeStrategyFactory.Create(_upgradeConfig);
-                _upgradeInfo = await new UpgradeStrategyContext(upgradeStrategy).GetUpgradeInfo();
+                _appNewVersion = await new UpgradeStrategyContext(upgradeStrategy).GetUpgradeInfo();
 
 
-                (bool isNeedUpdate, _mainProcess.AllowRun) = VersionUtils.CheckNeedUpdate(_upgradeInfo, _mainAppVersion);
+                (bool isNeedUpdate, _mainProcess.AllowRun) = VersionUtils.CheckNeedUpdate(_appNewVersion, _mainAppVersion);
                 if (isNeedUpdate == false)
                 {
                     _fmLoading.HideLoading();
@@ -145,8 +145,8 @@ namespace JiuLing.AutoUpgrade
         private void BindingUi()
         {
             LblCurrentVersion.Text = _mainAppVersion;
-            LblNewVersion.Text = _upgradeInfo.Version;
-            TxtLog.Text = _upgradeInfo.Log;
+            LblNewVersion.Text = _appNewVersion.Version;
+            TxtLog.Text = _appNewVersion.Log;
             if (!_mainProcess.AllowRun)
             {
                 LblVersionOverdue.Visible = true;
@@ -168,7 +168,7 @@ namespace JiuLing.AutoUpgrade
                     _fmLoading.SetMessage($"正在下载：{(percent * 100):f2}%");
                 });
                 await UpgradeTemplateFactory.Create(_upgradeConfig)
-                    .Update(_upgradeInfo.DownloadUrl, GlobalArgs.AppPath, GlobalArgs.TempPackagePath, GlobalArgs.TempZipDirectory, process);
+                    .Update(_appNewVersion.DownloadUrl, GlobalArgs.AppPath, GlobalArgs.TempPackagePath, GlobalArgs.TempZipDirectory, process);
 
                 MessageUtils.ShowInfo("更新完成");
                 Application.Exit();

@@ -16,12 +16,12 @@ namespace JiuLing.AutoUpgrade.Strategies
         {
             _connectionConfig = connectionConfig;
         }
-        public override async Task<AppUpgradeInfo> GetUpgradeInfo()
+        public override async Task<AppVersionInfo> GetUpgradeInfo()
         {
             try
             {
                 var result = await _clientHelper.GetReadString(_connectionConfig.UpgradeUrl);
-                var upgradeInfo = JsonSerializer.Deserialize<AppUpgradeInfo>(result);
+                var upgradeInfo = JsonSerializer.Deserialize<AppVersionInfo>(result);
                 if (upgradeInfo == null)
                 {
                     throw new Exception("服务器响应错误");

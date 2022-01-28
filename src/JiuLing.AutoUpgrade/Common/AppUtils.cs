@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using JiuLing.AutoUpgrade.Models;
 
 namespace JiuLing.AutoUpgrade.Common
@@ -38,7 +33,7 @@ namespace JiuLing.AutoUpgrade.Common
                     FileName = fileName,
                 };
             }
-            throw new ApplicationException($"未找到主进程{GlobalArgs.AppConfig.MainProcessName}");
+            throw new ApplicationException($"未找到主进程{mainProcessName}");
         }
 
         /// <summary>

@@ -10,7 +10,7 @@ namespace JiuLing.AutoUpgrade.Strategies
             _strategy = strategy;
         }
 
-        public Task<AppUpgradeInfo> GetUpgradeInfo()
+        public Task<AppVersionInfo> GetUpgradeInfo()
         {
             return _strategy.GetUpgradeInfo();
         }

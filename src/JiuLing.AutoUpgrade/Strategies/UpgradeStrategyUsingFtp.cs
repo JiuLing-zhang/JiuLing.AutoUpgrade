@@ -13,7 +13,7 @@ namespace JiuLing.AutoUpgrade.Strategies
             _connectionConfig = connectionConfig;
         }
 
-        public override Task<AppUpgradeInfo> GetUpgradeInfo()
+        public override Task<AppVersionInfo> GetUpgradeInfo()
         {
             throw new NotImplementedException();
         }

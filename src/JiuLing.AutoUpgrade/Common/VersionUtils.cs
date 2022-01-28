@@ -11,16 +11,16 @@ namespace JiuLing.AutoUpgrade.Common
         /// <summary>
         /// 检查是否需要更新
         /// </summary>
-        public static (bool IsNeedUpdate, bool IsAllowUse) CheckNeedUpdate(AppUpgradeInfo upgradeInfo, string currentVersion)
+        public static (bool IsNeedUpdate, bool IsAllowUse) CheckNeedUpdate(AppVersionInfo appNewVersion, string currentVersion)
         {
-            if (upgradeInfo.MinVersion.IsEmpty())
+            if (appNewVersion.MinVersion.IsEmpty())
             {
                 //如果没有指定最小版本号，则认为当前版本可以使用
-                var isNeedUpdate = CheckNeedUpdate(new Version(currentVersion), new Version(upgradeInfo.Version));
+                var isNeedUpdate = CheckNeedUpdate(new Version(currentVersion), new Version(appNewVersion.Version));
                 return (isNeedUpdate, true);
             }
 
-            return CheckNeedUpdate(new Version(currentVersion), new Version(upgradeInfo.Version), new Version(upgradeInfo.MinVersion));
+            return CheckNeedUpdate(new Version(currentVersion), new Version(appNewVersion.Version), new Version(appNewVersion.MinVersion));
         }
 
         /// <summary>

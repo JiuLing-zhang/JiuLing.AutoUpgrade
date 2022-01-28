@@ -3,10 +3,8 @@
     /// <summary>
     /// 一个通用的App自动更新所需的模型
     /// </summary>
-    public class AppUpgradeInfo
+    public class AppVersionInfo
     {
-        //TODO:更名为AppVersionInfo?
-
         /// <summary>
         /// 程序名称
         /// </summary>
