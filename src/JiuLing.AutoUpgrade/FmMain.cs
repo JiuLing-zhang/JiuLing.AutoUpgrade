@@ -13,19 +13,19 @@ namespace JiuLing.AutoUpgrade
         /// <summary>
         /// 自动更新的配置信息
         /// </summary>
-        private UpgradeConfigInfo _upgradeConfig;
+        private UpgradeConfigInfo _upgradeConfig = null!;
         /// <summary>
         /// 主进程信息（待更新的程序进程）
         /// </summary>
-        private ProcessInfo _mainProcess;
+        private ProcessInfo _mainProcess = null!;
         /// <summary>
         /// 主进程版本
         /// </summary>
-        private string _mainAppVersion;
+        private string _mainAppVersion = "";
         /// <summary>
         /// 新版本更新信息
         /// </summary>
-        public AppUpgradeInfo _upgradeInfo;
+        private AppUpgradeInfo _upgradeInfo = null!;
         public FmMain()
         {
             InitializeComponent();
@@ -39,6 +39,10 @@ namespace JiuLing.AutoUpgrade
 
                 _upgradeConfig = ReadUpgradeConfigFromCommandArgs();
                 _mainProcess = AppUtils.GetMainProcess(_upgradeConfig.MainProcessName);
+
+                string windowTitle = $"{_mainProcess.Title} - 自动更新";
+                this.Text = windowTitle;
+                MessageUtils.SetWindowTitle(windowTitle);
 
                 _mainAppVersion = AppUtils.GetMainAppVersion(_mainProcess);
                 _fmLoading.ShowLoading();

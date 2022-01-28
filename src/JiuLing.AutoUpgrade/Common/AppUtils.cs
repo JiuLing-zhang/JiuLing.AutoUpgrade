@@ -34,7 +34,8 @@ namespace JiuLing.AutoUpgrade.Common
                 return new ProcessInfo()
                 {
                     Id = p.Id,
-                    FileName = fileName
+                    Title = p.MainWindowTitle,
+                    FileName = fileName,
                 };
             }
             throw new ApplicationException($"未找到主进程{GlobalArgs.AppConfig.MainProcessName}");

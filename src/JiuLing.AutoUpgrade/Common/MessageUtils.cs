@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace JiuLing.AutoUpgrade.Common
+﻿namespace JiuLing.AutoUpgrade.Common
 {
     internal class MessageUtils
     {
-        private const string Title = "自动更新";
+        private static string _title = "";
+
+        public static void SetWindowTitle(string title)
+        {
+            _title = title;
+        }
         public static void ShowInfo(string msg)
         {
             Show(msg, MessageBoxIcon.Information);
@@ -21,7 +20,7 @@ namespace JiuLing.AutoUpgrade.Common
 
         private static void Show(string msg, MessageBoxIcon messageBoxIcon)
         {
-            MessageBox.Show(msg, Title, MessageBoxButtons.OK, messageBoxIcon);
+            MessageBox.Show(msg, _title, MessageBoxButtons.OK, messageBoxIcon);
         }
     }
 }
