@@ -11,15 +11,12 @@ namespace JiuLing.AutoUpgrade.Templates
         /// <returns></returns>
         public static UpgradeAbstract Create(UpgradeConfigInfo config)
         {
-            switch (config.UpgradeMode)
+            return config.UpgradeMode switch
             {
-                case UpgradeModeEnum.Http:
-                    return new UpgradeUsingHttp();
-                case UpgradeModeEnum.Ftp:
-                    throw new NotImplementedException("暂时不支持该方式");
-                default:
-                    throw new ArgumentException("创建更新策略失败：更新方式不正确");
-            }
+                UpgradeModeEnum.Http => new UpgradeUsingHttp(),
+                UpgradeModeEnum.Ftp => throw new NotImplementedException("暂时不支持该方式"),
+                _ => throw new ArgumentException("创建更新策略失败：更新方式不正确")
+            };
         }
     }
 }
