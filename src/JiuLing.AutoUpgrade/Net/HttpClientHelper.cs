@@ -3,7 +3,7 @@
     /// <summary>
     /// 网络请求工具
     /// </summary>
-    public class HttpClientHelper
+    internal class HttpClientHelper
     {
         private static HttpClient _httpClient = null!;
 

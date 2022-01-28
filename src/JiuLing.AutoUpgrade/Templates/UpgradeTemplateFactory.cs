@@ -14,7 +14,7 @@ namespace JiuLing.AutoUpgrade.Templates
             return config.UpgradeMode switch
             {
                 UpgradeModeEnum.Http => new UpgradeUsingHttp(),
-                UpgradeModeEnum.Ftp => throw new NotImplementedException("暂时不支持该方式"),
+                UpgradeModeEnum.Ftp => new UpgradeUsingFtp(config.ConnectionConfig),
                 _ => throw new ArgumentException("创建更新策略失败：更新方式不正确")
             };
         }

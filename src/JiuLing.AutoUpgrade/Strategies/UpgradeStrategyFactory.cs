@@ -11,15 +11,12 @@ namespace JiuLing.AutoUpgrade.Strategies
         /// <returns></returns>
         public static UpgradeStrategy Create(UpgradeConfigInfo config)
         {
-            switch (config.UpgradeMode)
+            return config.UpgradeMode switch
             {
-                case UpgradeModeEnum.Http:
-                    return new UpgradeStrategyUsingHttp(config.ConnectionConfig);
-                case UpgradeModeEnum.Ftp:
-                    return new UpgradeStrategyUsingFtp(config.ConnectionConfig);
-                default:
-                    throw new ArgumentException("创建更新策略失败：更新方式不正确");
-            }
+                UpgradeModeEnum.Http => new UpgradeStrategyUsingHttp(config.ConnectionConfig),
+                UpgradeModeEnum.Ftp => new UpgradeStrategyUsingFtp(config.ConnectionConfig),
+                _ => throw new ArgumentException("创建更新策略失败：更新方式不正确")
+            };
         }
     }
 }

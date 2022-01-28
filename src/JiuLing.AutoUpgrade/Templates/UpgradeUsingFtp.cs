@@ -1,12 +1,15 @@
-﻿using JiuLing.AutoUpgrade.Net;
+﻿using JiuLing.AutoUpgrade.Models;
+using JiuLing.AutoUpgrade.Net;
 
 namespace JiuLing.AutoUpgrade.Templates
 {
-    internal class UpgradeUsingHttp : UpgradeAbstract
+    internal class UpgradeUsingFtp : UpgradeAbstract
     {
-        private readonly HttpClientHelper _clientHelper = new();
-        public UpgradeUsingHttp()
+        private readonly FtpClientHelper _clientHelper;
+
+        public UpgradeUsingFtp(FtpConnectionConfig connectionConfig)
         {
+            _clientHelper = new FtpClientHelper(connectionConfig.UserName, connectionConfig.Password);
         }
         public override async Task DownloadApp(string downloadUrl, string updatePackPath, IProgress<float> progress)
         {

@@ -20,9 +20,21 @@ namespace JiuLing.AutoUpgrade.Test
             try
             {
                 var app = AutoUpgradeFactory.Create();
-                app
-                    .UseHttpMode("https://raw.githubusercontent.com/JiuLing-zhang/AutoUpgrade/main/test/AppInfo.json")
-                //.UseFtpMode("userName", "password", "upgradePath")
+                app.UseHttpMode(txtUpgradeUrl.Text)
+                     .Run();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"操作失败：{ex.Message}");
+            }
+        }
+
+        private void BtnCheckUpgradeUsingFtp_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var app = AutoUpgradeFactory.Create();
+                app.UseFtpMode(TxtUserName.Text, TxtPassword.Text, TxtFtpUpgradePath.Text)
                     .Run();
             }
             catch (Exception ex)
