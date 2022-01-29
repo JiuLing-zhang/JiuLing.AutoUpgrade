@@ -78,9 +78,15 @@ namespace JiuLing.AutoUpgrade
         /// 解析本次的更新方式
         /// </summary>
         /// <returns></returns>
-        /// <exception cref="ArgumentException"></exception>
         private UpgradeConfigInfo ReadUpgradeConfigFromCommandArgs()
         {
+            /******************参数格式*********************
+            [-p 主进程名称]                 设置主进程       
+            [-http 更新地址]                使用HTTP方式更新
+            [-ftp 用户名 密码 更新地址]       使用FTP方式更新
+            **********************************************/
+
+
             var upgradeConfig = new UpgradeConfigInfo();
             string[] cmdArgs = Environment.GetCommandLineArgs();
             if (cmdArgs.Length < 2)
