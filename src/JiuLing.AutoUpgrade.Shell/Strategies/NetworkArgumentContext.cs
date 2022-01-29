@@ -2,7 +2,6 @@
 
 namespace JiuLing.AutoUpgrade.Shell.Strategies
 {
-    //TODO 需要重命名文件
     internal class NetworkArgumentContext
     {
         private readonly NetworkStrategy _strategy;

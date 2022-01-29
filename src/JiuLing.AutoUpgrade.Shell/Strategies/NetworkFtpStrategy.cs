@@ -7,7 +7,6 @@ namespace JiuLing.AutoUpgrade.Shell.Strategies
     /// </summary>
     internal class NetworkFtpStrategy : NetworkStrategy
     {
-        //TODO 重命名文件
         private readonly string _userName;
         private readonly string _password;
         private readonly string _upgradePath;

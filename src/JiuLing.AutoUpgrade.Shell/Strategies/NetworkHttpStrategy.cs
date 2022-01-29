@@ -7,7 +7,6 @@ namespace JiuLing.AutoUpgrade.Shell.Strategies
     /// </summary>
     internal class NetworkHttpStrategy : NetworkStrategy
     {
-        //TODO 重命名文件
         private readonly string _upgradeUrl;
         public NetworkHttpStrategy(string upgradeUrl)
         {

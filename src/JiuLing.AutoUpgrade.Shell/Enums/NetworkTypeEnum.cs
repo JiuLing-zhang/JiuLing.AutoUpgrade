@@ -5,7 +5,6 @@
     /// </summary>
     enum NetworkTypeEnum
     {
-        //TODO 重命名文件
         Http,
         Ftp
     }
