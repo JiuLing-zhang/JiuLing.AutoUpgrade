@@ -2,8 +2,9 @@
 
 namespace JiuLing.AutoUpgrade.Shell.Strategies
 {
-    internal abstract class StartArgumentStrategy
+    internal abstract class NetworkStrategy
     {
-        public abstract string Build(string mainProcessName, ConnectionTypeEnum connectionType);
+        //TODO 重命名文件
+        public abstract string Build(NetworkTypeEnum networkType);
     }
 }

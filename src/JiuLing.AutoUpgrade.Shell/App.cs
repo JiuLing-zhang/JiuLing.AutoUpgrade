@@ -15,7 +15,7 @@ namespace JiuLing.AutoUpgrade.Shell
         private readonly string _autoUpgradePathPdb;
         private readonly string _autoUpgradePathRuntime;
 
-        private ConnectionTypeEnum _connectionType;
+        private NetworkTypeEnum _networkType;
         /// <summary>
         /// 初始化组件
         /// </summary>
@@ -35,7 +35,12 @@ namespace JiuLing.AutoUpgrade.Shell
         /// <returns></returns>
         public App UseHttpMode(string upgradeUrl)
         {
-            _connectionType = ConnectionTypeEnum.Http;
+            if (string.IsNullOrEmpty(upgradeUrl))
+            {
+                throw new ArgumentException("自动更新地址未配置");
+            }
+
+            _networkType = NetworkTypeEnum.Http;
             _upgradeUrl = upgradeUrl;
             return this;
         }
@@ -53,7 +58,20 @@ namespace JiuLing.AutoUpgrade.Shell
         /// <returns></returns>
         public App UseFtpMode(string userName, string password, string upgradePath)
         {
-            _connectionType = ConnectionTypeEnum.Ftp;
+            if (string.IsNullOrEmpty(userName))
+            {
+                throw new ArgumentException("FTP用户名未配置");
+            }
+            if (string.IsNullOrEmpty(password))
+            {
+                throw new ArgumentException("FTP密码未配置");
+            }
+            if (string.IsNullOrEmpty(upgradePath))
+            {
+                throw new ArgumentException("FTP更新地址未配置");
+            }
+
+            _networkType = NetworkTypeEnum.Ftp;
             _userName = userName;
             _password = password;
             _upgradePath = upgradePath;
@@ -65,37 +83,10 @@ namespace JiuLing.AutoUpgrade.Shell
         /// </summary>
         public void Run()
         {
-            string mainProcessName = Process.GetCurrentProcess().ProcessName;
-            string startArguments;
-            switch (_connectionType)
-            {
-                case ConnectionTypeEnum.Http:
-                    if (string.IsNullOrEmpty(_upgradeUrl))
-                    {
-                        throw new ArgumentException("自动更新地址未配置");
-                    }
-
-                    startArguments = new StartArgumentContext(new StartArgumentHttp(_upgradeUrl)).GetStartArguments(mainProcessName, _connectionType);
-                    break;
-                case ConnectionTypeEnum.Ftp:
-
-                    if (string.IsNullOrEmpty(_userName))
-                    {
-                        throw new ArgumentException("FTP用户名未配置");
-                    }
-                    if (string.IsNullOrEmpty(_password))
-                    {
-                        throw new ArgumentException("FTP密码未配置");
-                    }
-                    if (string.IsNullOrEmpty(_upgradePath))
-                    {
-                        throw new ArgumentException("FTP更新地址未配置");
-                    }
-                    startArguments = new StartArgumentContext(new StartArgumentFtp(_userName, _password, _upgradePath)).GetStartArguments(mainProcessName, _connectionType);
-                    break;
-                default:
-                    throw new ArgumentException("更新方式未配置");
-            }
+            string startArguments = "";
+            startArguments = $"{startArguments}{GetProcessArgument()} ";
+            startArguments = $"{startArguments}{GetNetworkArgument()} ";
+            startArguments = startArguments.Trim();
 
             ReleaseAutoUpgradeFiles();
 
@@ -105,6 +96,28 @@ namespace JiuLing.AutoUpgrade.Shell
             process.Start();
         }
 
+        /// <summary>
+        /// 主进程参数
+        /// </summary>
+        /// <returns></returns>
+        private string GetProcessArgument()
+        {
+            return $"-p {Process.GetCurrentProcess().ProcessName}";
+        }
+
+        /// <summary>
+        /// 网络参数
+        /// </summary>
+        /// <returns></returns>
+        private string GetNetworkArgument()
+        {
+            return _networkType switch
+            {
+                NetworkTypeEnum.Http => new NetworkArgumentContext(new NetworkHttpStrategy(_upgradeUrl)).GetStartArguments(_networkType),
+                NetworkTypeEnum.Ftp => new NetworkArgumentContext(new NetworkFtpStrategy(_userName, _password, _upgradePath)).GetStartArguments(_networkType),
+                _ => throw new ArgumentException("不支持的网络参数")
+            };
+        }
         private void ReleaseAutoUpgradeFiles()
         {
             File.WriteAllBytes(_autoUpgradePathExe, Resource.AutoUpgrade_exe);

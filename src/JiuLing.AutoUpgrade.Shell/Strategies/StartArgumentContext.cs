@@ -2,17 +2,18 @@
 
 namespace JiuLing.AutoUpgrade.Shell.Strategies
 {
-    internal class StartArgumentContext
+    //TODO 需要重命名文件
+    internal class NetworkArgumentContext
     {
-        private readonly StartArgumentStrategy _strategy;
-        public StartArgumentContext(StartArgumentStrategy strategy)
+        private readonly NetworkStrategy _strategy;
+        public NetworkArgumentContext(NetworkStrategy strategy)
         {
             _strategy = strategy;
         }
 
-        public string GetStartArguments(string mainProcessName, ConnectionTypeEnum connectionType)
+        public string GetStartArguments(NetworkTypeEnum networkType)
         {
-            return _strategy.Build(mainProcessName, connectionType);
+            return _strategy.Build(networkType);
         }
     }
 }

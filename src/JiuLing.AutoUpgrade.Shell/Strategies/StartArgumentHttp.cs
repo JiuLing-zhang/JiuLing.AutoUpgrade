@@ -5,17 +5,18 @@ namespace JiuLing.AutoUpgrade.Shell.Strategies
     /// <summary>
     /// Http参数构造策略
     /// </summary>
-    internal class StartArgumentHttp : StartArgumentStrategy
+    internal class NetworkHttpStrategy : NetworkStrategy
     {
+        //TODO 重命名文件
         private readonly string _upgradeUrl;
-        public StartArgumentHttp(string upgradeUrl)
+        public NetworkHttpStrategy(string upgradeUrl)
         {
             _upgradeUrl = upgradeUrl;
         }
 
-        public override string Build(string mainProcessName, ConnectionTypeEnum connectionType)
+        public override string Build(NetworkTypeEnum networkType)
         {
-            return $"{mainProcessName} {connectionType} {_upgradeUrl}";
+            return $"-n {networkType} {_upgradeUrl}";
         }
     }
 }
