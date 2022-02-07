@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using JiuLing.AutoUpgrade.CommandArgs;
 using JiuLing.AutoUpgrade.Common;
 using JiuLing.AutoUpgrade.Enums;
 using JiuLing.AutoUpgrade.Models;
@@ -83,58 +84,55 @@ namespace JiuLing.AutoUpgrade
             /******************参数格式*********************
             [-p 主进程名称]                 设置主进程       
             [-http 更新地址]                使用HTTP方式更新
-            [-ftp 用户名 密码 更新地址]       使用FTP方式更新
+            [-ftp 更新地址 用户名 密码]       使用FTP方式更新
             **********************************************/
 
-
             var upgradeConfig = new UpgradeConfigInfo();
-            string[] cmdArgs = Environment.GetCommandLineArgs();
-            if (cmdArgs.Length < 2)
+
+            ArgumentUtils.Initialize(string.Join(" ", Environment.GetCommandLineArgs()));
+            if (!ArgumentUtils.TryGetCommandValue("-p", out List<string> mainProcessArgs))
             {
-                throw new ArgumentException("启动参数不正确");
+                throw new ArgumentException("缺少主进程参数");
+            }
+            upgradeConfig.MainProcessName = mainProcessArgs[0];
+
+            if (ArgumentUtils.TryGetCommandValue("-http", out List<string> httpArgs))
+            {
+                upgradeConfig.UpgradeMode = UpgradeModeEnum.Http;
+                try
+                {
+                    upgradeConfig.ConnectionConfig = new HttpConnectionConfig()
+                    {
+                        UpgradeUrl = httpArgs[0]
+                    };
+                    return upgradeConfig;
+                }
+                catch (Exception)
+                {
+                    throw new ArgumentException("Http参数配置异常");
+                }
             }
 
-            upgradeConfig.MainProcessName = cmdArgs[1];
-
-            if (!Enum.TryParse(cmdArgs[2], out UpgradeModeEnum upgradeMode))
+            if (ArgumentUtils.TryGetCommandValue("-ftp", out List<string> ftpArgs))
             {
-                throw new ArgumentException("更新方式配置错误");
+                upgradeConfig.UpgradeMode = UpgradeModeEnum.Ftp;
+                try
+                {
+                    upgradeConfig.ConnectionConfig = new FtpConnectionConfig()
+                    {
+                        UpgradePath = ftpArgs[0],
+                        UserName = ftpArgs[1],
+                        Password = ftpArgs[2]
+                    };
+                    return upgradeConfig;
+                }
+                catch (Exception)
+                {
+                    throw new ArgumentException("Ftp参数配置异常");
+                }
             }
-            upgradeConfig.UpgradeMode = upgradeMode;
 
-            switch (upgradeMode)
-            {
-                case UpgradeModeEnum.Http:
-                    try
-                    {
-                        upgradeConfig.ConnectionConfig = new HttpConnectionConfig()
-                        {
-                            UpgradeUrl = cmdArgs[3]
-                        };
-                        return upgradeConfig;
-                    }
-                    catch (Exception)
-                    {
-                        throw new ArgumentException("Http参数配置异常");
-                    }
-                case UpgradeModeEnum.Ftp:
-                    try
-                    {
-                        upgradeConfig.ConnectionConfig = new FtpConnectionConfig()
-                        {
-                            UserName = cmdArgs[3],
-                            Password = cmdArgs[4],
-                            UpgradePath = cmdArgs[5]
-                        };
-                        return upgradeConfig;
-                    }
-                    catch (Exception)
-                    {
-                        throw new ArgumentException("Ftp参数配置异常");
-                    }
-                default:
-                    throw new ArgumentException("不支持的更新方式");
-            }
+            throw new ArgumentException("不支持的更新方式");
         }
         private void HideWindow()
         {

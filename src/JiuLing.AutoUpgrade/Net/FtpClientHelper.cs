@@ -5,8 +5,8 @@ namespace JiuLing.AutoUpgrade.Net
 {
     internal class FtpClientHelper
     {
-        private string _username;
-        private string _password;
+        private readonly string _username;
+        private readonly string _password;
         public FtpClientHelper(string username, string password)
         {
             _username = username;
