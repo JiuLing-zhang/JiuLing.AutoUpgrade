@@ -52,12 +52,16 @@ namespace JiuLing.AutoUpgrade.Shell
         /// <summary>
         /// 使用Ftp方式更新
         /// </summary>
+        /// <param name="upgradePath">更新文件地址</param>
         /// <param name="userName">Ftp用户名</param>
         /// <param name="password">Ftp密码</param>
-        /// <param name="upgradePath">更新文件地址</param>
         /// <returns></returns>
-        public App UseFtpMode(string userName, string password, string upgradePath)
+        public App UseFtpMode(string upgradePath, string userName, string password)
         {
+            if (string.IsNullOrEmpty(upgradePath))
+            {
+                throw new ArgumentException("FTP更新地址未配置");
+            }
             if (string.IsNullOrEmpty(userName))
             {
                 throw new ArgumentException("FTP用户名未配置");
@@ -66,15 +70,11 @@ namespace JiuLing.AutoUpgrade.Shell
             {
                 throw new ArgumentException("FTP密码未配置");
             }
-            if (string.IsNullOrEmpty(upgradePath))
-            {
-                throw new ArgumentException("FTP更新地址未配置");
-            }
 
             _networkType = NetworkTypeEnum.Ftp;
+            _upgradePath = upgradePath;
             _userName = userName;
             _password = password;
-            _upgradePath = upgradePath;
             return this;
         }
 

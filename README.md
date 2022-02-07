@@ -31,7 +31,7 @@ app.UseHttpMode("https://raw.githubusercontent.com/JiuLing-zhang/AutoUpgrade/mai
 
 //Ftp方式更新
 var app = AutoUpgradeFactory.Create();
-app.UseFtpMode("userName", "password", "upgradePath")
+app.UseFtpMode("upgradePath", "userName", "password")
     .Run();
 ```
 ***更新信息需要返回如下格式的`json`内容。***  

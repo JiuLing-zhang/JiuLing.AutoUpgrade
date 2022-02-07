@@ -34,7 +34,7 @@ namespace JiuLing.AutoUpgrade.Test
             try
             {
                 var app = AutoUpgradeFactory.Create();
-                app.UseFtpMode(TxtUserName.Text, TxtPassword.Text, TxtFtpUpgradePath.Text)
+                app.UseFtpMode(TxtFtpUpgradePath.Text, TxtUserName.Text, TxtPassword.Text)
                     .Run();
             }
             catch (Exception ex)
