@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Text;
 using JiuLing.AutoUpgrade.CommandArgs;
 using JiuLing.AutoUpgrade.Common;
 using JiuLing.AutoUpgrade.Enums;
@@ -37,6 +38,8 @@ namespace JiuLing.AutoUpgrade
             try
             {
                 HideWindow();
+
+                Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
                 _upgradeConfig = ReadUpgradeConfigFromCommandArgs();
                 _mainProcess = AppUtils.GetMainProcess(_upgradeConfig.MainProcessName);
@@ -79,7 +82,7 @@ namespace JiuLing.AutoUpgrade
         /// 解析本次的更新方式
         /// </summary>
         /// <returns></returns>
-        private UpgradeConfigInfo ReadUpgradeConfigFromCommandArgs()
+        private static UpgradeConfigInfo ReadUpgradeConfigFromCommandArgs()
         {
             /******************参数格式*********************
             [-p 主进程名称]                 设置主进程       

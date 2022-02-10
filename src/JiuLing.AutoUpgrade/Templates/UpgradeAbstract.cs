@@ -1,4 +1,5 @@
 ﻿using System.IO.Compression;
+using System.Text;
 
 namespace JiuLing.AutoUpgrade.Templates
 {
@@ -21,13 +22,9 @@ namespace JiuLing.AutoUpgrade.Templates
 
         public abstract Task DownloadApp(string downloadUrl, string updatePackPath, IProgress<float> progress);
 
-        public void PublishZipFile(string filePath, string dstPath)
+        private static void PublishZipFile(string filePath, string dstPath)
         {
-            if (Directory.Exists(dstPath))
-            {
-                Directory.Delete(dstPath, true);
-            }
-            ZipFile.ExtractToDirectory(filePath, dstPath);
+            ZipFile.ExtractToDirectory(filePath, dstPath, Encoding.GetEncoding("GBK"), true);
         }
 
         private void CopyFiles(string sourcePath, string destinationPath)
@@ -52,7 +49,7 @@ namespace JiuLing.AutoUpgrade.Templates
             }
         }
 
-        private void ClearFileCache(string updatePackPath, string tempZipDirectory)
+        private static void ClearFileCache(string updatePackPath, string tempZipDirectory)
         {
             File.Delete(updatePackPath);
             Directory.Delete(tempZipDirectory, true);

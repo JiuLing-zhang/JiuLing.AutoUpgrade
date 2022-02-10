@@ -94,13 +94,16 @@ namespace JiuLing.AutoUpgrade.Shell
             process.StartInfo.FileName = _autoUpgradePathExe;
             process.StartInfo.Arguments = startArguments;
             process.Start();
+            process.WaitForExit();
+
+            DeleteAutoUpgradeFiles();
         }
 
         /// <summary>
         /// 主进程参数
         /// </summary>
         /// <returns></returns>
-        private string GetProcessArgument()
+        private static string GetProcessArgument()
         {
             return $"-p {Process.GetCurrentProcess().ProcessName}";
         }
@@ -124,6 +127,14 @@ namespace JiuLing.AutoUpgrade.Shell
             File.WriteAllBytes(_autoUpgradePathDll, Resource.AutoUpgrade_dll);
             File.WriteAllBytes(_autoUpgradePathPdb, Resource.AutoUpgrade_pdb);
             File.WriteAllBytes(_autoUpgradePathRuntime, Resource.AutoUpgrade_runtime);
+        }
+
+        private void DeleteAutoUpgradeFiles()
+        {
+            File.Delete(_autoUpgradePathExe);
+            File.Delete(_autoUpgradePathDll);
+            File.Delete(_autoUpgradePathPdb);
+            File.Delete(_autoUpgradePathRuntime);
         }
     }
 }

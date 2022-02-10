@@ -41,7 +41,7 @@ namespace JiuLing.AutoUpgrade.Net
             using var response = (FtpWebResponse)request.GetResponse();
             await using var responseStream = response.GetResponseStream();
 
-            long contentLength = await GetFileSize(filePath);
+            long contentLength = GetFileSize(filePath);
             var buffer = new byte[bufferSize];
             int length;
             long downloadLength = 0;
@@ -62,7 +62,7 @@ namespace JiuLing.AutoUpgrade.Net
         /// </summary>
         /// <param name="filePath"></param>
         /// <returns></returns>
-        private async Task<long> GetFileSize(string filePath)
+        private long GetFileSize(string filePath)
         {
             var request = (FtpWebRequest)WebRequest.Create(filePath);
             request.Method = WebRequestMethods.Ftp.GetFileSize;
