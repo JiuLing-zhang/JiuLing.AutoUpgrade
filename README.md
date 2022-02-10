@@ -1,5 +1,5 @@
 ![](https://img.shields.io/github/license/JiuLing-zhang/JiuLing.AutoUpgrade)
-![](https://img.shields.io/github/workflow/status/JiuLing-zhang/JiuLing.AutoUpgrade/Publish)
+![](https://img.shields.io/github/workflow/status/JiuLing-zhang/JiuLing.AutoUpgrade/Build)
 [![](https://img.shields.io/nuget/v/JiuLing.AutoUpgrade)](https://www.nuget.org/packages/JiuLing.AutoUpgrade)
 [![](https://img.shields.io/github/v/release/JiuLing-zhang/JiuLing.AutoUpgrade)](https://github.com/JiuLing-zhang/JiuLing.AutoUpgrade/releases)  
 
