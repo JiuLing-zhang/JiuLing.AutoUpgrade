@@ -43,10 +43,11 @@ jobs:
           # 配置【zip文件地址】
           files: .\src\JiuLing.AutoUpgrade.Shell\bin\Release\JiuLing.AutoUpgrade.Shell_${{ steps.tagName.outputs.tag }}.zip
 
-    - name: Publish  
-      uses: brandedoutcast/publish-nuget@v2.5.2  
-      with:   
-        PROJECT_FILE_PATH: src/JiuLing.AutoUpgrade.Shell/JiuLing.AutoUpgrade.Shell.csproj        
-        PACKAGE_NAME: JiuLing.AutoUpgrade
-        NUGET_KEY: ${{secrets.NUGET_API_KEY}}  
-        TAG_COMMIT: false
+      #配置发布NuGet
+      - name: Publish  
+        uses: brandedoutcast/publish-nuget@v2.5.2  
+        with:   
+          PROJECT_FILE_PATH: src/JiuLing.AutoUpgrade.Shell/JiuLing.AutoUpgrade.Shell.csproj        
+          PACKAGE_NAME: JiuLing.AutoUpgrade
+          NUGET_KEY: ${{secrets.NUGET_API_KEY}}  
+          TAG_COMMIT: false
