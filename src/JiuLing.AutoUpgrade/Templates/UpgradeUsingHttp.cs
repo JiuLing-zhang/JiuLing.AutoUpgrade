@@ -1,10 +1,13 @@
-﻿using JiuLing.AutoUpgrade.Net;
+﻿using System;
+using System.IO;
+using System.Threading.Tasks;
+using JiuLing.AutoUpgrade.Net;
 
 namespace JiuLing.AutoUpgrade.Templates
 {
     internal class UpgradeUsingHttp : UpgradeAbstract
     {
-        private readonly HttpClientHelper _clientHelper = new();
+        private readonly HttpClientHelper _clientHelper = new HttpClientHelper();
         public UpgradeUsingHttp()
         {
         }
@@ -15,7 +18,7 @@ namespace JiuLing.AutoUpgrade.Templates
                 File.Delete(updatePackPath);
             }
             var result = await _clientHelper.GetFileByteArray(downloadUrl, progress);
-            await File.WriteAllBytesAsync(updatePackPath, result);
+            File.WriteAllBytes(updatePackPath, result);
         }
     }
 }

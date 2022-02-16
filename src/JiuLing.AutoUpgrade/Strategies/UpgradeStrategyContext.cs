@@ -1,4 +1,5 @@
-﻿using JiuLing.AutoUpgrade.Models;
+﻿using System.Threading.Tasks;
+using JiuLing.AutoUpgrade.Models;
 
 namespace JiuLing.AutoUpgrade.Strategies
 {

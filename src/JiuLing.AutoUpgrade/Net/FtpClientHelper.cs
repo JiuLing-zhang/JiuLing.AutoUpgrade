@@ -1,5 +1,9 @@
-﻿using System.Net;
+﻿using System;
+using System.IO;
+using System.Linq;
+using System.Net;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace JiuLing.AutoUpgrade.Net
 {
@@ -23,14 +27,24 @@ namespace JiuLing.AutoUpgrade.Net
             request.Method = WebRequestMethods.Ftp.DownloadFile;
 
             request.Credentials = new NetworkCredential(_username, _password);
-            using var response = (FtpWebResponse)request.GetResponse();
-            await using var responseStream = response.GetResponseStream();
-            await using var memoryStream = new MemoryStream();
-            await responseStream.CopyToAsync(memoryStream);
-            return Encoding.UTF8.GetString(memoryStream.ToArray());
+            using (var response = (FtpWebResponse)request.GetResponse())
+            {
+                using (var responseStream = response.GetResponseStream())
+                {
+                    if (responseStream == null)
+                    {
+                        throw new Exception("文本读取失败：未读取到任何数据流。");
+                    }
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        await responseStream.CopyToAsync(memoryStream);
+                        return Encoding.UTF8.GetString(memoryStream.ToArray());
+                    }
+                }
+            }
         }
 
-        public async Task<byte[]> GetFileByteArray(string filePath, IProgress<float> progress = null!, int bufferSize = 8192)
+        public async Task<byte[]> GetFileByteArray(string filePath, IProgress<float> progress, int bufferSize = 8192)
         {
             progress?.Report(0);
 
@@ -38,24 +52,31 @@ namespace JiuLing.AutoUpgrade.Net
             request.Method = WebRequestMethods.Ftp.DownloadFile;
 
             request.Credentials = new NetworkCredential(_username, _password);
-            using var response = (FtpWebResponse)request.GetResponse();
-            await using var responseStream = response.GetResponseStream();
-
-            long contentLength = GetFileSize(filePath);
-            var buffer = new byte[bufferSize];
-            int length;
-            long downloadLength = 0;
-            var bytes = new byte[contentLength];
-
-            while ((length = await responseStream.ReadAsync(buffer.AsMemory(0, bufferSize))) > 0)
+            using (var response = (FtpWebResponse)request.GetResponse())
             {
+                using (var responseStream = response.GetResponseStream())
+                {
+                    if (responseStream == null)
+                    {
+                        throw new Exception("文件获取失败：未读取到任何数据流。");
+                    }
+                    long contentLength = GetFileSize(filePath);
+                    var buffer = new byte[bufferSize];
+                    int length;
+                    long downloadLength = 0;
+                    var bytes = new byte[contentLength];
 
-                Array.Copy(buffer, 0, bytes, downloadLength, length);
-                downloadLength += length;
-                progress?.Report((float)downloadLength / contentLength);
+                    while ((length = await responseStream.ReadAsync(buffer, 0, bufferSize)) > 0)
+                    {
+
+                        Array.Copy(buffer, 0, bytes, downloadLength, length);
+                        downloadLength += length;
+                        progress?.Report((float)downloadLength / contentLength);
+                    }
+                    progress?.Report(1);
+                    return bytes.ToArray();
+                }
             }
-            progress?.Report(1);
-            return bytes.ToArray();
         }
         /// <summary>
         /// 获取文件大小
@@ -67,8 +88,10 @@ namespace JiuLing.AutoUpgrade.Net
             var request = (FtpWebRequest)WebRequest.Create(filePath);
             request.Method = WebRequestMethods.Ftp.GetFileSize;
             request.Credentials = new NetworkCredential(_username, _password);
-            using var response = (FtpWebResponse)request.GetResponse();
-            return response.ContentLength;
+            using (var response = (FtpWebResponse)request.GetResponse())
+            {
+                return response.ContentLength;
+            }
         }
     }
 }

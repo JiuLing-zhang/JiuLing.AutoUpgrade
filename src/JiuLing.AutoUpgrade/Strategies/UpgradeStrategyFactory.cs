@@ -1,4 +1,5 @@
-﻿using JiuLing.AutoUpgrade.Enums;
+﻿using System;
+using JiuLing.AutoUpgrade.Enums;
 using JiuLing.AutoUpgrade.Models;
 
 namespace JiuLing.AutoUpgrade.Strategies
@@ -11,12 +12,15 @@ namespace JiuLing.AutoUpgrade.Strategies
         /// <returns></returns>
         public static UpgradeStrategy Create(UpgradeConfigInfo config)
         {
-            return config.UpgradeMode switch
+            switch (config.UpgradeMode)
             {
-                UpgradeModeEnum.Http => new UpgradeStrategyUsingHttp(config.ConnectionConfig),
-                UpgradeModeEnum.Ftp => new UpgradeStrategyUsingFtp(config.ConnectionConfig),
-                _ => throw new ArgumentException("创建更新策略失败：更新方式不正确")
-            };
+                case UpgradeModeEnum.Http:
+                    return new UpgradeStrategyUsingHttp(config.ConnectionConfig);
+                case UpgradeModeEnum.Ftp:
+                    return new UpgradeStrategyUsingFtp(config.ConnectionConfig);
+                default:
+                    throw new ArgumentException("创建更新策略失败：更新方式不正确");
+            }
         }
     }
 }

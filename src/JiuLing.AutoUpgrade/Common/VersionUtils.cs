@@ -1,4 +1,5 @@
-﻿using JiuLing.AutoUpgrade.Models;
+﻿using System;
+using JiuLing.AutoUpgrade.Models;
 using JiuLing.AutoUpgrade.ExtensionMethods;
 
 namespace JiuLing.AutoUpgrade.Common

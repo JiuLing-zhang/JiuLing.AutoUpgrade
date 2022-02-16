@@ -1,11 +1,13 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace JiuLing.AutoUpgrade.CommandArgs
 {
     internal class ArgumentUtils
     {
-        private static string _input = null!;
+        private static string _input;
         private static readonly Hashtable Result = new Hashtable();
         public static void Initialize(string input)
         {
@@ -46,7 +48,7 @@ namespace JiuLing.AutoUpgrade.CommandArgs
             return Result.ContainsKey(key);
         }
 
-        public static List<string>? GetCommandValue(string key)
+        public static List<string> GetCommandValue(string key)
         {
             if (!Result.ContainsKey(key))
             {
@@ -60,13 +62,14 @@ namespace JiuLing.AutoUpgrade.CommandArgs
 
             if (!Result.ContainsKey(key))
             {
-                commandValue = null!;
+                commandValue = null;
                 return false;
             }
 
-            if (Result[key] is not List<string> value)
+            var value = Result[key] as List<string>;
+            if (value == null)
             {
-                commandValue = null!;
+                commandValue = null;
                 return false;
             }
             commandValue = value;

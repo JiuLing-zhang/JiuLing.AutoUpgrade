@@ -1,6 +1,8 @@
-﻿using JiuLing.AutoUpgrade.Models;
+﻿using System;
+using JiuLing.AutoUpgrade.Models;
 using JiuLing.AutoUpgrade.Net;
-using System.Text.Json;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace JiuLing.AutoUpgrade.Strategies
 {
@@ -11,7 +13,7 @@ namespace JiuLing.AutoUpgrade.Strategies
     {
         private readonly HttpConnectionConfig _connectionConfig;
 
-        private readonly HttpClientHelper _clientHelper = new();
+        private readonly HttpClientHelper _clientHelper = new HttpClientHelper();
         public UpgradeStrategyUsingHttp(HttpConnectionConfig connectionConfig)
         {
             _connectionConfig = connectionConfig;
@@ -21,7 +23,7 @@ namespace JiuLing.AutoUpgrade.Strategies
             try
             {
                 var result = await _clientHelper.GetReadString(_connectionConfig.UpgradeUrl);
-                var upgradeInfo = JsonSerializer.Deserialize<AppVersionInfo>(result);
+                var upgradeInfo = JsonConvert.DeserializeObject<AppVersionInfo>(result);
                 if (upgradeInfo == null)
                 {
                     throw new Exception("服务器响应错误");

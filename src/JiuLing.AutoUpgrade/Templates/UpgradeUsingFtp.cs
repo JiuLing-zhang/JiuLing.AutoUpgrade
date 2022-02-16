@@ -1,4 +1,7 @@
-﻿using JiuLing.AutoUpgrade.Models;
+﻿using System;
+using System.IO;
+using System.Threading.Tasks;
+using JiuLing.AutoUpgrade.Models;
 using JiuLing.AutoUpgrade.Net;
 
 namespace JiuLing.AutoUpgrade.Templates
@@ -18,7 +21,7 @@ namespace JiuLing.AutoUpgrade.Templates
                 File.Delete(updatePackPath);
             }
             var result = await _clientHelper.GetFileByteArray(downloadUrl, progress);
-            await File.WriteAllBytesAsync(updatePackPath, result);
+            File.WriteAllBytes(updatePackPath, result);
         }
     }
 }

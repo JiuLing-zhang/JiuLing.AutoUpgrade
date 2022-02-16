@@ -1,4 +1,6 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
+using System.IO;
 using JiuLing.AutoUpgrade.Models;
 
 namespace JiuLing.AutoUpgrade.Common
@@ -19,7 +21,7 @@ namespace JiuLing.AutoUpgrade.Common
             {
                 string fileName = p.MainModule?.FileName ?? throw new ArgumentException("未找到主进程启动路径");
                 string processDirectory = Path.GetDirectoryName(fileName) ?? throw new ArgumentException("未找到主进程启动目录");
-                string? myDirectory = Path.GetDirectoryName(GlobalArgs.AppPath);
+                string myDirectory = Path.GetDirectoryName(GlobalArgs.AppPath);
 
                 if (myDirectory != processDirectory)
                 {

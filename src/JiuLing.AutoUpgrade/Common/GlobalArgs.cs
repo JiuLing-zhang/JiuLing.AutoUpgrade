@@ -1,4 +1,7 @@
-﻿namespace JiuLing.AutoUpgrade.Common
+﻿using System;
+using System.IO;
+
+namespace JiuLing.AutoUpgrade.Common
 {
     internal class GlobalArgs
     {

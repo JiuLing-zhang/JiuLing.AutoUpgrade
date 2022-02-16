@@ -18,7 +18,7 @@ namespace JiuLing.AutoUpgrade.Models
         /// <summary>
         /// 请求连接配置
         /// </summary>
-        public dynamic ConnectionConfig { get; set; } = null!;
+        public dynamic ConnectionConfig { get; set; }
     }
 
     internal class HttpConnectionConfig

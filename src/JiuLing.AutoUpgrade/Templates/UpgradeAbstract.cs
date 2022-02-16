@@ -1,5 +1,8 @@
-﻿using System.IO.Compression;
+﻿using System;
+using System.IO;
+using System.IO.Compression;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace JiuLing.AutoUpgrade.Templates
 {
@@ -12,7 +15,8 @@ namespace JiuLing.AutoUpgrade.Templates
         /// <param name="appPath">程序运行路径</param>
         /// <param name="updatePackPath">更新包的路径</param>
         /// <param name="tempZipDirectory">更新文件的临时解压路径</param>
-        public async Task Update(string downloadUrl, string appPath, string updatePackPath, string tempZipDirectory, IProgress<float> progress = null!)
+        /// <param name="progress">进度</param>
+        public async Task Update(string downloadUrl, string appPath, string updatePackPath, string tempZipDirectory, IProgress<float> progress)
         {
             await DownloadApp(downloadUrl, updatePackPath, progress);
             PublishZipFile(updatePackPath, tempZipDirectory);
@@ -24,7 +28,11 @@ namespace JiuLing.AutoUpgrade.Templates
 
         private static void PublishZipFile(string filePath, string dstPath)
         {
-            ZipFile.ExtractToDirectory(filePath, dstPath, Encoding.GetEncoding("GBK"), true);
+            if (Directory.Exists(dstPath))
+            {
+                Directory.Delete(dstPath, true);
+            }
+            ZipFile.ExtractToDirectory(filePath, dstPath, Encoding.GetEncoding("GBK"));
         }
 
         private void CopyFiles(string sourcePath, string destinationPath)
