@@ -23,5 +23,20 @@ namespace JiuLing.AutoUpgrade
         {
             InitializeComponent();
         }
+
+        public void ShowLoading()
+        {
+            this.Show();
+        }
+
+        public void HideLoading()
+        {
+            this.Hide();
+        }
+
+        public void SetMessage(string text)
+        {
+            LblMsg.Content = text;
+        }
     }
 }

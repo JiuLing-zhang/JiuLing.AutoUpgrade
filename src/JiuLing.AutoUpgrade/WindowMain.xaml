@@ -7,6 +7,13 @@
         mc:Ignorable="d"
         Title="WindowMain" Height="450" Width="800">
     <Grid>
-        
+        <TextBlock x:Name="LblCurrentVersion"></TextBlock>
+        <TextBlock x:Name="LblNewVersion"></TextBlock>
+        <TextBlock x:Name="TxtLog"></TextBlock>
+
+        <TextBlock x:Name="LblVersionOverdue"></TextBlock>
+
+        <Button x:Name="BtnCancel"></Button>
+        <Button x:Name="BtnUpgrade"></Button>
     </Grid>
 </Window>
