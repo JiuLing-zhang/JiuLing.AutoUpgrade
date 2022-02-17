@@ -63,16 +63,6 @@ namespace JiuLing.AutoUpgrade.Shell {
         /// <summary>
         ///   查找 System.Byte[] 类型的本地化资源。
         /// </summary>
-        internal static byte[] AutoUpgrade_dll {
-            get {
-                object obj = ResourceManager.GetObject("AutoUpgrade_dll", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   查找 System.Byte[] 类型的本地化资源。
-        /// </summary>
         internal static byte[] AutoUpgrade_exe {
             get {
                 object obj = ResourceManager.GetObject("AutoUpgrade_exe", resourceCulture);
@@ -83,9 +73,9 @@ namespace JiuLing.AutoUpgrade.Shell {
         /// <summary>
         ///   查找 System.Byte[] 类型的本地化资源。
         /// </summary>
-        internal static byte[] AutoUpgrade_pdb {
+        internal static byte[] Newtonsoft_Json {
             get {
-                object obj = ResourceManager.GetObject("AutoUpgrade_pdb", resourceCulture);
+                object obj = ResourceManager.GetObject("Newtonsoft_Json", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -93,9 +83,9 @@ namespace JiuLing.AutoUpgrade.Shell {
         /// <summary>
         ///   查找 System.Byte[] 类型的本地化资源。
         /// </summary>
-        internal static byte[] AutoUpgrade_runtime {
+        internal static byte[] System_IO_Compression_ZipFile {
             get {
-                object obj = ResourceManager.GetObject("AutoUpgrade_runtime", resourceCulture);
+                object obj = ResourceManager.GetObject("System_IO_Compression_ZipFile", resourceCulture);
                 return ((byte[])(obj));
             }
         }

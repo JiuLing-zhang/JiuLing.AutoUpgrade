@@ -23,7 +23,7 @@ namespace JiuLing.AutoUpgrade.Common
                 string processDirectory = Path.GetDirectoryName(fileName) ?? throw new ArgumentException("未找到主进程启动目录");
                 string myDirectory = Path.GetDirectoryName(GlobalArgs.AppPath);
 
-                if (myDirectory != processDirectory)
+                if (myDirectory != Path.Combine(processDirectory, "JiuLing.AutoUpgrade.main.temp"))
                 {
                     throw new ApplicationException("主程序和自动更新程序不在同一目录");
                 }

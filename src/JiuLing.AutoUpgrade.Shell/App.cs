@@ -9,11 +9,12 @@ namespace JiuLing.AutoUpgrade.Shell
     /// </summary>
     public class App
     {
-        private readonly string _appPath = AppDomain.CurrentDomain.BaseDirectory;
+
+
+        private readonly string _mainAppTempDirectory;
         private readonly string _autoUpgradePathExe;
-        private readonly string _autoUpgradePathDll;
-        private readonly string _autoUpgradePathPdb;
-        private readonly string _autoUpgradePathRuntime;
+        private readonly string _newtonsoftJsonPath;
+        private readonly string _compressionZipFilePath;
 
         private NetworkTypeEnum _networkType;
         /// <summary>
@@ -21,10 +22,14 @@ namespace JiuLing.AutoUpgrade.Shell
         /// </summary>
         public App()
         {
-            _autoUpgradePathExe = Path.Combine(_appPath, "JiuLing.AutoUpgrade.exe");
-            _autoUpgradePathDll = Path.Combine(_appPath, "JiuLing.AutoUpgrade.dll");
-            _autoUpgradePathPdb = Path.Combine(_appPath, "JiuLing.AutoUpgrade.pdb");
-            _autoUpgradePathRuntime = Path.Combine(_appPath, "JiuLing.AutoUpgrade.runtimeconfig.json");
+            _mainAppTempDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "JiuLing.AutoUpgrade.main.temp");
+            if (!Directory.Exists(_mainAppTempDirectory))
+            {
+                Directory.CreateDirectory(_mainAppTempDirectory);
+            }
+            _autoUpgradePathExe = Path.Combine(_mainAppTempDirectory, "JiuLing.AutoUpgrade.exe");
+            _newtonsoftJsonPath = Path.Combine(_mainAppTempDirectory, "Newtonsoft.Json.dll");
+            _compressionZipFilePath = Path.Combine(_mainAppTempDirectory, "System.IO.Compression.ZipFile");
         }
 
         private string _upgradeUrl = "";
@@ -96,7 +101,7 @@ namespace JiuLing.AutoUpgrade.Shell
             process.Start();
             process.WaitForExit();
 
-            DeleteAutoUpgradeFiles();
+            DeleteMainApplication();
         }
 
         /// <summary>
@@ -124,17 +129,13 @@ namespace JiuLing.AutoUpgrade.Shell
         private void ReleaseAutoUpgradeFiles()
         {
             File.WriteAllBytes(_autoUpgradePathExe, Resource.AutoUpgrade_exe);
-            File.WriteAllBytes(_autoUpgradePathDll, Resource.AutoUpgrade_dll);
-            File.WriteAllBytes(_autoUpgradePathPdb, Resource.AutoUpgrade_pdb);
-            File.WriteAllBytes(_autoUpgradePathRuntime, Resource.AutoUpgrade_runtime);
+            File.WriteAllBytes(_newtonsoftJsonPath, Resource.Newtonsoft_Json);
+            File.WriteAllBytes(_compressionZipFilePath, Resource.System_IO_Compression_ZipFile);
         }
 
-        private void DeleteAutoUpgradeFiles()
+        private void DeleteMainApplication()
         {
-            File.Delete(_autoUpgradePathExe);
-            File.Delete(_autoUpgradePathDll);
-            File.Delete(_autoUpgradePathPdb);
-            File.Delete(_autoUpgradePathRuntime);
+            Directory.Delete(_mainAppTempDirectory, true);
         }
     }
 }

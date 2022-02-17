@@ -1,8 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Threading.Tasks;
-using System.Windows;
+using System.Text;
 using System.Windows.Forms;
 using JiuLing.AutoUpgrade.CommandArgs;
 using JiuLing.AutoUpgrade.Common;
@@ -10,17 +9,12 @@ using JiuLing.AutoUpgrade.Enums;
 using JiuLing.AutoUpgrade.Models;
 using JiuLing.AutoUpgrade.Strategies;
 using JiuLing.AutoUpgrade.Templates;
-using Application = System.Windows.Application;
 
 namespace JiuLing.AutoUpgrade
 {
-    /// <summary>
-    /// WindowMain.xaml 的交互逻辑
-    /// </summary>
-    public partial class WindowMain : Window
+    public partial class FmMain : Form
     {
-
-        private readonly WindowLoading _fmLoading = new WindowLoading();
+        private readonly FmLoading _fmLoading = new FmLoading();
         /// <summary>
         /// 自动更新的配置信息
         /// </summary>
@@ -37,15 +31,19 @@ namespace JiuLing.AutoUpgrade
         /// 新版本更新信息
         /// </summary>
         private AppVersionInfo _appNewVersion;
-
-        public WindowMain()
+        public FmMain()
         {
             InitializeComponent();
+        }
 
+        private async void FmMain_Load(object sender, EventArgs e)
+        {
             try
             {
-                this.Title = "自动更新程序";
-                MessageUtils.SetWindowTitle(this.Title);
+                while (!System.Diagnostics.Debugger.IsAttached)
+                {
+                    System.Threading.Thread.Sleep(1000);
+                }
 
                 HideWindow();
 
@@ -53,7 +51,7 @@ namespace JiuLing.AutoUpgrade
                 _mainProcess = AppUtils.GetMainProcess(_upgradeConfig.MainProcessName);
 
                 string windowTitle = $"{_mainProcess.Title} - 自动更新";
-                this.Title = windowTitle;
+                this.Text = windowTitle;
                 MessageUtils.SetWindowTitle(windowTitle);
 
                 _mainAppVersion = AppUtils.GetMainAppVersion(_mainProcess);
@@ -61,31 +59,28 @@ namespace JiuLing.AutoUpgrade
                 _fmLoading.SetMessage("正在检查更新");
 
                 var upgradeStrategy = UpgradeStrategyFactory.Create(_upgradeConfig);
+                _appNewVersion = await new UpgradeStrategyContext(upgradeStrategy).GetUpgradeInfo();
 
-                Task.Run(async () =>
+                bool isNeedUpdate;
+                (isNeedUpdate, _mainProcess.AllowRun) = VersionUtils.CheckNeedUpdate(_appNewVersion, _mainAppVersion);
+                if (isNeedUpdate == false)
                 {
-                    _appNewVersion = await new UpgradeStrategyContext(upgradeStrategy).GetUpgradeInfo();
-
-                    bool isNeedUpdate;
-                    (isNeedUpdate, _mainProcess.AllowRun) = VersionUtils.CheckNeedUpdate(_appNewVersion, _mainAppVersion);
-                    if (isNeedUpdate == false)
-                    {
-                        _fmLoading.HideLoading();
-                        MessageUtils.ShowInfo("当前版本为最新版");
-                        Application.Current.Shutdown();
-                        return;
-                    }
-
                     _fmLoading.HideLoading();
+                    MessageUtils.ShowInfo("当前版本为最新版");
+                    Application.Exit();
+                    return;
+                }
 
-                    BindingUi();
-                    ShowWindow();
-                });
+                _fmLoading.HideLoading();
+
+                BindingUi();
+                ShowWindow();
+
             }
             catch (Exception ex)
             {
                 MessageUtils.ShowError($"更新失败，{ex.Message}");
-                Application.Current.Shutdown();
+                Application.Exit();
             }
         }
 
@@ -150,13 +145,13 @@ namespace JiuLing.AutoUpgrade
         }
         private void HideWindow()
         {
-            this.WindowState = WindowState.Minimized;
+            this.WindowState = FormWindowState.Minimized;
             this.ShowInTaskbar = false;
         }
 
         private void ShowWindow()
         {
-            this.WindowState = WindowState.Normal;
+            this.WindowState = FormWindowState.Normal;
             this.ShowInTaskbar = true;
         }
 
@@ -167,8 +162,8 @@ namespace JiuLing.AutoUpgrade
             TxtLog.Text = _appNewVersion.Log;
             if (!_mainProcess.AllowRun)
             {
-                LblVersionOverdue.Visibility = Visibility.Visible;
-                BtnCancel.Visibility = Visibility.Collapsed;
+                LblVersionOverdue.Visible = true;
+                BtnCancel.Visible = false;
             }
         }
 
@@ -176,7 +171,7 @@ namespace JiuLing.AutoUpgrade
         {
             try
             {
-                BtnUpgrade.IsEnabled = false;
+                BtnUpgrade.Enabled = false;
 
                 KillMainApp();
                 _fmLoading.ShowLoading();
@@ -189,13 +184,13 @@ namespace JiuLing.AutoUpgrade
                     .Update(_appNewVersion.DownloadUrl, GlobalArgs.AppPath, GlobalArgs.TempPackagePath, GlobalArgs.TempZipDirectory, process);
 
                 MessageUtils.ShowInfo("更新完成");
-                Application.Current.Shutdown();
+                Application.Exit();
                 RunMainApp();
             }
             catch (Exception ex)
             {
                 MessageUtils.ShowError($"更新失败：{ex.Message}");
-                BtnUpgrade.IsEnabled = true;
+                BtnUpgrade.Enabled = true;
             }
             finally
             {
@@ -205,7 +200,7 @@ namespace JiuLing.AutoUpgrade
 
         private void BtnCancel_Click(object sender, EventArgs e)
         {
-            Application.Current.Shutdown();
+            Application.Exit();
         }
 
         private void FmMain_FormClosing(object sender, FormClosingEventArgs e)
