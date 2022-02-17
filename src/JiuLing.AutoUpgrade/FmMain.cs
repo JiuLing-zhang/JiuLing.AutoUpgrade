@@ -40,6 +40,7 @@ namespace JiuLing.AutoUpgrade
         {
             try
             {
+                MessageBox.Show("主程序已启动");
                 while (!System.Diagnostics.Debugger.IsAttached)
                 {
                     System.Threading.Thread.Sleep(1000);
@@ -173,7 +174,6 @@ namespace JiuLing.AutoUpgrade
             {
                 BtnUpgrade.Enabled = false;
 
-                KillMainApp();
                 _fmLoading.ShowLoading();
                 _fmLoading.SetMessage("准备下载");
                 var process = new Progress<float>((percent) =>
@@ -181,7 +181,7 @@ namespace JiuLing.AutoUpgrade
                     _fmLoading.SetMessage($"正在下载：{(percent * 100):f2}%");
                 });
                 await UpgradeTemplateFactory.Create(_upgradeConfig)
-                    .Update(_appNewVersion.DownloadUrl, GlobalArgs.AppPath, GlobalArgs.TempPackagePath, GlobalArgs.TempZipDirectory, process);
+                    .Update(_appNewVersion.DownloadUrl, GlobalArgs.AppPath, GlobalArgs.TempPackagePath, GlobalArgs.TempZipDirectory, KillMainApp, process);
 
                 MessageUtils.ShowInfo("更新完成");
                 Application.Exit();

@@ -37,13 +37,17 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\Newtonsoft.Json.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.IO.Compression.FileSystem" />
-    <Reference Include="System.IO.Compression.ZipFile, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\System.IO.Compression.ZipFile.4.3.0\lib\net46\System.IO.Compression.ZipFile.dll</HintPath>
+    <Reference Include="System.IO.Compression.ZipFile, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\System.IO.Compression.ZipFile.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -61,6 +65,7 @@
     <Compile Include="Common\GlobalArgs.cs" />
     <Compile Include="Common\MessageUtils.cs" />
     <Compile Include="Common\VersionUtils.cs" />
+    <Compile Include="EmbeddedAssembly.cs" />
     <Compile Include="Enums\UpgradeModeEnum.cs" />
     <Compile Include="ExtensionMethods\StringExtension.cs" />
     <Compile Include="FmLoading.cs">
@@ -105,8 +110,8 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -121,10 +126,17 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="lib\Newtonsoft.Json.dll" />
+    <EmbeddedResource Include="lib\System.IO.Compression.ZipFile.dll" />
+    <None Include="bin\Debug\Newtonsoft.Json.dll" />
+    <None Include="bin\Debug\System.IO.Compression.ZipFile.dll" />
+    <None Include="bin\Debug - 副本 %282%29\Newtonsoft.Json.dll" />
+    <None Include="bin\Debug - 副本 %282%29\System.IO.Compression.ZipFile.dll" />
     <Content Include="Images\icons8_buy_upgrade.ico" />
     <Content Include="Images\icons8_buy_upgrade_48.png" />
     <Content Include="Images\loading.gif" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>echo a | xcopy "$(TargetPath)" "$(SolutionDir)Librarys.tmp\"</PostBuildEvent>

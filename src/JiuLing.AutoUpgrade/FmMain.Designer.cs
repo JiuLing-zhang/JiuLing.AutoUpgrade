@@ -30,6 +30,7 @@ namespace JiuLing.AutoUpgrade
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FmMain));
             this.label1 = new System.Windows.Forms.Label();
             this.LblCurrentVersion = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -54,9 +55,10 @@ namespace JiuLing.AutoUpgrade
             // LblCurrentVersion
             // 
             this.LblCurrentVersion.AutoSize = true;
-            this.LblCurrentVersion.Location = new System.Drawing.Point(63, 6);
+            this.LblCurrentVersion.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F);
+            this.LblCurrentVersion.Location = new System.Drawing.Point(72, 6);
             this.LblCurrentVersion.Name = "LblCurrentVersion";
-            this.LblCurrentVersion.Size = new System.Drawing.Size(11, 12);
+            this.LblCurrentVersion.Size = new System.Drawing.Size(13, 17);
             this.LblCurrentVersion.TabIndex = 1;
             this.LblCurrentVersion.Text = "-";
             // 
@@ -73,9 +75,10 @@ namespace JiuLing.AutoUpgrade
             // LblNewVersion
             // 
             this.LblNewVersion.AutoSize = true;
-            this.LblNewVersion.Location = new System.Drawing.Point(159, 6);
+            this.LblNewVersion.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F);
+            this.LblNewVersion.Location = new System.Drawing.Point(167, 6);
             this.LblNewVersion.Name = "LblNewVersion";
-            this.LblNewVersion.Size = new System.Drawing.Size(11, 12);
+            this.LblNewVersion.Size = new System.Drawing.Size(13, 17);
             this.LblNewVersion.TabIndex = 1;
             this.LblNewVersion.Text = "-";
             // 
@@ -83,7 +86,7 @@ namespace JiuLing.AutoUpgrade
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F);
-            this.label3.Location = new System.Drawing.Point(10, 18);
+            this.label3.Location = new System.Drawing.Point(10, 30);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(56, 17);
             this.label3.TabIndex = 3;
@@ -92,10 +95,10 @@ namespace JiuLing.AutoUpgrade
             // BtnCancel
             // 
             this.BtnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.BtnCancel.Location = new System.Drawing.Point(129, 205);
+            this.BtnCancel.Location = new System.Drawing.Point(132, 286);
             this.BtnCancel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.BtnCancel.Name = "BtnCancel";
-            this.BtnCancel.Size = new System.Drawing.Size(64, 16);
+            this.BtnCancel.Size = new System.Drawing.Size(75, 23);
             this.BtnCancel.TabIndex = 4;
             this.BtnCancel.Text = "忽略";
             this.BtnCancel.UseVisualStyleBackColor = true;
@@ -104,10 +107,10 @@ namespace JiuLing.AutoUpgrade
             // BtnUpgrade
             // 
             this.BtnUpgrade.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.BtnUpgrade.Location = new System.Drawing.Point(198, 205);
+            this.BtnUpgrade.Location = new System.Drawing.Point(213, 286);
             this.BtnUpgrade.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.BtnUpgrade.Name = "BtnUpgrade";
-            this.BtnUpgrade.Size = new System.Drawing.Size(64, 16);
+            this.BtnUpgrade.Size = new System.Drawing.Size(75, 23);
             this.BtnUpgrade.TabIndex = 5;
             this.BtnUpgrade.Text = "更新";
             this.BtnUpgrade.UseVisualStyleBackColor = true;
@@ -118,12 +121,13 @@ namespace JiuLing.AutoUpgrade
             this.TxtLog.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TxtLog.Location = new System.Drawing.Point(10, 32);
+            this.TxtLog.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F);
+            this.TxtLog.Location = new System.Drawing.Point(10, 49);
             this.TxtLog.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.TxtLog.Name = "TxtLog";
             this.TxtLog.ReadOnly = true;
             this.TxtLog.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.TxtLog.Size = new System.Drawing.Size(253, 169);
+            this.TxtLog.Size = new System.Drawing.Size(278, 233);
             this.TxtLog.TabIndex = 6;
             this.TxtLog.Text = "";
             // 
@@ -131,9 +135,9 @@ namespace JiuLing.AutoUpgrade
             // 
             this.LblVersionOverdue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.LblVersionOverdue.AutoSize = true;
-            this.LblVersionOverdue.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Bold);
+            this.LblVersionOverdue.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.LblVersionOverdue.ForeColor = System.Drawing.Color.Red;
-            this.LblVersionOverdue.Location = new System.Drawing.Point(10, 207);
+            this.LblVersionOverdue.Location = new System.Drawing.Point(12, 288);
             this.LblVersionOverdue.Name = "LblVersionOverdue";
             this.LblVersionOverdue.Size = new System.Drawing.Size(104, 17);
             this.LblVersionOverdue.TabIndex = 7;
@@ -144,7 +148,7 @@ namespace JiuLing.AutoUpgrade
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(273, 229);
+            this.ClientSize = new System.Drawing.Size(298, 320);
             this.Controls.Add(this.LblVersionOverdue);
             this.Controls.Add(this.TxtLog);
             this.Controls.Add(this.BtnUpgrade);
@@ -154,6 +158,7 @@ namespace JiuLing.AutoUpgrade
             this.Controls.Add(this.LblCurrentVersion);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MaximizeBox = false;
             this.MinimizeBox = false;

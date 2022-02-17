@@ -39,9 +39,10 @@ namespace JiuLing.AutoUpgrade
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(8, 3);
+            this.pictureBox1.Location = new System.Drawing.Point(7, 2);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(124, 124);
+            this.pictureBox1.Size = new System.Drawing.Size(128, 128);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
@@ -49,22 +50,23 @@ namespace JiuLing.AutoUpgrade
             // 
             this.LblMsg.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.LblMsg.Location = new System.Drawing.Point(8, 133);
+            this.LblMsg.Location = new System.Drawing.Point(5, 132);
             this.LblMsg.Name = "LblMsg";
-            this.LblMsg.Size = new System.Drawing.Size(124, 17);
+            this.LblMsg.Size = new System.Drawing.Size(130, 25);
             this.LblMsg.TabIndex = 1;
             this.LblMsg.Text = "正在检查更新";
             this.LblMsg.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // FmLoading
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(139, 157);
+            this.ClientSize = new System.Drawing.Size(141, 159);
             this.Controls.Add(this.LblMsg);
             this.Controls.Add(this.pictureBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "FmLoading";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
