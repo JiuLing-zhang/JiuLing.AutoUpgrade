@@ -10,11 +10,8 @@ namespace JiuLing.AutoUpgrade.Shell
     public class App
     {
 
-
-        private readonly string _mainAppTempDirectory;
+        private readonly string _appPath = AppDomain.CurrentDomain.BaseDirectory;
         private readonly string _autoUpgradePathExe;
-        private readonly string _newtonsoftJsonPath;
-        private readonly string _compressionZipFilePath;
 
         private NetworkTypeEnum _networkType;
         /// <summary>
@@ -22,14 +19,7 @@ namespace JiuLing.AutoUpgrade.Shell
         /// </summary>
         public App()
         {
-            _mainAppTempDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "JiuLing.AutoUpgrade.main.temp");
-            if (!Directory.Exists(_mainAppTempDirectory))
-            {
-                Directory.CreateDirectory(_mainAppTempDirectory);
-            }
-            _autoUpgradePathExe = Path.Combine(_mainAppTempDirectory, "JiuLing.AutoUpgrade.exe");
-            _newtonsoftJsonPath = Path.Combine(_mainAppTempDirectory, "Newtonsoft.Json.dll");
-            _compressionZipFilePath = Path.Combine(_mainAppTempDirectory, "System.IO.Compression.ZipFile");
+            _autoUpgradePathExe = Path.Combine(_appPath, "JiuLing.AutoUpgrade.exe");
         }
 
         private string _upgradeUrl = "";
@@ -129,13 +119,11 @@ namespace JiuLing.AutoUpgrade.Shell
         private void ReleaseAutoUpgradeFiles()
         {
             File.WriteAllBytes(_autoUpgradePathExe, Resource.AutoUpgrade_exe);
-            File.WriteAllBytes(_newtonsoftJsonPath, Resource.Newtonsoft_Json);
-            File.WriteAllBytes(_compressionZipFilePath, Resource.System_IO_Compression_ZipFile);
         }
 
         private void DeleteMainApplication()
         {
-            Directory.Delete(_mainAppTempDirectory, true);
+            File.Delete(_autoUpgradePathExe);
         }
     }
 }
