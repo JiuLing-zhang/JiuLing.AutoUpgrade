@@ -13,9 +13,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-     
+
+      - name: Setup MSBuild
+        uses: warrenbuckley/Setup-MSBuild@v1
+
       - name: Build core app
-        run: dotnet build .\src\JiuLing.AutoUpgrade\JiuLing.AutoUpgrade.csproj --no-restore
+        run: msbuild .\src\JiuLing.AutoUpgrade\JiuLing.AutoUpgrade.csproj --no-restore
 
       - name: Setup .NET 6
         uses: actions/setup-dotnet@v1
