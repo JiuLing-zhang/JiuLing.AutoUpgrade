@@ -18,7 +18,7 @@ jobs:
         uses: microsoft/setup-msbuild@v1.1
 
       - name: Build core app
-        run: msbuild .\src\JiuLing.AutoUpgrade\JiuLing.AutoUpgrade.csproj --no-restore
+        run: msbuild .\src\JiuLing.AutoUpgrade\JiuLing.AutoUpgrade.csproj
 
       - name: Setup .NET 6
         uses: actions/setup-dotnet@v1
