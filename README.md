@@ -58,6 +58,7 @@ app.UseFtpMode("upgradePath", "userName", "password")
 
 ## :four:.项目说明  
 
+```Text
 |-- root  
     |-- JiuLing.AutoUpgrade.sln  项目解决方案  
     |-- Librarys.tmp             临时目录，核心程序编译完成后将自身发布到该目录  
@@ -74,6 +75,7 @@ app.UseFtpMode("upgradePath", "userName", "password")
         |-- JiuLing.AutoUpgrade.Test.csproj  
         |-- UpgradePackage1.2.0.zip  
         |-- 测试环境配置说明.txt  
+```
 
 ## :five:.License
 MIT License
