@@ -12,17 +12,23 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-        
-      - name: Setup .NET
+
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.1
+
+      - name: Build core app
+        run: msbuild .\src\JiuLing.AutoUpgrade\JiuLing.AutoUpgrade.csproj /P:Configuration=Release
+
+      - name: Setup .NET 6
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 6.0.x
-
+          
       - name: Restore dependencies
         run: dotnet restore
-
-      - name: Build
-        run: dotnet build --no-restore -c release
+        
+      - name: Build shell app
+        run: dotnet build .\src\JiuLing.AutoUpgrade.Shell\JiuLing.AutoUpgrade.Shell.csproj --no-restore -c release
 
       - name: Get version
         uses: olegtarasov/get-tag@v2.1
@@ -31,7 +37,7 @@ jobs:
       - name: Create zip
         shell: pwsh
         # 配置【编译后的文件地址】
-        run: Compress-Archive -Path .\src\JiuLing.AutoUpgrade.Shell\bin\Release\net6.0\* -DestinationPath .\src\JiuLing.AutoUpgrade.Shell\bin\Release\JiuLing.AutoUpgrade.Shell_${{ steps.tagName.outputs.tag }}.zip
+        run: Compress-Archive -Path .\src\JiuLing.AutoUpgrade.Shell\bin\Release\* -DestinationPath .\src\JiuLing.AutoUpgrade.Shell\bin\Release\JiuLing.AutoUpgrade.Shell_${{ steps.tagName.outputs.tag }}.zip
 
       - name: Release
         uses: softprops/action-gh-release@v1

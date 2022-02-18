@@ -40,8 +40,6 @@ namespace JiuLing.AutoUpgrade
         {
             try
             {
-                MessageBox.Show("主程序已启动");
-
                 HideWindow();
 
                 _upgradeConfig = ReadUpgradeConfigFromCommandArgs();

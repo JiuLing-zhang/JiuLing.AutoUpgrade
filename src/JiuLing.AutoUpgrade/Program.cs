@@ -10,18 +10,33 @@ namespace JiuLing.AutoUpgrade
 {
     internal static class Program
     {
+        private static readonly List<string> EmbeddedAssemblyList = new List<string>() { "Newtonsoft.Json", "System.IO.Compression.ZipFile" };
         /// <summary>
         /// 应用程序的主入口点。
         /// </summary>
         [STAThread]
         static void Main()
         {
- 
-            string resource1 = "JiuLing.AutoUpgrade.lib.Newtonsoft.Json.dll";
-            string resource2 = "JiuLing.AutoUpgrade.lib.System.IO.Compression.ZipFile.dll";
-            EmbeddedAssembly.Load(resource1, "Newtonsoft.Json.dll");
-            EmbeddedAssembly.Load(resource2, "System.IO.Compression.ZipFile.dll");
 
+            AppDomain.CurrentDomain.AssemblyResolve += (sender, args) =>
+            {
+                string dllName = args.Name.Split(',')[0];
+                if (!EmbeddedAssemblyList.Contains(dllName))
+                {
+                    return null;
+                }
+
+                byte[] ba = null;
+                string resource = $"JiuLing.AutoUpgrade.lib.{dllName}.dll";
+                Assembly curAsm = Assembly.GetExecutingAssembly();
+                using (Stream stm = curAsm.GetManifestResourceStream(resource))
+                {
+                    ba = new byte[(int)stm.Length];
+                    stm.Read(ba, 0, (int)stm.Length);
+
+                    return Assembly.Load(ba);
+                }
+            };
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

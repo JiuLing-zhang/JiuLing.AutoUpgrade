@@ -28,5 +28,8 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore
         
-      - name: Build core shell
+      - name: Build shell app
         run: dotnet build .\src\JiuLing.AutoUpgrade.Shell\JiuLing.AutoUpgrade.Shell.csproj --no-restore
+
+      - name: Build test app
+        run: dotnet build .\test\JiuLing.AutoUpgrade.Test.csproj --no-restore
