@@ -128,10 +128,6 @@
   <ItemGroup>
     <EmbeddedResource Include="lib\Newtonsoft.Json.dll" />
     <EmbeddedResource Include="lib\System.IO.Compression.ZipFile.dll" />
-    <None Include="bin\Debug\Newtonsoft.Json.dll" />
-    <None Include="bin\Debug\System.IO.Compression.ZipFile.dll" />
-    <None Include="bin\Debug - 副本 %282%29\Newtonsoft.Json.dll" />
-    <None Include="bin\Debug - 副本 %282%29\System.IO.Compression.ZipFile.dll" />
     <Content Include="Images\icons8_buy_upgrade.ico" />
     <Content Include="Images\icons8_buy_upgrade_48.png" />
     <Content Include="Images\loading.gif" />
@@ -139,6 +135,6 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>echo a | xcopy "$(TargetPath)" "$(SolutionDir)Librarys.tmp\"</PostBuildEvent>
+    <PostBuildEvent>echo a | xcopy "$(TargetPath)" "$(ProjectDir)..\..\Librarys.tmp\"</PostBuildEvent>
   </PropertyGroup>
 </Project>

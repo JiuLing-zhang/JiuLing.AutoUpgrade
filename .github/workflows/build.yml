@@ -2,9 +2,9 @@ name: Build
 
 on:
   push:
-    branches: [ mainxxx ]
+    branches: [ main ]
   pull_request:
-    branches: [ mainxxx ]
+    branches: [ main ]
 
 jobs:
   build:
@@ -12,19 +12,23 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - uses: actions/checkout@v2
-    
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 6.0.x
+      - uses: actions/checkout@v2
+      
+      - name: Setup .NET 4.7
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 4.7
         
-    - name: Restore dependencies
-      run: dotnet restore
-      
-    - name: Build
-      run: dotnet build --no-restore
-      
-    - name: Test
-      run: dotnet test --no-build --verbosity normal  
+      - name: Build core app
+        run: dotnet build .\src\JiuLing.AutoUpgrade\JiuLing.AutoUpgrade.csproj --no-restore
 
+      - name: Setup .NET 6
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 6.0.x
+          
+      - name: Restore dependencies
+        run: dotnet restore
+        
+      - name: Build core shell
+        run: dotnet build .\src\JiuLing.AutoUpgrade.Shell\JiuLing.AutoUpgrade.Shell.csproj --no-restore

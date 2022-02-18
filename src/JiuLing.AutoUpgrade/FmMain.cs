@@ -41,10 +41,6 @@ namespace JiuLing.AutoUpgrade
             try
             {
                 MessageBox.Show("主程序已启动");
-                while (!System.Diagnostics.Debugger.IsAttached)
-                {
-                    System.Threading.Thread.Sleep(1000);
-                }
 
                 HideWindow();
 
