@@ -1,4 +1,6 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
+using System.IO;
 using JiuLing.AutoUpgrade.Shell.Enums;
 using JiuLing.AutoUpgrade.Shell.Strategies;
 
@@ -109,12 +111,15 @@ namespace JiuLing.AutoUpgrade.Shell
         /// <returns></returns>
         private string GetNetworkArgument()
         {
-            return _networkType switch
+            switch (_networkType)
             {
-                NetworkTypeEnum.Http => new NetworkArgumentContext(new NetworkHttpStrategy(_upgradeUrl)).GetStartArguments(_networkType),
-                NetworkTypeEnum.Ftp => new NetworkArgumentContext(new NetworkFtpStrategy(_userName, _password, _upgradePath)).GetStartArguments(_networkType),
-                _ => throw new ArgumentException("不支持的网络参数")
-            };
+                case NetworkTypeEnum.Http:
+                    return new NetworkArgumentContext(new NetworkHttpStrategy(_upgradeUrl)).GetStartArguments(_networkType);
+                case NetworkTypeEnum.Ftp:
+                    return new NetworkArgumentContext(new NetworkFtpStrategy(_userName, _password, _upgradePath)).GetStartArguments(_networkType);
+                default:
+                    throw new ArgumentException("不支持的网络参数");
+            }
         }
         private void ReleaseAutoUpgradeFiles()
         {

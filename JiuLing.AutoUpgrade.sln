@@ -5,9 +5,9 @@ VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JiuLing.AutoUpgrade.Test", "test\JiuLing.AutoUpgrade.Test.csproj", "{C2597B6B-5DFF-4EF0-84C3-2CA9471C89DA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JiuLing.AutoUpgrade.Shell", "src\JiuLing.AutoUpgrade.Shell\JiuLing.AutoUpgrade.Shell.csproj", "{7E5C5D11-F5B4-403E-925A-4697544982FC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JiuLing.AutoUpgrade", "src\JiuLing.AutoUpgrade\JiuLing.AutoUpgrade.csproj", "{69F985E1-D109-444E-81F5-5C9DD4C66B41}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JiuLing.AutoUpgrade", "src\JiuLing.AutoUpgrade\JiuLing.AutoUpgrade.csproj", "{FF417F0C-EF3F-42B7-AB77-D002FA86340D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JiuLing.AutoUpgrade.Shell", "src\JiuLing.AutoUpgrade.Shell\JiuLing.AutoUpgrade.Shell.csproj", "{51D7D69F-5457-45C0-A5FC-7758994CFC84}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,14 +19,14 @@ Global
 		{C2597B6B-5DFF-4EF0-84C3-2CA9471C89DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C2597B6B-5DFF-4EF0-84C3-2CA9471C89DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C2597B6B-5DFF-4EF0-84C3-2CA9471C89DA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7E5C5D11-F5B4-403E-925A-4697544982FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7E5C5D11-F5B4-403E-925A-4697544982FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7E5C5D11-F5B4-403E-925A-4697544982FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7E5C5D11-F5B4-403E-925A-4697544982FC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FF417F0C-EF3F-42B7-AB77-D002FA86340D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FF417F0C-EF3F-42B7-AB77-D002FA86340D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FF417F0C-EF3F-42B7-AB77-D002FA86340D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FF417F0C-EF3F-42B7-AB77-D002FA86340D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69F985E1-D109-444E-81F5-5C9DD4C66B41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69F985E1-D109-444E-81F5-5C9DD4C66B41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69F985E1-D109-444E-81F5-5C9DD4C66B41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69F985E1-D109-444E-81F5-5C9DD4C66B41}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51D7D69F-5457-45C0-A5FC-7758994CFC84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51D7D69F-5457-45C0-A5FC-7758994CFC84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51D7D69F-5457-45C0-A5FC-7758994CFC84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51D7D69F-5457-45C0-A5FC-7758994CFC84}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
