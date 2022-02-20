@@ -75,14 +75,28 @@ namespace JiuLing.AutoUpgrade.Shell
             return this;
         }
 
+        private readonly NoticeConfig _notice = new NoticeConfig();
+        /// <summary>
+        /// 设置通知的一些配置
+        /// </summary>
+        /// <param name="config"></param>
+        /// <returns></returns>
+        public App SetNoticesConfig(Action<NoticeConfig> config)
+        {
+            config?.Invoke(_notice);
+            return this;
+        }
+
         /// <summary>
         /// 启动更新
         /// </summary>
         public void Run()
         {
             string startArguments = "";
+
             startArguments = $"{startArguments}{GetProcessArgument()} ";
             startArguments = $"{startArguments}{GetNetworkArgument()} ";
+            startArguments = $"{startArguments}{GetNoticesArgument()} ";
             startArguments = startArguments.Trim();
 
             ReleaseAutoUpgradeFiles();
@@ -100,9 +114,9 @@ namespace JiuLing.AutoUpgrade.Shell
         /// 主进程参数
         /// </summary>
         /// <returns></returns>
-        private static string GetProcessArgument()
+        private string GetProcessArgument()
         {
-            return $"-p {Process.GetCurrentProcess().ProcessName}";
+            return $"-{ArgumentTypeEnum.p} {Process.GetCurrentProcess().ProcessName}";
         }
 
         /// <summary>
@@ -121,6 +135,26 @@ namespace JiuLing.AutoUpgrade.Shell
                     throw new ArgumentException("不支持的网络参数");
             }
         }
+
+        /// <summary>
+        /// 获取通知参数
+        /// </summary>
+        /// <returns></returns>
+        private string GetNoticesArgument()
+        {
+            string noticesArgument = "";
+            if (_notice.NoUpdateShowDialog)
+            {
+                noticesArgument = $"{nameof(_notice.NoUpdateShowDialog)} ";
+            }
+
+            if (string.IsNullOrEmpty(noticesArgument))
+            {
+                return "";
+            }
+            return $"-{ArgumentTypeEnum.n} {noticesArgument}";
+        }
+
         private void ReleaseAutoUpgradeFiles()
         {
             File.WriteAllBytes(_autoUpgradePathExe, Resource.AutoUpgrade_exe);

@@ -18,7 +18,7 @@ namespace JiuLing.AutoUpgrade.Shell.Strategies
         }
         public override string Build(NetworkTypeEnum networkType)
         {
-            return $"-ftp {_upgradePath} {_userName} {_password}";
+            return $"-{ArgumentTypeEnum.ftp} {_upgradePath} {_userName} {_password}";
         }
     }
 }

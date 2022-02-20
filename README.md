@@ -3,7 +3,7 @@
 [![](https://img.shields.io/nuget/v/JiuLing.AutoUpgrade)](https://www.nuget.org/packages/JiuLing.AutoUpgrade)
 [![](https://img.shields.io/github/v/release/JiuLing-zhang/JiuLing.AutoUpgrade)](https://github.com/JiuLing-zhang/JiuLing.AutoUpgrade/releases)  
 
-## :one:.介绍
+## 介绍
 `JiuLing.AutoUpgrade` 是一个简单、易用的自动更新组件。  
 
 更新程序的核心程序是基于 `.NET Framework 4.7` 开发的 `x64` 格式的程序，所以使用此组件之前，请先确保客户端环境能够运行该程序。  
@@ -18,11 +18,11 @@
 ![main2.png](https://s2.loli.net/2022/01/21/xC6jka4vGdgptTq.png)  
 ![download.png](https://s2.loli.net/2022/01/21/94nGMBNJpQUzYTR.png)  
 
-## :two:.安装  
+## 安装  
 * 通过 `Nuget` 直接安装。👉👉👉[`JiuLing.AutoUpgrade`](https://www.nuget.org/packages/JiuLing.AutoUpgrade)  
 * 下载最新的 `Release` 版本自己引用到项目。👉👉👉[`下载`](https://github.com/JiuLing-zhang/JiuLing.AutoUpgrade/releases)  
 
-## :three:.使用  
+## 使用  
 1. 导入命名空间 `using JiuLing.AutoUpgrade.Shell;`
 2. 启动更新
 ```C#
@@ -56,7 +56,17 @@ app.UseFtpMode("upgradePath", "userName", "password")
 }
 ```
 
-## :four:.项目说明  
+## 高级设置  
+* 没有新版本时禁止提示 “当前版本为最新版” （开发中）  
+
+```C#
+    app.SetNoticesConfig(config =>
+    {
+        config.NoUpdateShowDialog = false;
+    });
+```
+
+## 项目说明  
 
 ```Text
 |-- root  
@@ -77,5 +87,5 @@ app.UseFtpMode("upgradePath", "userName", "password")
         |-- 测试环境配置说明.txt  
 ```
 
-## :five:.License
+## License
 MIT License

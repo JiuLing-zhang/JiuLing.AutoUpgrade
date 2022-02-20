@@ -15,7 +15,7 @@ namespace JiuLing.AutoUpgrade.Shell.Strategies
 
         public override string Build(NetworkTypeEnum networkType)
         {
-            return $"-http {_upgradeUrl}";
+            return $"-{ArgumentTypeEnum.http} {_upgradeUrl}";
         }
     }
 }
