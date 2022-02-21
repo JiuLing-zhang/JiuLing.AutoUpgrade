@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace JiuLing.AutoUpgrade.Shell.Enums
+﻿namespace JiuLing.AutoUpgrade.Enums
 {
     /// <summary>
     /// 参数类型

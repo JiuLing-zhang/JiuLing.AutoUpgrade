@@ -57,12 +57,12 @@ app.UseFtpMode("upgradePath", "userName", "password")
 ```
 
 ## 高级设置  
-* 没有新版本时禁止提示 “当前版本为最新版” （开发中）  
+* 是否在后台进行更新检查（默认为否）    
 
 ```C#
-    app.SetNoticesConfig(config =>
+    app.SetUpgrade(config =>
     {
-        config.NoUpdateShowDialog = false;
+        config.IsBackgroundCheck = true;
     });
 ```
 

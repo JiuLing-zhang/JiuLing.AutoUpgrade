@@ -31,6 +31,11 @@ namespace JiuLing.AutoUpgrade
         /// 新版本更新信息
         /// </summary>
         private AppVersionInfo _appNewVersion;
+
+        /// <summary>
+        /// 配置更新时的一些设置
+        /// </summary>
+        private UpgradeSetting _upgradeSetting = new UpgradeSetting();
         public FmMain()
         {
             InitializeComponent();
@@ -50,8 +55,11 @@ namespace JiuLing.AutoUpgrade
                 MessageUtils.SetWindowTitle(windowTitle);
 
                 _mainAppVersion = AppUtils.GetMainAppVersion(_mainProcess);
-                _fmLoading.ShowLoading();
-                _fmLoading.SetMessage("正在检查更新");
+                if (!_upgradeSetting.IsBackgroundCheck)
+                {
+                    _fmLoading.ShowLoading();
+                    _fmLoading.SetMessage("正在检查更新");
+                }
 
                 var upgradeStrategy = UpgradeStrategyFactory.Create(_upgradeConfig);
                 _appNewVersion = await new UpgradeStrategyContext(upgradeStrategy).GetUpgradeInfo();
@@ -61,7 +69,10 @@ namespace JiuLing.AutoUpgrade
                 if (isNeedUpdate == false)
                 {
                     _fmLoading.HideLoading();
-                    MessageUtils.ShowInfo("当前版本为最新版");
+                    if (!_upgradeSetting.IsBackgroundCheck)
+                    {
+                        MessageUtils.ShowInfo("当前版本为最新版");
+                    }
                     Application.Exit();
                     return;
                 }
@@ -74,7 +85,10 @@ namespace JiuLing.AutoUpgrade
             }
             catch (Exception ex)
             {
-                MessageUtils.ShowError($"更新失败，{ex.Message}");
+                if (!_upgradeSetting.IsBackgroundCheck)
+                {
+                    MessageUtils.ShowError($"更新失败，{ex.Message}");
+                }
                 Application.Exit();
             }
         }
@@ -83,24 +97,40 @@ namespace JiuLing.AutoUpgrade
         /// 解析本次的更新方式
         /// </summary>
         /// <returns></returns>
-        private static UpgradeConfigInfo ReadUpgradeConfigFromCommandArgs()
+        private UpgradeConfigInfo ReadUpgradeConfigFromCommandArgs()
         {
-            /******************参数格式*********************
-            [-p 主进程名称]                 设置主进程       
-            [-http 更新地址]                使用HTTP方式更新
-            [-ftp 更新地址 用户名 密码]       使用FTP方式更新
+
+            /******************参数说明*********************
+            * -p MainProcess
+              设置主进程,[MainProcess:主进程名称]
+
+            * -http UpgradeUrl
+              使用 HTTP 方式更新,[UpgradeUrl:更新地址]
+
+            * -ftp UpgradeUrl UserName pwd
+              使用 FTP 方式更新,[UpgradeUrl:更新地址] [UserName:用户名] [pwd:密码]
+            
+            * -s IsBackgroundCheck
+              常规设置,[IsBackgroundCheck:是否在后台进行更新检查]
             **********************************************/
 
             var upgradeConfig = new UpgradeConfigInfo();
-
             ArgumentUtils.Initialize(string.Join(" ", Environment.GetCommandLineArgs()));
-            if (!ArgumentUtils.TryGetCommandValue("-p", out List<string> mainProcessArgs))
+            if (!ArgumentUtils.TryGetCommandValue($"-{ArgumentTypeEnum.p}", out List<string> mainProcessArgs))
             {
                 throw new ArgumentException("缺少主进程参数");
             }
             upgradeConfig.MainProcessName = mainProcessArgs[0];
 
-            if (ArgumentUtils.TryGetCommandValue("-http", out List<string> httpArgs))
+            if (ArgumentUtils.TryGetCommandValue($"-{ArgumentTypeEnum.s}", out List<string> noticesArgument))
+            {
+                if (noticesArgument.Contains(nameof(_upgradeSetting.IsBackgroundCheck)))
+                {
+                    _upgradeSetting.IsBackgroundCheck = true;
+                }
+            }
+
+            if (ArgumentUtils.TryGetCommandValue($"-{ArgumentTypeEnum.http}", out List<string> httpArgs))
             {
                 upgradeConfig.UpgradeMode = UpgradeModeEnum.Http;
                 try
@@ -117,7 +147,7 @@ namespace JiuLing.AutoUpgrade
                 }
             }
 
-            if (ArgumentUtils.TryGetCommandValue("-ftp", out List<string> ftpArgs))
+            if (ArgumentUtils.TryGetCommandValue($"-{ArgumentTypeEnum.ftp}", out List<string> ftpArgs))
             {
                 upgradeConfig.UpgradeMode = UpgradeModeEnum.Ftp;
                 try

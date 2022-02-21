@@ -32,4 +32,15 @@ namespace JiuLing.AutoUpgrade.Models
         public string Password { get; set; } = "";
         public string UpgradePath { get; set; } = "";
     }
+
+    /// <summary>
+    /// 通知设置
+    /// </summary>
+    public class UpgradeSetting
+    {
+        /// <summary>
+        /// 是否在后台进行更新检查
+        /// </summary>
+        public bool IsBackgroundCheck { get; set; } = false;
+    }
 }

@@ -5,13 +5,13 @@ using System.Text;
 namespace JiuLing.AutoUpgrade.Shell
 {
     /// <summary>
-    /// 通知设置
+    /// 更新时的一些设置
     /// </summary>
-    public class NoticeConfig
+    public class UpgradeSetting
     {
         /// <summary>
-        /// 无可用更新时是否弹窗提醒
+        /// 是否在后台进行更新检查
         /// </summary>
-        public bool NoUpdateShowDialog { get; set; } = true;
+        public bool IsBackgroundCheck { get; set; } = false;
     }
 }

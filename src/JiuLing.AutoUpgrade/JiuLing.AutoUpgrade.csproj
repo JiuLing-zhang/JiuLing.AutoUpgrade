@@ -66,6 +66,7 @@
     <Compile Include="Common\MessageUtils.cs" />
     <Compile Include="Common\VersionUtils.cs" />
     <Compile Include="EmbeddedAssembly.cs" />
+    <Compile Include="Enums\ArgumentTypeEnum.cs" />
     <Compile Include="Enums\UpgradeModeEnum.cs" />
     <Compile Include="ExtensionMethods\StringExtension.cs" />
     <Compile Include="FmLoading.cs">

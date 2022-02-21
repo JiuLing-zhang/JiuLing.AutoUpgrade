@@ -75,15 +75,15 @@ namespace JiuLing.AutoUpgrade.Shell
             return this;
         }
 
-        private readonly NoticeConfig _notice = new NoticeConfig();
+        private readonly UpgradeSetting _upgradeSetting = new UpgradeSetting();
         /// <summary>
-        /// 设置通知的一些配置
+        /// 配置更新时的一些设置
         /// </summary>
         /// <param name="config"></param>
         /// <returns></returns>
-        public App SetNoticesConfig(Action<NoticeConfig> config)
+        public App SetUpgrade(Action<UpgradeSetting> config)
         {
-            config?.Invoke(_notice);
+            config?.Invoke(_upgradeSetting);
             return this;
         }
 
@@ -96,7 +96,7 @@ namespace JiuLing.AutoUpgrade.Shell
 
             startArguments = $"{startArguments}{GetProcessArgument()} ";
             startArguments = $"{startArguments}{GetNetworkArgument()} ";
-            startArguments = $"{startArguments}{GetNoticesArgument()} ";
+            startArguments = $"{startArguments}{GetSettingArgument()} ";
             startArguments = startArguments.Trim();
 
             ReleaseAutoUpgradeFiles();
@@ -137,22 +137,23 @@ namespace JiuLing.AutoUpgrade.Shell
         }
 
         /// <summary>
-        /// 获取通知参数
+        /// 获取设置参数
         /// </summary>
         /// <returns></returns>
-        private string GetNoticesArgument()
+        private string GetSettingArgument()
         {
+
             string noticesArgument = "";
-            if (_notice.NoUpdateShowDialog)
+            if (_upgradeSetting.IsBackgroundCheck)
             {
-                noticesArgument = $"{nameof(_notice.NoUpdateShowDialog)} ";
+                noticesArgument = $"{nameof(_upgradeSetting.IsBackgroundCheck)} ";
             }
 
             if (string.IsNullOrEmpty(noticesArgument))
             {
                 return "";
             }
-            return $"-{ArgumentTypeEnum.n} {noticesArgument}";
+            return $"-{ArgumentTypeEnum.s} {noticesArgument}";
         }
 
         private void ReleaseAutoUpgradeFiles()
