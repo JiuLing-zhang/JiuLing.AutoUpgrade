@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using JiuLing.AutoUpgrade.Shell.Enums;
 
 namespace JiuLing.AutoUpgrade.Shell
 {
@@ -13,5 +14,9 @@ namespace JiuLing.AutoUpgrade.Shell
         /// 是否在后台进行更新检查
         /// </summary>
         public bool IsBackgroundCheck { get; set; } = false;
+        /// <summary>
+        /// 是否校验签名
+        /// </summary>
+        public bool IsCheckSign { get; set; } = false;
     }
 }

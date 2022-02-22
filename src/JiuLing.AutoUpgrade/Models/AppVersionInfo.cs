@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JiuLing.AutoUpgrade.Enums;
+using System;
 
 namespace JiuLing.AutoUpgrade.Models
 {
@@ -32,5 +33,13 @@ namespace JiuLing.AutoUpgrade.Models
         /// 时间
         /// </summary>
         public DateTime CreateTime { get; set; } = DateTime.MinValue;
+        /// <summary>
+        /// 签名类型
+        /// </summary>
+        public SignTypeEnum SignType { get; set; }
+        /// <summary>
+        /// 签名值
+        /// </summary>
+        public string SignValue { get; set; }
     }
 }

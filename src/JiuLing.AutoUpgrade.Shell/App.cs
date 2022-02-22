@@ -146,14 +146,14 @@ namespace JiuLing.AutoUpgrade.Shell
             string noticesArgument = "";
             if (_upgradeSetting.IsBackgroundCheck)
             {
-                noticesArgument = $"{nameof(_upgradeSetting.IsBackgroundCheck)} ";
+                noticesArgument = $"-{ArgumentTypeEnum.background} ";
             }
 
-            if (string.IsNullOrEmpty(noticesArgument))
+            if (_upgradeSetting.IsBackgroundCheck)
             {
-                return "";
+                noticesArgument = $"{noticesArgument}-{ArgumentTypeEnum.check} ";
             }
-            return $"-{ArgumentTypeEnum.s} {noticesArgument}";
+            return noticesArgument;
         }
 
         private void ReleaseAutoUpgradeFiles()

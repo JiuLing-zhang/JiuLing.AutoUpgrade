@@ -10,14 +10,13 @@ namespace JiuLing.AutoUpgrade
 {
     internal static class Program
     {
-        private static readonly List<string> EmbeddedAssemblyList = new List<string>() { "Newtonsoft.Json", "System.IO.Compression.ZipFile" };
+        private static readonly List<string> EmbeddedAssemblyList = new List<string>() { "Newtonsoft.Json", "System.IO.Compression.ZipFile", "JiuLing.CommonLibs" };
         /// <summary>
         /// 应用程序的主入口点。
         /// </summary>
         [STAThread]
         static void Main()
         {
-
             AppDomain.CurrentDomain.AssemblyResolve += (sender, args) =>
             {
                 string dllName = args.Name.Split(',')[0];

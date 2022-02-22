@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
 using System.Windows.Forms;
 using JiuLing.AutoUpgrade.CommandArgs;
 using JiuLing.AutoUpgrade.Common;
@@ -9,6 +8,7 @@ using JiuLing.AutoUpgrade.Enums;
 using JiuLing.AutoUpgrade.Models;
 using JiuLing.AutoUpgrade.Strategies;
 using JiuLing.AutoUpgrade.Templates;
+using JiuLing.CommonLibs.ExtensionMethods;
 
 namespace JiuLing.AutoUpgrade
 {
@@ -35,7 +35,7 @@ namespace JiuLing.AutoUpgrade
         /// <summary>
         /// 配置更新时的一些设置
         /// </summary>
-        private UpgradeSetting _upgradeSetting = new UpgradeSetting();
+        private readonly UpgradeSetting _upgradeSetting = new UpgradeSetting();
         public FmMain()
         {
             InitializeComponent();
@@ -122,12 +122,14 @@ namespace JiuLing.AutoUpgrade
             }
             upgradeConfig.MainProcessName = mainProcessArgs[0];
 
-            if (ArgumentUtils.TryGetCommandValue($"-{ArgumentTypeEnum.s}", out List<string> noticesArgument))
+            if (ArgumentUtils.HasCommand($"-{ArgumentTypeEnum.background}"))
             {
-                if (noticesArgument.Contains(nameof(_upgradeSetting.IsBackgroundCheck)))
-                {
-                    _upgradeSetting.IsBackgroundCheck = true;
-                }
+                _upgradeSetting.IsBackgroundCheck = true;
+            }
+
+            if (ArgumentUtils.HasCommand($"-{ArgumentTypeEnum.check}"))
+            {
+                _upgradeSetting.IsCheckSign = true;
             }
 
             if (ArgumentUtils.TryGetCommandValue($"-{ArgumentTypeEnum.http}", out List<string> httpArgs))
@@ -205,7 +207,31 @@ namespace JiuLing.AutoUpgrade
                     _fmLoading.SetMessage($"正在下载：{(percent * 100):f2}%");
                 });
                 await UpgradeTemplateFactory.Create(_upgradeConfig)
-                    .Update(_appNewVersion.DownloadUrl, GlobalArgs.AppPath, GlobalArgs.TempPackagePath, GlobalArgs.TempZipDirectory, KillMainApp, process);
+                    .Update(_appNewVersion.DownloadUrl, GlobalArgs.AppPath, GlobalArgs.TempPackagePath, GlobalArgs.TempZipDirectory,
+                        () =>
+                        {
+                            if (_upgradeSetting.IsCheckSign)
+                            {
+                                string fileSign = "";
+                                switch (_appNewVersion.SignType)
+                                {
+                                    case SignTypeEnum.MD5:
+                                        fileSign = JiuLing.CommonLibs.Security.MD5Utils.GetFileValueToLower(GlobalArgs.TempPackagePath);
+                                        break;
+                                    case SignTypeEnum.SHA11:
+                                        fileSign = JiuLing.CommonLibs.Security.SHA1Utils.GetFileValueToLower(GlobalArgs.TempPackagePath);
+                                        break;
+                                    default:
+                                        throw new Exception("服务器返回了不支持的签名方式");
+                                }
+
+                                if (_appNewVersion.SignValue.ToLower() != fileSign)
+                                {
+                                    throw new Exception("文件校验失败");
+                                }
+                            }
+                            KillMainApp();
+                        }, process);
 
                 MessageUtils.ShowInfo("更新完成");
                 Application.Exit();

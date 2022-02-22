@@ -15,13 +15,13 @@ namespace JiuLing.AutoUpgrade.Templates
         /// <param name="appPath">程序运行路径</param>
         /// <param name="updatePackPath">更新包的路径</param>
         /// <param name="tempZipDirectory">更新文件的临时解压路径</param>
-        /// <param name="beginUpdate">实际更新之前</param>
+        /// <param name="downloadCompleted">文件下载完成之后</param>
         /// <param name="progress">进度</param>
-        public async Task Update(string downloadUrl, string appPath, string updatePackPath, string tempZipDirectory, Action beginUpdate, IProgress<float> progress)
+        public async Task Update(string downloadUrl, string appPath, string updatePackPath, string tempZipDirectory, Action downloadCompleted, IProgress<float> progress)
         {
             await DownloadApp(downloadUrl, updatePackPath, progress);
+            downloadCompleted?.Invoke();
             PublishZipFile(updatePackPath, tempZipDirectory);
-            beginUpdate?.Invoke();
             CopyFiles(tempZipDirectory, appPath);
             ClearFileCache(updatePackPath, tempZipDirectory);
         }

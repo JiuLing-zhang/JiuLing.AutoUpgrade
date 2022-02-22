@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace JiuLing.AutoUpgrade.Shell.Enums
+﻿namespace JiuLing.AutoUpgrade.Shell.Enums
 {
     /// <summary>
     /// 参数类型
@@ -22,9 +18,12 @@ namespace JiuLing.AutoUpgrade.Shell.Enums
         /// </summary>
         http,
         /// <summary>
-        /// 常规设置参数
+        /// 后台检查更新参数
         /// </summary>
-        s
-
+        background,
+        /// <summary>
+        /// 校验文件参数
+        /// </summary>
+        check
     }
 }

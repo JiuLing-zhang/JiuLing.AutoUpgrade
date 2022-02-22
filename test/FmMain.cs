@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using JiuLing.AutoUpgrade.Shell;
 
 namespace JiuLing.AutoUpgrade.Test
@@ -20,6 +19,10 @@ namespace JiuLing.AutoUpgrade.Test
             try
             {
                 var app = AutoUpgradeFactory.Create();
+                app.SetUpgrade(config =>
+                { 
+                    config.IsCheckSign = true;
+                });
                 app.UseHttpMode(txtUpgradeUrl.Text)
                      .Run();
             }
