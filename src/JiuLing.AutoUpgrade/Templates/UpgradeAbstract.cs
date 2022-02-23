@@ -19,11 +19,18 @@ namespace JiuLing.AutoUpgrade.Templates
         /// <param name="progress">进度</param>
         public async Task Update(string downloadUrl, string appPath, string updatePackPath, string tempZipDirectory, Action downloadCompleted, IProgress<float> progress)
         {
-            await DownloadApp(downloadUrl, updatePackPath, progress);
-            downloadCompleted?.Invoke();
-            PublishZipFile(updatePackPath, tempZipDirectory);
-            CopyFiles(tempZipDirectory, appPath);
-            ClearFileCache(updatePackPath, tempZipDirectory);
+            try
+            {
+                await DownloadApp(downloadUrl, updatePackPath, progress);
+                downloadCompleted?.Invoke();
+                PublishZipFile(updatePackPath, tempZipDirectory);
+                CopyFiles(tempZipDirectory, appPath);
+
+            }
+            finally
+            {
+                ClearFileCache(updatePackPath, tempZipDirectory);
+            }
         }
 
         public abstract Task DownloadApp(string downloadUrl, string updatePackPath, IProgress<float> progress);
@@ -61,8 +68,15 @@ namespace JiuLing.AutoUpgrade.Templates
 
         private static void ClearFileCache(string updatePackPath, string tempZipDirectory)
         {
-            File.Delete(updatePackPath);
-            Directory.Delete(tempZipDirectory, true);
+            if (File.Exists(updatePackPath))
+            {
+                File.Delete(updatePackPath);
+            }
+
+            if (Directory.Exists(tempZipDirectory))
+            {
+                Directory.Delete(tempZipDirectory, true);
+            }
         }
     }
 }

@@ -149,7 +149,7 @@ namespace JiuLing.AutoUpgrade.Shell
                 noticesArgument = $"-{ArgumentTypeEnum.background} ";
             }
 
-            if (_upgradeSetting.IsBackgroundCheck)
+            if (_upgradeSetting.IsCheckSign)
             {
                 noticesArgument = $"{noticesArgument}-{ArgumentTypeEnum.check} ";
             }

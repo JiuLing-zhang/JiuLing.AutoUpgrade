@@ -1,6 +1,6 @@
 ﻿using System;
+using JiuLing.AutoUpgrade.ExtensionMethods;
 using JiuLing.AutoUpgrade.Models;
-using JiuLing.CommonLibs.ExtensionMethods;
 
 namespace JiuLing.AutoUpgrade.Common
 {

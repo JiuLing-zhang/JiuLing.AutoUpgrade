@@ -36,11 +36,6 @@
     <ApplicationIcon>Images\icons8_buy_upgrade.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="JiuLing.CommonLibs, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>lib\JiuLing.CommonLibs.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>lib\Newtonsoft.Json.dll</HintPath>
@@ -74,6 +69,7 @@
     <Compile Include="Enums\ArgumentTypeEnum.cs" />
     <Compile Include="Enums\SignTypeEnum.cs" />
     <Compile Include="Enums\UpgradeModeEnum.cs" />
+    <Compile Include="ExtensionMethods\StringExtension.cs" />
     <Compile Include="FmLoading.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -93,6 +89,8 @@
     <Compile Include="Net\HttpClientHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\MD5Utils.cs" />
+    <Compile Include="Security\SHA1Utils.cs" />
     <Compile Include="Strategies\UpgradeStrategy.cs" />
     <Compile Include="Strategies\UpgradeStrategyContext.cs" />
     <Compile Include="Strategies\UpgradeStrategyFactory.cs" />
@@ -133,7 +131,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="lib\JiuLing.CommonLibs.dll" />
     <EmbeddedResource Include="lib\Newtonsoft.Json.dll" />
     <EmbeddedResource Include="lib\System.IO.Compression.ZipFile.dll" />
     <Content Include="Images\icons8_buy_upgrade.ico" />

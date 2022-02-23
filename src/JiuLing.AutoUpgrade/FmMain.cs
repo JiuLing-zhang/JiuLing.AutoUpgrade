@@ -6,9 +6,9 @@ using JiuLing.AutoUpgrade.CommandArgs;
 using JiuLing.AutoUpgrade.Common;
 using JiuLing.AutoUpgrade.Enums;
 using JiuLing.AutoUpgrade.Models;
+using JiuLing.AutoUpgrade.Security;
 using JiuLing.AutoUpgrade.Strategies;
 using JiuLing.AutoUpgrade.Templates;
-using JiuLing.CommonLibs.ExtensionMethods;
 
 namespace JiuLing.AutoUpgrade
 {
@@ -216,18 +216,18 @@ namespace JiuLing.AutoUpgrade
                                 switch (_appNewVersion.SignType)
                                 {
                                     case SignTypeEnum.MD5:
-                                        fileSign = JiuLing.CommonLibs.Security.MD5Utils.GetFileValueToLower(GlobalArgs.TempPackagePath);
+                                        fileSign = MD5Utils.GetFileValueToLower(GlobalArgs.TempPackagePath);
                                         break;
                                     case SignTypeEnum.SHA11:
-                                        fileSign = JiuLing.CommonLibs.Security.SHA1Utils.GetFileValueToLower(GlobalArgs.TempPackagePath);
+                                        fileSign = SHA1Utils.GetFileValueToLower(GlobalArgs.TempPackagePath);
                                         break;
                                     default:
-                                        throw new Exception("服务器返回了不支持的签名方式");
+                                        throw new Exception("文件校验不通过。");
                                 }
 
-                                if (_appNewVersion.SignValue.ToLower() != fileSign)
+                                if (_appNewVersion.SignValue?.ToLower() != fileSign)
                                 {
-                                    throw new Exception("文件校验失败");
+                                    throw new Exception("文件校验失败。");
                                 }
                             }
                             KillMainApp();
@@ -236,15 +236,13 @@ namespace JiuLing.AutoUpgrade
                 MessageUtils.ShowInfo("更新完成");
                 Application.Exit();
                 RunMainApp();
+
             }
             catch (Exception ex)
             {
+                _fmLoading.HideLoading();
                 MessageUtils.ShowError($"更新失败：{ex.Message}");
                 BtnUpgrade.Enabled = true;
-            }
-            finally
-            {
-                _fmLoading.HideLoading();
             }
         }
 
