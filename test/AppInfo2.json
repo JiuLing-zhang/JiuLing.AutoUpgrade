@@ -4,5 +4,7 @@
   "MinVersion": "1.1.0",
   "DownloadUrl": "https://github.com/JiuLing-zhang/AutoUpgrade/raw/main/test/UpgradePackage1.2.0.zip",
   "Log": "1、Http更新。\n2、修改了若干bug。",
-  "CreateTime": "2022-01-18T11:11:11"
+  "CreateTime": "2022-01-18T11:11:11",
+  "SignType": "md5",
+  "SignValue": "xxx"
 }
