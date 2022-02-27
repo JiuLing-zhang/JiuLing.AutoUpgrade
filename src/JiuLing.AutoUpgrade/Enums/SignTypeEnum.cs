@@ -5,7 +5,8 @@
     /// </summary>
     public enum SignTypeEnum
     {
+        None,
         MD5,
-        SHA11
+        SHA1
     }
 }

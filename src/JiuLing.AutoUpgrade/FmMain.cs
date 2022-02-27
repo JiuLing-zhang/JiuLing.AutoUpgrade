@@ -218,7 +218,7 @@ namespace JiuLing.AutoUpgrade
                                     case SignTypeEnum.MD5:
                                         fileSign = MD5Utils.GetFileValueToLower(GlobalArgs.TempPackagePath);
                                         break;
-                                    case SignTypeEnum.SHA11:
+                                    case SignTypeEnum.SHA1:
                                         fileSign = SHA1Utils.GetFileValueToLower(GlobalArgs.TempPackagePath);
                                         break;
                                     default:

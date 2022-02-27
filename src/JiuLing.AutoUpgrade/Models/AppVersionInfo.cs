@@ -36,7 +36,7 @@ namespace JiuLing.AutoUpgrade.Models
         /// <summary>
         /// 签名类型
         /// </summary>
-        public SignTypeEnum SignType { get; set; }
+        public SignTypeEnum? SignType { get; set; }
         /// <summary>
         /// 签名值
         /// </summary>
