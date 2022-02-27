@@ -39,20 +39,24 @@ app.UseFtpMode("upgradePath", "userName", "password")
 ***更新信息需要返回如下格式的 `json` 内容。***  
 ```json
 {
-    "Version":"最新的版本号（必须返回）",
+    "Version":"【必须】最新的版本号",
     "MinVersion":"程序运行的最低版本号，低于此版本将无法运行",
-    "DownloadUrl":"程序的下载路径（必须返回）",
+    "DownloadUrl":"【必须】程序的下载路径",
     "Log":"更新日志",
-    "CreateTime":"时间"
+    "CreateTime":"时间",
+    "SignType":"签名方式（支持 MD5 和 SHA1 两种方式）",
+    "SignValue":"签名值"
 }
 ```
 ```json
 {
     "Version":"1.2.0",
     "MinVersion":"1.1.0",
-    "DownloadUrl":"demo.com/update.zip",
+    "DownloadUrl":"xxxxx/update.zip",
     "Log":"1、修复了若干bug。2、新增了若干需求。",
-    "CreateTime":"2022-01-16 12:12:12"
+    "CreateTime":"2022-01-16 12:12:12",
+    "SignType":"MD5",
+    "SignValue":"f42c6cb229a0a1237c9945448342d59e"
 }
 ```
 
@@ -63,6 +67,15 @@ app.UseFtpMode("upgradePath", "userName", "password")
     app.SetUpgrade(config =>
     {
         config.IsBackgroundCheck = true;
+    });
+```
+
+* 对下载的文件启用签名校验（默认为不启用），支持 `MD5` 和 `SHA1` 两种方式。  
+
+```C#
+    app.SetUpgrade(config =>
+    {
+        config.IsCheckSign = true;
     });
 ```
 
