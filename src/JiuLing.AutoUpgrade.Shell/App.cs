@@ -11,9 +11,14 @@ namespace JiuLing.AutoUpgrade.Shell
     /// </summary>
     public class App
     {
-
-        private readonly string _appPath = AppDomain.CurrentDomain.BaseDirectory;
-        private readonly string _autoUpgradePathExe;
+        /// <summary>
+        /// 核心程序的释放路径
+        /// </summary>
+        private readonly string _coreAppDirectory;
+        /// <summary>
+        /// 核心程序的文件名（含路径）
+        /// </summary>
+        private readonly string _coreAppFullFileName;
 
         private NetworkTypeEnum _networkType;
         /// <summary>
@@ -21,7 +26,8 @@ namespace JiuLing.AutoUpgrade.Shell
         /// </summary>
         public App()
         {
-            _autoUpgradePathExe = Path.Combine(_appPath, "JiuLing.AutoUpgrade.exe");
+            _coreAppDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "JiuLing.AutoUpgrade.Core.Temp");
+            _coreAppFullFileName = Path.Combine(_coreAppDirectory, "JiuLing.AutoUpgrade.exe");
         }
 
         private string _upgradeUrl = "";
@@ -102,7 +108,7 @@ namespace JiuLing.AutoUpgrade.Shell
             ReleaseAutoUpgradeFiles();
 
             var process = new Process();
-            process.StartInfo.FileName = _autoUpgradePathExe;
+            process.StartInfo.FileName = _coreAppFullFileName;
             process.StartInfo.Arguments = startArguments;
             process.Start();
             process.WaitForExit();
@@ -158,12 +164,16 @@ namespace JiuLing.AutoUpgrade.Shell
 
         private void ReleaseAutoUpgradeFiles()
         {
-            File.WriteAllBytes(_autoUpgradePathExe, Resource.AutoUpgrade_exe);
+            if (!Directory.Exists(_coreAppDirectory))
+            {
+                Directory.CreateDirectory(_coreAppDirectory);
+            }
+            File.WriteAllBytes(_coreAppFullFileName, Resource.AutoUpgrade_exe);
         }
 
         private void DeleteMainApplication()
         {
-            File.Delete(_autoUpgradePathExe);
+            Directory.Delete(_coreAppDirectory, true);
         }
     }
 }

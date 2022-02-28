@@ -24,6 +24,7 @@ namespace JiuLing.AutoUpgrade.Templates
                 await DownloadApp(downloadUrl, updatePackPath, progress);
                 downloadCompleted?.Invoke();
                 PublishZipFile(updatePackPath, tempZipDirectory);
+
                 CopyFiles(tempZipDirectory, appPath);
 
             }

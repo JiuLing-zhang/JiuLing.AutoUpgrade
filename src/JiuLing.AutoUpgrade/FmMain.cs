@@ -206,6 +206,7 @@ namespace JiuLing.AutoUpgrade
                 {
                     _fmLoading.SetMessage($"正在下载：{(percent * 100):f2}%");
                 });
+
                 await UpgradeTemplateFactory.Create(_upgradeConfig)
                     .Update(_appNewVersion.DownloadUrl, GlobalArgs.AppPath, GlobalArgs.TempPackagePath, GlobalArgs.TempZipDirectory,
                         () =>

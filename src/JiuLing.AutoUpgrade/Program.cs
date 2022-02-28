@@ -17,6 +17,10 @@ namespace JiuLing.AutoUpgrade
         [STAThread]
         static void Main()
         {
+            while (!System.Diagnostics.Debugger.IsAttached)
+            {
+
+            }
             AppDomain.CurrentDomain.AssemblyResolve += (sender, args) =>
             {
                 string dllName = args.Name.Split(',')[0];
