@@ -21,13 +21,13 @@ namespace JiuLing.AutoUpgrade.Common
             {
                 string fileName = p.MainModule?.FileName ?? throw new ArgumentException("未找到主进程启动路径");
                 string processDirectory = Path.GetDirectoryName(fileName) ?? throw new ArgumentException("未找到主进程启动目录");
-                string myDirectory = Path.GetDirectoryName(GlobalArgs.AppPath);
 
-                if (myDirectory != Path.Combine(processDirectory, GlobalArgs.AppReleasedDirectory))
+                if (Path.GetDirectoryName(GlobalArgs.AppPath) != Path.Combine(processDirectory, GlobalArgs.AppReleasedDirectoryName))
                 {
                     throw new ApplicationException("主程序和自动更新程序不在同一目录");
                 }
 
+                GlobalArgs.MainAppPath = processDirectory;
                 return new ProcessInfo()
                 {
                     Id = p.Id,

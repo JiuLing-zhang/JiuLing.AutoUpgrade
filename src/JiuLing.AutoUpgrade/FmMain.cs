@@ -208,7 +208,7 @@ namespace JiuLing.AutoUpgrade
                 });
 
                 await UpgradeTemplateFactory.Create(_upgradeConfig)
-                    .Update(_appNewVersion.DownloadUrl, GlobalArgs.AppPath, GlobalArgs.TempPackagePath, GlobalArgs.TempZipDirectory,
+                    .Update(_appNewVersion.DownloadUrl, GlobalArgs.MainAppPath, GlobalArgs.TempPackagePath, GlobalArgs.TempZipDirectory,
                         () =>
                         {
                             if (_upgradeSetting.IsCheckSign)
