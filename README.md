@@ -1,7 +1,16 @@
+<p align="center">
+<a href="https://github.com/JiuLing-zhang/JiuLing.AutoUpgrade" target="_blank"><img src="https://s2.loli.net/2022/03/06/CG8X5AOwfFRInSa.png" ></a>
+</p>
+
+<div align="center">
+
 ![](https://img.shields.io/github/license/JiuLing-zhang/JiuLing.AutoUpgrade)
 ![](https://img.shields.io/github/workflow/status/JiuLing-zhang/JiuLing.AutoUpgrade/Build)
 [![](https://img.shields.io/nuget/v/JiuLing.AutoUpgrade)](https://www.nuget.org/packages/JiuLing.AutoUpgrade)
-[![](https://img.shields.io/github/v/release/JiuLing-zhang/JiuLing.AutoUpgrade)](https://github.com/JiuLing-zhang/JiuLing.AutoUpgrade/releases)  
+[![](https://img.shields.io/github/v/release/JiuLing-zhang/JiuLing.AutoUpgrade)](https://github.com/JiuLing-zhang/JiuLing.AutoUpgrade/releases)
+
+</div>
+
 
 ## 介绍
 `JiuLing.AutoUpgrade` 是一个简单、易用的自动更新组件。  
