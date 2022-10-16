@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace JiuLing.AutoUpgrade.Shell
+﻿namespace JiuLing.AutoUpgrade.Shell
 {
     /// <summary>
     /// 自动更新组件工厂

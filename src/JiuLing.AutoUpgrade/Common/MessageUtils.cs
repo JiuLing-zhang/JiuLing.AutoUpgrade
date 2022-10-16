@@ -1,5 +1,4 @@
-﻿using System.Windows;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace JiuLing.AutoUpgrade.Common
 {
@@ -23,7 +22,7 @@ namespace JiuLing.AutoUpgrade.Common
 
         private static void Show(string msg, MessageBoxIcon messageBoxIcon)
         {
-            System.Windows.Forms.MessageBox.Show(msg, _title, MessageBoxButtons.OK, messageBoxIcon);
+            MessageBox.Show(msg, _title, MessageBoxButtons.OK, messageBoxIcon);
         }
     }
 }

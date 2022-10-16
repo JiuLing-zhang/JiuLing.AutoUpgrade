@@ -8,9 +8,7 @@ namespace JiuLing.AutoUpgrade.Templates
     internal class UpgradeUsingHttp : UpgradeAbstract
     {
         private readonly HttpClientHelper _clientHelper = new HttpClientHelper();
-        public UpgradeUsingHttp()
-        {
-        }
+
         public override async Task DownloadApp(string downloadUrl, string updatePackPath, IProgress<float> progress)
         {
             if (File.Exists(updatePackPath))

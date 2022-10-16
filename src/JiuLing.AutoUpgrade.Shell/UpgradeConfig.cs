@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using JiuLing.AutoUpgrade.Shell.Enums;
-
-namespace JiuLing.AutoUpgrade.Shell
+﻿namespace JiuLing.AutoUpgrade.Shell
 {
     /// <summary>
     /// 更新时的一些设置

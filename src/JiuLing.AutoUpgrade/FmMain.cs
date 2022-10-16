@@ -213,7 +213,7 @@ namespace JiuLing.AutoUpgrade
                         {
                             if (_upgradeSetting.IsCheckSign)
                             {
-                                string fileSign = "";
+                                string fileSign;
                                 switch (_appNewVersion.SignType)
                                 {
                                     case SignTypeEnum.MD5:

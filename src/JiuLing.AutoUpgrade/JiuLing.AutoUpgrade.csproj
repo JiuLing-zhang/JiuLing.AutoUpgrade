@@ -65,7 +65,6 @@
     <Compile Include="Common\GlobalArgs.cs" />
     <Compile Include="Common\MessageUtils.cs" />
     <Compile Include="Common\VersionUtils.cs" />
-    <Compile Include="EmbeddedAssembly.cs" />
     <Compile Include="Enums\ArgumentTypeEnum.cs" />
     <Compile Include="Enums\SignTypeEnum.cs" />
     <Compile Include="Enums\UpgradeModeEnum.cs" />
