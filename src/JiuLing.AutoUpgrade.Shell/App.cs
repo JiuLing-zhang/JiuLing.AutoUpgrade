@@ -1,9 +1,9 @@
-﻿using System;
+﻿using JiuLing.AutoUpgrade.Shell.Enums;
+using JiuLing.AutoUpgrade.Shell.Strategies;
+using System;
 using System.Diagnostics;
 using System.IO;
-using JiuLing.AutoUpgrade.Shell.Enums;
-using JiuLing.AutoUpgrade.Shell.Strategies;
-
+using System.Threading;
 namespace JiuLing.AutoUpgrade.Shell
 {
     /// <summary>
@@ -21,6 +21,8 @@ namespace JiuLing.AutoUpgrade.Shell
         private readonly string _coreAppFullFileName;
 
         private NetworkTypeEnum _networkType;
+
+        private static Mutex _mutex;
         /// <summary>
         /// 初始化组件
         /// </summary>
@@ -98,6 +100,13 @@ namespace JiuLing.AutoUpgrade.Shell
         /// </summary>
         public void Run()
         {
+            //不允许同一个程序的自动更新组件同时运行
+            _mutex = new Mutex(true, $"JiuLing.AutoUpgrade.{Process.GetCurrentProcess().ProcessName}");
+            if (!_mutex.WaitOne(0, false))
+            {
+                Console.WriteLine("不允许同一个程序的自动更新组件同时运行。");
+                return;
+            }
             string startArguments = "";
 
             startArguments = $"{startArguments}{GetProcessArgument()} ";
