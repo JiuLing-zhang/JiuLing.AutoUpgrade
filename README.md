@@ -70,6 +70,15 @@ app.UseFtpMode("upgradePath", "userName", "password")
 ```
 
 ## 高级设置  
+* 检查更新时的请求超时时间（默认 5 秒）    
+
+```C#
+    app.SetUpgrade(config =>
+    {
+        config.TimeoutSecond = 60;
+    });
+```
+
 * 是否在后台进行更新检查（默认为否）    
 
 ```C#
