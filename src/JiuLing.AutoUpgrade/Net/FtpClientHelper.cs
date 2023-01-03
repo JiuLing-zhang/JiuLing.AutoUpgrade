@@ -20,12 +20,13 @@ namespace JiuLing.AutoUpgrade.Net
         /// 读取文本
         /// </summary>
         /// <param name="filePath"></param>
+        /// <param name="timeout">超时时间</param>
         /// <returns></returns>
-        public async Task<string> ReadFileText(string filePath)
+        public async Task<string> ReadFileText(string filePath, TimeSpan timeout)
         {
             var request = (FtpWebRequest)WebRequest.Create(filePath);
             request.Method = WebRequestMethods.Ftp.DownloadFile;
-
+            request.Timeout = Convert.ToInt32(timeout.TotalMilliseconds);
             request.Credentials = new NetworkCredential(_username, _password);
             using (var response = (FtpWebResponse)request.GetResponse())
             {

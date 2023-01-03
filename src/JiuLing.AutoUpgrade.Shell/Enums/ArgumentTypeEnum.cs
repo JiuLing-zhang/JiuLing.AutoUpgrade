@@ -10,6 +10,10 @@
         /// </summary>
         p,
         /// <summary>
+        /// 超时时间
+        /// </summary>
+        t,
+        /// <summary>
         /// ftp更新参数
         /// </summary>
         ftp,

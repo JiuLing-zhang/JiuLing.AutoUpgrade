@@ -157,11 +157,11 @@ namespace JiuLing.AutoUpgrade.Shell
         /// <returns></returns>
         private string GetSettingArgument()
         {
+            string noticesArgument = $"-{ArgumentTypeEnum.t} {_upgradeSetting.TimeoutSecond} ";
 
-            string noticesArgument = "";
             if (_upgradeSetting.IsBackgroundCheck)
             {
-                noticesArgument = $"-{ArgumentTypeEnum.background} ";
+                noticesArgument = $"{noticesArgument}-{ArgumentTypeEnum.background} ";
             }
 
             if (_upgradeSetting.IsCheckSign)

@@ -22,7 +22,7 @@ namespace JiuLing.AutoUpgrade.Strategies
         {
             try
             {
-                var result = await _clientHelper.GetReadString(_connectionConfig.UpgradeUrl);
+                var result = await _clientHelper.GetReadString(_connectionConfig.UpgradeUrl, _connectionConfig.Timeout);
                 var upgradeInfo = JsonConvert.DeserializeObject<AppVersionInfo>(result);
                 if (upgradeInfo == null)
                 {

@@ -13,5 +13,9 @@
         /// 是否校验签名
         /// </summary>
         public bool IsCheckSign { get; set; } = false;
+        /// <summary>
+        /// 检查更新时的超时时间（秒）
+        /// </summary>
+        public int TimeoutSecond { get; set; } = 5;
     }
 }

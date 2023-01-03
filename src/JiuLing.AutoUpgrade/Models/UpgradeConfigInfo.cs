@@ -1,4 +1,5 @@
 ﻿using JiuLing.AutoUpgrade.Enums;
+using System;
 
 namespace JiuLing.AutoUpgrade.Models
 {
@@ -15,6 +16,7 @@ namespace JiuLing.AutoUpgrade.Models
         /// 更新方式
         /// </summary>
         public UpgradeModeEnum UpgradeMode { get; set; }
+
         /// <summary>
         /// 请求连接配置
         /// </summary>
@@ -23,11 +25,19 @@ namespace JiuLing.AutoUpgrade.Models
 
     internal class HttpConnectionConfig
     {
+        /// <summary>
+        /// 超时时间
+        /// </summary>
+        public TimeSpan Timeout { get; set; }
         public string UpgradeUrl { get; set; } = "";
     }
 
     internal class FtpConnectionConfig
     {
+        /// <summary>
+        /// 超时时间
+        /// </summary>
+        public TimeSpan Timeout { get; set; }
         public string UserName { get; set; } = "";
         public string Password { get; set; } = "";
         public string UpgradePath { get; set; } = "";

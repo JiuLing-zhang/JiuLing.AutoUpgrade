@@ -24,9 +24,11 @@ namespace JiuLing.AutoUpgrade.Net
         /// 发送一个GET请求
         /// </summary>
         /// <param name="url">请求的URL</param>
+        /// <param name="timeout">超时时间</param>
         /// <returns>返回服务器请求得到的字符串</returns>
-        public async Task<string> GetReadString(string url)
+        public async Task<string> GetReadString(string url, TimeSpan timeout)
         {
+            _httpClient.Timeout = timeout;
             return await _httpClient.GetStringAsync(url);
         }
 

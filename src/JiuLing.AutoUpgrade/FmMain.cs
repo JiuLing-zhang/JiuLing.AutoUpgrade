@@ -104,6 +104,9 @@ namespace JiuLing.AutoUpgrade
             * -p MainProcess
               设置主进程,[MainProcess:主进程名称]
 
+            * -t 10
+              超时时间,[10:10秒]
+
             * -http UpgradeUrl
               使用 HTTP 方式更新,[UpgradeUrl:更新地址]
 
@@ -122,6 +125,24 @@ namespace JiuLing.AutoUpgrade
             }
             upgradeConfig.MainProcessName = mainProcessArgs[0];
 
+            TimeSpan timeout;
+            if (!ArgumentUtils.TryGetCommandValue($"-{ArgumentTypeEnum.t}", out List<string> timeoutArgs))
+            {
+                timeout = TimeSpan.FromSeconds(5);
+            }
+            else
+            {
+                int timeoutInt;
+                if (!int.TryParse(timeoutArgs[0], out timeoutInt))
+                {
+                    timeout = TimeSpan.FromSeconds(5);
+                }
+                else
+                {
+                    timeout = TimeSpan.FromSeconds(timeoutInt);
+                }
+            }
+
             if (ArgumentUtils.HasCommand($"-{ArgumentTypeEnum.background}"))
             {
                 _upgradeSetting.IsBackgroundCheck = true;
@@ -139,6 +160,7 @@ namespace JiuLing.AutoUpgrade
                 {
                     upgradeConfig.ConnectionConfig = new HttpConnectionConfig()
                     {
+                        Timeout = timeout,
                         UpgradeUrl = httpArgs[0]
                     };
                     return upgradeConfig;
@@ -156,6 +178,7 @@ namespace JiuLing.AutoUpgrade
                 {
                     upgradeConfig.ConnectionConfig = new FtpConnectionConfig()
                     {
+                        Timeout = timeout,
                         UpgradePath = ftpArgs[0],
                         UserName = ftpArgs[1],
                         Password = ftpArgs[2]

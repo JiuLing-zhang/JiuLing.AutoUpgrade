@@ -13,17 +13,19 @@ namespace JiuLing.AutoUpgrade.Strategies
     {
         private readonly FtpClientHelper _clientHelper;
         private readonly string _upgradePath;
+        private TimeSpan _timeout;
         public UpgradeStrategyUsingFtp(FtpConnectionConfig connectionConfig)
         {
             _clientHelper = new FtpClientHelper(connectionConfig.UserName, connectionConfig.Password);
             _upgradePath = connectionConfig.UpgradePath;
+            _timeout = connectionConfig.Timeout;
         }
 
         public override async Task<AppVersionInfo> GetUpgradeInfo()
         {
             try
             {
-                var result = await _clientHelper.ReadFileText(_upgradePath);
+                var result = await _clientHelper.ReadFileText(_upgradePath, _timeout);
                 var upgradeInfo = JsonConvert.DeserializeObject<AppVersionInfo>(result);
                 if (upgradeInfo == null)
                 {
