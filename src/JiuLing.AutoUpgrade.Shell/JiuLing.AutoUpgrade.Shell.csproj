@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<TargetFrameworks>netstandard2.0;netstandard2.1;net5.0;net6.0;net7.0</TargetFrameworks>
 		<PackageId>JiuLing.AutoUpgrade</PackageId>
-		<Version>1.2.8</Version>
+		<Version>1.2.9</Version>
 		<Authors>九零</Authors>
 		<Product>JiuLing.AutoUpgrade</Product>
 		<Description>一个简单的.Net下的自动更新组件。</Description>
