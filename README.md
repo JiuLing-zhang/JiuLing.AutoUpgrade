@@ -1,5 +1,5 @@
 <p align="center">
-<a href="https://github.com/JiuLing-zhang/JiuLing.AutoUpgrade" target="_blank"><img src="https://s2.loli.net/2022/03/06/CG8X5AOwfFRInSa.png" ></a>
+<a href="https://github.com/JiuLing-zhang/JiuLing.AutoUpgrade" target="_blank"><img src="https://github.com/JiuLing-zhang/JiuLing.AutoUpgrade/raw/main/docs/resources/images/logo.png" ></a>
 </p>
 
 <div align="center">
@@ -23,9 +23,8 @@
 
 **检查更新时，如果指定了最小运行版本，并且主程序版本低于最小版本，那么自动更新程序将不允许跳过本次更新，不更新直接关闭自动更新程序时，同时也会关闭主程序**  
 
-![main1.png](https://s2.loli.net/2022/01/21/CoOMVHLTvQAPu5X.png)  
-![main2.png](https://s2.loli.net/2022/01/21/xC6jka4vGdgptTq.png)  
-![download.png](https://s2.loli.net/2022/01/21/94nGMBNJpQUzYTR.png)  
+![demo1.png](https://github.com/JiuLing-zhang/JiuLing.AutoUpgrade/raw/main/docs/resources/images/demo1.png)  
+![demo2.png](https://github.com/JiuLing-zhang/JiuLing.AutoUpgrade/raw/main/docs/resources/images/demo2.png)  
 
 ## 安装  
 * 通过 `Nuget` 直接安装。👉👉👉[`JiuLing.AutoUpgrade`](https://www.nuget.org/packages/JiuLing.AutoUpgrade)  
