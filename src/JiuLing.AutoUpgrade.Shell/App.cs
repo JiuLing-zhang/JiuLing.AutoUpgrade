@@ -101,7 +101,7 @@ namespace JiuLing.AutoUpgrade.Shell
         public void Run()
         {
             //不允许同一个程序的自动更新组件同时运行
-            _mutex = new Mutex(true, $"JiuLing.AutoUpgrade.{Process.GetCurrentProcess().ProcessName}");
+            _mutex = new Mutex(false, $"JiuLing.AutoUpgrade.{Process.GetCurrentProcess().ProcessName}");
             if (!_mutex.WaitOne(0, false))
             {
                 Console.WriteLine("不允许同一个程序的自动更新组件同时运行。");
@@ -123,6 +123,7 @@ namespace JiuLing.AutoUpgrade.Shell
             process.WaitForExit();
 
             DeleteMainApplication();
+            _mutex.ReleaseMutex();
         }
 
         /// <summary>
