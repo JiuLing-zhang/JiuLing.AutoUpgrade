@@ -20,11 +20,29 @@ namespace JiuLing.AutoUpgrade.Test
             {
                 var app = AutoUpgradeFactory.Create();
                 app.SetUpgrade(config =>
-                { 
+                {
                     config.IsCheckSign = true;
                 });
                 app.UseHttpMode(txtUpgradeUrl.Text)
                      .Run();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"操作失败：{ex.Message}");
+            }
+        }
+
+        private async void BtnCheckUpgradeAsync_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var app = AutoUpgradeFactory.Create();
+                app.SetUpgrade(config =>
+                {
+                    config.IsCheckSign = true;
+                });
+                await app.UseHttpMode(txtUpgradeUrl.Text)
+                      .RunAsync();
             }
             catch (Exception ex)
             {
@@ -39,6 +57,20 @@ namespace JiuLing.AutoUpgrade.Test
                 var app = AutoUpgradeFactory.Create();
                 app.UseFtpMode(TxtFtpUpgradePath.Text, TxtUserName.Text, TxtPassword.Text)
                     .Run();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"操作失败：{ex.Message}");
+            }
+        }
+
+        private async void BtnCheckUpgradeUsingFtpAsync_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var app = AutoUpgradeFactory.Create();
+                await app.UseFtpMode(TxtFtpUpgradePath.Text, TxtUserName.Text, TxtPassword.Text)
+                      .RunAsync();
             }
             catch (Exception ex)
             {

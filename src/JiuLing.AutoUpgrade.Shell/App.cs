@@ -4,6 +4,8 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
+using System.Threading.Tasks;
+
 namespace JiuLing.AutoUpgrade.Shell
 {
     /// <summary>
@@ -104,26 +106,55 @@ namespace JiuLing.AutoUpgrade.Shell
             _mutex = new Mutex(false, $"JiuLing.AutoUpgrade.{Process.GetCurrentProcess().ProcessName}");
             if (!_mutex.WaitOne(0, false))
             {
-                Console.WriteLine("不允许同一个程序的自动更新组件同时运行。");
+                Debug.WriteLine("不允许同一个程序的自动更新组件同时运行。");
                 return;
             }
-            string startArguments = "";
-
-            startArguments = $"{startArguments}{GetProcessArgument()} ";
-            startArguments = $"{startArguments}{GetNetworkArgument()} ";
-            startArguments = $"{startArguments}{GetSettingArgument()} ";
-            startArguments = startArguments.Trim();
 
             ReleaseAutoUpgradeFiles();
 
             var process = new Process();
             process.StartInfo.FileName = _coreAppFullFileName;
-            process.StartInfo.Arguments = startArguments;
+            process.StartInfo.Arguments = GenerateStartArguments();
             process.Start();
             process.WaitForExit();
 
             DeleteMainApplication();
             _mutex.ReleaseMutex();
+        }
+
+#if NET5_0_OR_GREATER
+        /// <summary>
+        /// 启动更新
+        /// </summary>
+        public async Task RunAsync()
+        {
+            //不允许同一个程序的自动更新组件同时运行
+            _mutex = new Mutex(false, $"JiuLing.AutoUpgrade.{Process.GetCurrentProcess().ProcessName}");
+            if (!_mutex.WaitOne(0, false))
+            {
+                Debug.WriteLine("不允许同一个程序的自动更新组件同时运行。");
+                return;
+            }
+
+            ReleaseAutoUpgradeFiles();
+
+            var process = new Process();
+            process.StartInfo.FileName = _coreAppFullFileName;
+            process.StartInfo.Arguments = GenerateStartArguments();
+            process.Start();
+            await process.WaitForExitAsync();
+
+            DeleteMainApplication();
+            _mutex.ReleaseMutex();
+        }
+#endif
+        private string GenerateStartArguments()
+        {
+            string startArguments = "";
+            startArguments = $"{startArguments}{GetProcessArgument()} ";
+            startArguments = $"{startArguments}{GetNetworkArgument()} ";
+            startArguments = $"{startArguments}{GetSettingArgument()} ";
+            return startArguments.Trim();
         }
 
         /// <summary>
