@@ -5,7 +5,7 @@
 <div align="center">
 
 ![](https://img.shields.io/github/license/JiuLing-zhang/JiuLing.AutoUpgrade)
-![](https://img.shields.io/github/workflow/status/JiuLing-zhang/JiuLing.AutoUpgrade/Build)
+![](https://img.shields.io/github/actions/workflow/status/JiuLing-zhang/JiuLing.AutoUpgrade/build.yml)
 [![](https://img.shields.io/nuget/v/JiuLing.AutoUpgrade)](https://www.nuget.org/packages/JiuLing.AutoUpgrade)
 [![](https://img.shields.io/github/v/release/JiuLing-zhang/JiuLing.AutoUpgrade)](https://github.com/JiuLing-zhang/JiuLing.AutoUpgrade/releases)
 
@@ -31,19 +31,33 @@
 * 下载最新的 `Release` 版本自己引用到项目。👉👉👉[`下载`](https://github.com/JiuLing-zhang/JiuLing.AutoUpgrade/releases)  
 
 ## 使用  
-1. 导入命名空间 `using JiuLing.AutoUpgrade.Shell;`
-2. 启动更新
+1. 导入命名空间  
+```C#
+using JiuLing.AutoUpgrade.Shell;
+```
+2. 创建更新
+```C#
+var app = AutoUpgradeFactory.Create();
+```
+3. 选择更新方式
 ```C#
 //Http 方式更新
-var app = AutoUpgradeFactory.Create();
-app.UseHttpMode("https://raw.githubusercontent.com/JiuLing-zhang/AutoUpgrade/main/test/AppInfo.json")
-    .Run();
+app.UseHttpMode("https://raw.githubusercontent.com/JiuLing-zhang/AutoUpgrade/main/test/AppInfo.json");
 
 //Ftp 方式更新
-var app = AutoUpgradeFactory.Create();
-app.UseFtpMode("upgradePath", "userName", "password")
-    .Run();
+app.UseFtpMode("upgradePath", "userName", "password");
 ```
+4. 启动
+```C#
+app.Run();
+// or
+await app.RunAsync();
+```
+> 链式写法
+```C#
+AutoUpgradeFactory.Create().UseHttpMode("https://raw.githubusercontent.com/JiuLing-zhang/AutoUpgrade/main/test/AppInfo.json").Run();
+```
+
 ***更新信息需要返回如下格式的 `json` 内容。***  
 ```json
 {
