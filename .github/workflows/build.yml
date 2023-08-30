@@ -18,6 +18,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Setup Nuget
+        uses: NuGet/setup-nuget@v1.2.0
+
+      - name: Restore nuget packages
+        run: nuget restore JiuLing.AutoUpgrade.sln
+
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v1.1
 
