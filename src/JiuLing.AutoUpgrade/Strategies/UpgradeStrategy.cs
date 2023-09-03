@@ -1,10 +1,10 @@
 ﻿using System.Threading.Tasks;
-using JiuLing.AutoUpgrade.Models;
+using JiuLing.CommonLibs.Model;
 
 namespace JiuLing.AutoUpgrade.Strategies
 {
     internal abstract class UpgradeStrategy
     {
-        public abstract Task<AppVersionInfo> GetUpgradeInfo();
+        public abstract Task<AppUpgradeInfo> GetUpgradeInfo();
     }
 }

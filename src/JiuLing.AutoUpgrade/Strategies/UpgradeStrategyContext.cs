@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using JiuLing.AutoUpgrade.Models;
+using JiuLing.CommonLibs.Model;
 
 namespace JiuLing.AutoUpgrade.Strategies
 {
@@ -11,7 +11,7 @@ namespace JiuLing.AutoUpgrade.Strategies
             _strategy = strategy;
         }
 
-        public Task<AppVersionInfo> GetUpgradeInfo()
+        public Task<AppUpgradeInfo> GetUpgradeInfo()
         {
             return _strategy.GetUpgradeInfo();
         }

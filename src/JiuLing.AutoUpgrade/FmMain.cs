@@ -2,13 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Forms;
-using JiuLing.AutoUpgrade.CommandArgs;
 using JiuLing.AutoUpgrade.Common;
 using JiuLing.AutoUpgrade.Enums;
 using JiuLing.AutoUpgrade.Models;
-using JiuLing.AutoUpgrade.Security;
 using JiuLing.AutoUpgrade.Strategies;
 using JiuLing.AutoUpgrade.Templates;
+using JiuLing.CommonLibs;
+using JiuLing.CommonLibs.Model;
+using JiuLing.CommonLibs.Security;
 
 namespace JiuLing.AutoUpgrade
 {
@@ -30,12 +31,14 @@ namespace JiuLing.AutoUpgrade
         /// <summary>
         /// 新版本更新信息
         /// </summary>
-        private AppVersionInfo _appNewVersion;
+        private AppUpgradeInfo _appNewVersion;
 
         /// <summary>
         /// 配置更新时的一些设置
         /// </summary>
         private readonly UpgradeSetting _upgradeSetting = new UpgradeSetting();
+
+        private readonly CommandLineArgsHelper _commandLineArgsHelper = new CommandLineArgsHelper();
         public FmMain()
         {
             InitializeComponent();
@@ -65,7 +68,7 @@ namespace JiuLing.AutoUpgrade
                 _appNewVersion = await new UpgradeStrategyContext(upgradeStrategy).GetUpgradeInfo();
 
                 bool isNeedUpdate;
-                (isNeedUpdate, _mainProcess.AllowRun) = VersionUtils.CheckNeedUpdate(_appNewVersion, _mainAppVersion);
+                (isNeedUpdate, _mainProcess.AllowRun) = VersionUtils.CheckNeedUpdate(_mainAppVersion, _appNewVersion.Version, _appNewVersion.MinVersion);
                 if (isNeedUpdate == false)
                 {
                     _fmLoading.HideLoading();
@@ -118,15 +121,14 @@ namespace JiuLing.AutoUpgrade
             **********************************************/
 
             var upgradeConfig = new UpgradeConfigInfo();
-            ArgumentUtils.Initialize(string.Join(" ", Environment.GetCommandLineArgs()));
-            if (!ArgumentUtils.TryGetCommandValue($"-{ArgumentTypeEnum.p}", out List<string> mainProcessArgs))
+            if (!_commandLineArgsHelper.TryGetCommandValue($"-{ArgumentTypeEnum.p}", out List<string> mainProcessArgs))
             {
                 throw new ArgumentException("缺少主进程参数");
             }
             upgradeConfig.MainProcessName = mainProcessArgs[0];
 
             TimeSpan timeout;
-            if (!ArgumentUtils.TryGetCommandValue($"-{ArgumentTypeEnum.t}", out List<string> timeoutArgs))
+            if (!_commandLineArgsHelper.TryGetCommandValue($"-{ArgumentTypeEnum.t}", out List<string> timeoutArgs))
             {
                 timeout = TimeSpan.FromSeconds(5);
             }
@@ -143,17 +145,17 @@ namespace JiuLing.AutoUpgrade
                 }
             }
 
-            if (ArgumentUtils.HasCommand($"-{ArgumentTypeEnum.background}"))
+            if (_commandLineArgsHelper.HasCommand($"-{ArgumentTypeEnum.background}"))
             {
                 _upgradeSetting.IsBackgroundCheck = true;
             }
 
-            if (ArgumentUtils.HasCommand($"-{ArgumentTypeEnum.check}"))
+            if (_commandLineArgsHelper.HasCommand($"-{ArgumentTypeEnum.check}"))
             {
                 _upgradeSetting.IsCheckSign = true;
             }
 
-            if (ArgumentUtils.TryGetCommandValue($"-{ArgumentTypeEnum.http}", out List<string> httpArgs))
+            if (_commandLineArgsHelper.TryGetCommandValue($"-{ArgumentTypeEnum.http}", out List<string> httpArgs))
             {
                 upgradeConfig.UpgradeMode = UpgradeModeEnum.Http;
                 try
@@ -171,7 +173,7 @@ namespace JiuLing.AutoUpgrade
                 }
             }
 
-            if (ArgumentUtils.TryGetCommandValue($"-{ArgumentTypeEnum.ftp}", out List<string> ftpArgs))
+            if (_commandLineArgsHelper.TryGetCommandValue($"-{ArgumentTypeEnum.ftp}", out List<string> ftpArgs))
             {
                 upgradeConfig.UpgradeMode = UpgradeModeEnum.Ftp;
                 try
@@ -237,12 +239,12 @@ namespace JiuLing.AutoUpgrade
                             if (_upgradeSetting.IsCheckSign)
                             {
                                 string fileSign;
-                                switch (_appNewVersion.SignType)
+                                switch (_appNewVersion.SignType.ToLower())
                                 {
-                                    case SignTypeEnum.MD5:
+                                    case "md5":
                                         fileSign = MD5Utils.GetFileValueToLower(GlobalArgs.TempPackagePath);
                                         break;
-                                    case SignTypeEnum.SHA1:
+                                    case "sha1":
                                         fileSign = SHA1Utils.GetFileValueToLower(GlobalArgs.TempPackagePath);
                                         break;
                                     default:
