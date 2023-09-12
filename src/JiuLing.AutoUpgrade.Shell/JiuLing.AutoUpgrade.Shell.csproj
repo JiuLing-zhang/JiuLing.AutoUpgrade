@@ -43,7 +43,7 @@
 	</ItemGroup>
 
 	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-		<Exec Command="echo a | xcopy &quot;$(ProjectDir)..\..\Librarys.tmp\JiuLing.AutoUpgrade.exe&quot; &quot;$(ProjectDir)Resources\&quot;" />
+		<Exec Command="echo a | xcopy &quot;$(ProjectDir)..\Librarys.tmp\JiuLing.AutoUpgrade.exe&quot; &quot;$(ProjectDir)Resources\&quot;" />
 	</Target>
 
 </Project>
