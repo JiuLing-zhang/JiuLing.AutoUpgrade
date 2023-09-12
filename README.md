@@ -113,22 +113,18 @@ AutoUpgradeFactory.Create().UseHttpMode("https://raw.githubusercontent.com/JiuLi
 ## 项目说明  
 
 ```Text
-|-- root  
-    |-- JiuLing.AutoUpgrade.sln  项目解决方案  
-    |-- Librarys.tmp             临时目录，核心程序编译完成后将自身发布到该目录  
-    |   |-- JiuLing.AutoUpgrade.exe  
-    |-- src  
-    |   |-- JiuLing.AutoUpgrade  核心程序  
-    |   |   |-- lib              项目需要的dll，通过本地目录引用，然后以嵌入式资源打包，使得最终只生成一个.exe的主程序  
-    |   |   |   |-- Newtonsoft.Json.dll  
-    |   |   |   |-- System.IO.Compression.ZipFile.dll  
-    |   |-- JiuLing.AutoUpgrade.Shell      启动程序，用来启动核心更新程序  
-    |       |-- Resources                  通过动态资源的形式加载核心程序，使得核心程序可以实现自身更新。项目编译前，会先从Librarys.tmp文件夹拷贝核心程序。    
-    |       |   |-- JiuLing.AutoUpgrade.exe  
-    |-- test                               测试程序
-        |-- JiuLing.AutoUpgrade.Test.csproj  
-        |-- UpgradePackage1.2.0.zip  
-        |-- 测试环境配置说明.txt  
+src
+  ├─JiuLing.AutoUpgrade             核心程序
+  ├─JiuLing.AutoUpgrade.Shell       启动程序，用来启动核心更新程序  
+  │  └─Resources                    通过动态资源的形式加载核心程序，使得核心程序可以实现自身更新。项目编译前，会先从Librarys.tmp文件夹拷贝核心程序。
+  │     └─JiuLing.AutoUpgrade.exe
+  ├─JiuLing.AutoUpgrade.Test        测试程序
+  │  ├─JiuLing.AutoUpgrade.Test.csproj
+  │  ├─UpgradePackage1.2.0.zip
+  │  └─测试环境配置说明.txt
+  ├─Librarys.tmp                    临时目录，核心程序编译完成后将自身发布到该目录
+  │  └─JiuLing.AutoUpgrade.exe
+  └─JiuLing.AutoUpgrade.sln         项目解决方案
 ```
 
 ## License
