@@ -3,7 +3,7 @@ using JiuLing.AutoUpgrade.Models;
 using JiuLing.AutoUpgrade.Net;
 using System.Threading.Tasks;
 using JiuLing.CommonLibs.Model;
-using Newtonsoft.Json;
+using JiuLing.CommonLibs.ExtensionMethods;
 
 namespace JiuLing.AutoUpgrade.Strategies
 {
@@ -24,7 +24,7 @@ namespace JiuLing.AutoUpgrade.Strategies
             try
             {
                 var result = await _clientHelper.GetReadString(_connectionConfig.UpgradeUrl, _connectionConfig.Timeout);
-                var upgradeInfo = JsonConvert.DeserializeObject<AppUpgradeInfo>(result);
+                var upgradeInfo = result.ToObject<AppUpgradeInfo>();
                 if (upgradeInfo == null)
                 {
                     throw new Exception("服务器响应错误");
