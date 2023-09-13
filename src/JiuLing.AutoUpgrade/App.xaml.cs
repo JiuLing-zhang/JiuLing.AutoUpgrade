@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
 using JiuLing.AutoUpgrade.Common;
+using JiuLing.AutoUpgrade.Shared;
+using Microsoft.Win32;
 
 namespace JiuLing.AutoUpgrade
 {
@@ -15,10 +17,10 @@ namespace JiuLing.AutoUpgrade
     /// </summary>
     public partial class App : Application
     {
+        private ThemeEnum _theme;
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            AppearanceManager.Current.ThemeSource = AppearanceManager.LightThemeSource;
 
             try
             {
@@ -31,6 +33,24 @@ namespace JiuLing.AutoUpgrade
                 App.Current.Shutdown();
                 return;
             }
+
+            bool isDarkTheme;
+            switch (_theme)
+            {
+                case ThemeEnum.System:
+                    isDarkTheme = CheckSystemIsDarkTheme();
+                    break;
+                case ThemeEnum.Light:
+                    isDarkTheme = false;
+                    break;
+                case ThemeEnum.Dark:
+                    isDarkTheme = true;
+                    break;
+                default:
+                    isDarkTheme = false;
+                    break;
+            }
+            AppearanceManager.Current.ThemeSource = isDarkTheme ? AppearanceManager.DarkThemeSource : AppearanceManager.LightThemeSource;
 
             if (!UpgradeInfo.UpgradeSetting.IsBackgroundCheck)
             {
@@ -80,6 +100,9 @@ namespace JiuLing.AutoUpgrade
             
             * -s IsBackgroundCheck
               常规设置,[IsBackgroundCheck:是否在后台进行更新检查]
+
+            * -theme [system|light|dark]
+              系统主题
             **********************************************/
 
             CommandLineArgsHelper _commandLineArgsHelper = new CommandLineArgsHelper();
@@ -118,6 +141,12 @@ namespace JiuLing.AutoUpgrade
             {
                 UpgradeInfo.UpgradeSetting.IsCheckSign = true;
             }
+
+            if (!_commandLineArgsHelper.TryGetCommandValue($"-{ArgumentTypeEnum.theme}", out List<string> themeArgs))
+            {
+                throw new ArgumentException("缺少主题参数");
+            }
+            _theme = (ThemeEnum)Enum.Parse(typeof(ThemeEnum), themeArgs[0]);
 
             if (_commandLineArgsHelper.TryGetCommandValue($"-{ArgumentTypeEnum.http}", out List<string> httpArgs))
             {
@@ -158,6 +187,27 @@ namespace JiuLing.AutoUpgrade
             }
 
             throw new ArgumentException("不支持的更新方式");
+        }
+
+        private bool CheckSystemIsDarkTheme()
+        {
+            try
+            {
+                var registryValue = Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", null);
+
+                if (registryValue != null && registryValue is int themeValue)
+                {
+                    return themeValue == 0;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
         }
     }
 }

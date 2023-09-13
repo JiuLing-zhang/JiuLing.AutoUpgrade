@@ -1,4 +1,6 @@
-﻿namespace JiuLing.AutoUpgrade.Shell
+﻿using JiuLing.AutoUpgrade.Shared;
+
+namespace JiuLing.AutoUpgrade.Shell
 {
     /// <summary>
     /// 更新时的一些设置
@@ -17,5 +19,9 @@
         /// 检查更新时的超时时间（秒）
         /// </summary>
         public int TimeoutSecond { get; set; } = 5;
+        /// <summary>
+        /// 主题
+        /// </summary>
+        public ThemeEnum Theme { get; set; } = ThemeEnum.System;
     }
 }

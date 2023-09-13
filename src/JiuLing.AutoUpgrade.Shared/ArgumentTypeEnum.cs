@@ -1,4 +1,4 @@
-﻿namespace JiuLing.AutoUpgrade.Shell.Enums
+﻿namespace JiuLing.AutoUpgrade.Shared
 {
     /// <summary>
     /// 参数类型
@@ -28,6 +28,10 @@
         /// <summary>
         /// 校验文件参数
         /// </summary>
-        check
+        check,
+        /// <summary>
+        /// 主题
+        /// </summary>
+        theme
     }
 }

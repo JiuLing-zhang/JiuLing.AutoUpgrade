@@ -46,4 +46,6 @@
 		<Exec Command="echo a | xcopy &quot;$(ProjectDir)..\Librarys.tmp\JiuLing.AutoUpgrade.exe&quot; &quot;$(ProjectDir)Resources\&quot;" />
 	</Target>
 
+	<Import Project="..\JiuLing.AutoUpgrade.Shared\JiuLing.AutoUpgrade.Shared.projitems" Label="Shared" />
+
 </Project>

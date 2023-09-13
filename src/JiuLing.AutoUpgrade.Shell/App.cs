@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using JiuLing.AutoUpgrade.Shared;
 
 namespace JiuLing.AutoUpgrade.Shell
 {
@@ -200,6 +201,8 @@ namespace JiuLing.AutoUpgrade.Shell
             {
                 noticesArgument = $"{noticesArgument}-{ArgumentTypeEnum.check} ";
             }
+
+            noticesArgument = $"{noticesArgument}-{ArgumentTypeEnum.theme} {(int)_upgradeSetting.Theme} ";
             return noticesArgument;
         }
 

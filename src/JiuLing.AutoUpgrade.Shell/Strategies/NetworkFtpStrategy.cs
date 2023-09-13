@@ -1,4 +1,5 @@
-﻿using JiuLing.AutoUpgrade.Shell.Enums;
+﻿using JiuLing.AutoUpgrade.Shared;
+using JiuLing.AutoUpgrade.Shell.Enums;
 
 namespace JiuLing.AutoUpgrade.Shell.Strategies
 {
