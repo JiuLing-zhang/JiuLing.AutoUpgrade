@@ -110,14 +110,26 @@ AutoUpgradeFactory.Create().UseHttpMode("https://raw.githubusercontent.com/JiuLi
     });
 ```
 
+* 设置主题（默认为跟随操作系统），支持设置“浅色主题”和“深色主题”。  
+
+```C#
+    app.SetUpgrade(config =>
+    {
+        config.Theme = Shared.ThemeEnum.System;
+        // config.Theme = Shared.ThemeEnum.Light;
+        // config.Theme = Shared.ThemeEnum.Dark;
+    });
+```
+
 ## 项目说明  
 
 ```Text
 src
   ├─JiuLing.AutoUpgrade             核心程序
   ├─JiuLing.AutoUpgrade.Shell       启动程序，用来启动核心更新程序  
-  │  └─Resources                    通过动态资源的形式加载核心程序，使得核心程序可以实现自身更新。项目编译前，会先从Librarys.tmp文件夹拷贝核心程序。
+  │  └─Resources                    通过动态资源的形式加载核心程序，使得核心程序可以实现自身更新。项目编译前，会先从Librarys.tmp文件夹拷贝核心程序
   │     └─JiuLing.AutoUpgrade.exe
+  ├─JiuLing.AutoUpgrade.Shared      核心程序和启动程序所共享的代码片段
   ├─JiuLing.AutoUpgrade.Test        测试程序
   │  ├─JiuLing.AutoUpgrade.Test.csproj
   │  ├─UpgradePackage1.2.0.zip
