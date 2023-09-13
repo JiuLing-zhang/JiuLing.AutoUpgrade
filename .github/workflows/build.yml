@@ -22,7 +22,7 @@ jobs:
         uses: NuGet/setup-nuget@v1.2.0
 
       - name: Restore nuget packages
-        run: nuget restore JiuLing.AutoUpgrade.sln
+        run: nuget restore .\src\JiuLing.AutoUpgrade.sln
 
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v1.1
@@ -36,10 +36,10 @@ jobs:
           dotnet-version: 7.0.x
           
       - name: Restore dependencies
-        run: dotnet restore
+        run: dotnet restore .\src\JiuLing.AutoUpgrade.sln
         
       - name: Build shell app
         run: dotnet build .\src\JiuLing.AutoUpgrade.Shell\JiuLing.AutoUpgrade.Shell.csproj --no-restore
 
       - name: Build test app
-        run: dotnet build .\test\JiuLing.AutoUpgrade.Test.csproj --no-restore
+        run: dotnet build .\src\JiuLing.AutoUpgrade.Test\JiuLing.AutoUpgrade.Test.csproj --no-restore
