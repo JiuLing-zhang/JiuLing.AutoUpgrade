@@ -27,13 +27,13 @@ namespace JiuLing.AutoUpgrade.Strategies
                 var upgradeInfo = result.ToObject<AppUpgradeInfo>();
                 if (upgradeInfo == null)
                 {
-                    throw new Exception("服务器响应错误");
+                    throw new Exception("服务器返回的版本信息不合法");
                 }
                 return upgradeInfo;
             }
             catch (Exception)
             {
-                throw new Exception("服务器响应异常");
+                throw new Exception("无法连接到服务器");
             }
         }
     }
