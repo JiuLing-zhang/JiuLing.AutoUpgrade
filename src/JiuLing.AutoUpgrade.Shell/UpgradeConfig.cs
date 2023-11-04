@@ -23,5 +23,9 @@ namespace JiuLing.AutoUpgrade.Shell
         /// 主题
         /// </summary>
         public ThemeEnum Theme { get; set; } = ThemeEnum.System;
+        /// <summary>
+        /// 语言
+        /// </summary>
+        public string Lang { get; set; } = "zh";
     }
 }

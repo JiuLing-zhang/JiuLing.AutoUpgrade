@@ -6,7 +6,7 @@
                   xmlns:local="clr-namespace:JiuLing.AutoUpgrade"
                   xmlns:mui="http://firstfloorsoftware.com/ModernUI"
                   mc:Ignorable="d"
-                  Title="自动更新" 
+                  Title="{x:Static local:lang.Title}" 
                   Height="450" 
                   Width="700"          
                   ResizeMode="NoResize"
@@ -30,7 +30,7 @@
             </Setter>
         </Style>
     </Window.Resources>
-    
+
     <Grid Margin="10 0 10 5">
         <Grid.RowDefinitions>
             <RowDefinition Height="60"></RowDefinition>
@@ -47,7 +47,7 @@
                     VerticalAlignment="Center">
             <TextBlock Margin="0 0 0 15"
                       HorizontalAlignment="Center"
-                      Text="正在检查更新"/>
+                      Text="{x:Static local:lang.Checking}"/>
             <ProgressBar IsIndeterminate="True"/>
         </StackPanel>
 
@@ -61,16 +61,18 @@
                         TextWrapping="Wrap"
                         HorizontalAlignment="Center" />
             <Button x:Name="BtnRetry"
+                    Content="{x:Static local:lang.Retry}"
                     Click="BtnRetry_Click"
                     HorizontalAlignment="Center"
-                    Margin="0 10 0 0">重试</Button>
+                    Margin="0 10 0 0" />
         </StackPanel>
 
         <Button Grid.Row="2"
+                Content="{x:Static local:lang.Close}"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Bottom"
                 Height="30"
-                Click="BtnCancel_Click">关闭</Button>
+                Click="BtnCancel_Click"/>
     </Grid>
 
 </mui:ModernWindow>

@@ -19,12 +19,12 @@ namespace JiuLing.AutoUpgrade.Common
 
             foreach (Process p in process)
             {
-                string fileName = p.MainModule?.FileName ?? throw new ArgumentException("未找到主进程启动路径");
-                string processDirectory = Path.GetDirectoryName(fileName) ?? throw new ArgumentException("未找到主进程启动目录");
+                string fileName = p.MainModule?.FileName ?? throw new ArgumentException(lang.StartupPathNotFound);
+                string processDirectory = Path.GetDirectoryName(fileName) ?? throw new ArgumentException(lang.StartupDirectoryNotFound);
 
                 if (Path.GetDirectoryName(GlobalArgs.AppPath) != Path.Combine(processDirectory, GlobalArgs.AppReleasedDirectoryName))
                 {
-                    throw new ApplicationException("主程序和自动更新程序不在同一目录");
+                    throw new ApplicationException(lang.ProgramDirectoryError);
                 }
 
                 GlobalArgs.MainAppPath = processDirectory;
@@ -35,7 +35,7 @@ namespace JiuLing.AutoUpgrade.Common
                     FileName = fileName,
                 };
             }
-            throw new ApplicationException($"未找到主进程{mainProcessName}");
+            throw new ApplicationException($"{lang.MainProcessNotFound} {mainProcessName}");
         }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace JiuLing.AutoUpgrade.Common
             FileVersionInfo info = FileVersionInfo.GetVersionInfo(mainProcess.FileName);
             if (info.FileVersion == null)
             {
-                throw new ArgumentException($"主程序版本号异常");
+                throw new ArgumentException(lang.MainProcessVersionError);
             }
             return info.FileVersion;
         }

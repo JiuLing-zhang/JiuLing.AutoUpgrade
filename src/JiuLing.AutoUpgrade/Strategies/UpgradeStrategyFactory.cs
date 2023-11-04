@@ -19,7 +19,7 @@ namespace JiuLing.AutoUpgrade.Strategies
                 case UpgradeModeEnum.Ftp:
                     return new UpgradeStrategyUsingFtp(config.ConnectionConfig);
                 default:
-                    throw new ArgumentException("创建更新策略失败：更新方式不正确");
+                    throw new ArgumentException(lang.UnsupportedUpdateMethod);
             }
         }
     }

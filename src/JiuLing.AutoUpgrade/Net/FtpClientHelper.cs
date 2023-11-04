@@ -34,7 +34,7 @@ namespace JiuLing.AutoUpgrade.Net
                 {
                     if (responseStream == null)
                     {
-                        throw new Exception("文本读取失败：未读取到任何数据流。");
+                        throw new Exception($"{lang.ExTextReadingFailed}{lang.StreamIsEmpty}");
                     }
                     using (var memoryStream = new MemoryStream())
                     {
@@ -59,7 +59,7 @@ namespace JiuLing.AutoUpgrade.Net
                 {
                     if (responseStream == null)
                     {
-                        throw new Exception("文件获取失败：未读取到任何数据流。");
+                        throw new Exception($"{lang.ExFileReadingFailed}{lang.StreamIsEmpty}");
                     }
                     long contentLength = GetFileSize(filePath);
                     var buffer = new byte[bufferSize];

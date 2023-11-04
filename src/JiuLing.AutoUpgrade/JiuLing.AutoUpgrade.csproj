@@ -179,6 +179,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Resources\lang\lang.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>lang.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\lang\lang.en.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>lang.en.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\lang\lang.zh.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>lang.zh.resx</DependentUpon>
+    </Compile>
     <Compile Include="UpgradeCheckWindow.xaml.cs">
       <DependentUpon>UpgradeCheckWindow.xaml</DependentUpon>
     </Compile>
@@ -234,6 +249,22 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\lang\lang.en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>lang.en.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>JiuLing.AutoUpgrade</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\lang\lang.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>lang.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+      <CustomToolNamespace>JiuLing.AutoUpgrade</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\lang\lang.zh.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>lang.zh.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>JiuLing.AutoUpgrade</CustomToolNamespace>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -246,6 +277,7 @@
   <ItemGroup>
     <Resource Include="icons8_buy_upgrade.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="..\JiuLing.AutoUpgrade.Shared\JiuLing.AutoUpgrade.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Fody.6.5.5\build\Fody.targets" Condition="Exists('..\packages\Fody.6.5.5\build\Fody.targets')" />

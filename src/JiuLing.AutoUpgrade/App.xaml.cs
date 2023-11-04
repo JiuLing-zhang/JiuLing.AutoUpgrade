@@ -4,11 +4,13 @@ using JiuLing.AutoUpgrade.Models;
 using JiuLing.CommonLibs;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading.Tasks;
 using System.Windows;
 using JiuLing.AutoUpgrade.Common;
 using JiuLing.AutoUpgrade.Shared;
 using Microsoft.Win32;
+using JiuLing.CommonLibs.ExtensionMethods;
 
 namespace JiuLing.AutoUpgrade
 {
@@ -17,7 +19,7 @@ namespace JiuLing.AutoUpgrade
     /// </summary>
     public partial class App : Application
     {
-        private ThemeEnum _theme;
+        private ThemeEnum _theme = ThemeEnum.System;
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
@@ -29,7 +31,7 @@ namespace JiuLing.AutoUpgrade
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"更新失败：参数配置异常。{ex.Message}", "自动更新", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"{lang.ExUpdateFailed}{lang.ParameterException}{ex.Message}", lang.Title, MessageBoxButton.OK, MessageBoxImage.Error);
                 App.Current.Shutdown();
                 return;
             }
@@ -103,6 +105,9 @@ namespace JiuLing.AutoUpgrade
 
             * -theme [system|light|dark]
               系统主题
+
+            * -lang [zh|en]
+              语言
             **********************************************/
 
             CommandLineArgsHelper _commandLineArgsHelper = new CommandLineArgsHelper();
@@ -110,9 +115,22 @@ namespace JiuLing.AutoUpgrade
             var upgradeConfig = new UpgradeConfigInfo();
             if (!_commandLineArgsHelper.TryGetCommandValue($"-{ArgumentTypeEnum.p}", out List<string> mainProcessArgs))
             {
-                throw new ArgumentException("缺少主进程参数");
+                throw new ArgumentException(lang.MissingMainProcessParameter);
             }
             upgradeConfig.MainProcessName = mainProcessArgs[0];
+
+
+            CultureInfo cultureInfo;
+            try
+            {
+                _commandLineArgsHelper.TryGetCommandValue($"-{ArgumentTypeEnum.lang}", out List<string> cultureList);
+                cultureInfo = new CultureInfo(cultureList[0]);
+            }
+            catch (Exception e)
+            {
+                cultureInfo = new CultureInfo(CultureInfo.CurrentCulture.Name);
+            }
+            lang.Culture = cultureInfo;
 
             TimeSpan timeout;
             if (!_commandLineArgsHelper.TryGetCommandValue($"-{ArgumentTypeEnum.t}", out List<string> timeoutArgs))
@@ -142,11 +160,10 @@ namespace JiuLing.AutoUpgrade
                 UpgradeInfo.UpgradeSetting.IsCheckSign = true;
             }
 
-            if (!_commandLineArgsHelper.TryGetCommandValue($"-{ArgumentTypeEnum.theme}", out List<string> themeArgs))
+            if (_commandLineArgsHelper.TryGetCommandValue($"-{ArgumentTypeEnum.theme}", out List<string> themeArgs))
             {
-                throw new ArgumentException("缺少主题参数");
+                _theme = (ThemeEnum)Enum.Parse(typeof(ThemeEnum), themeArgs[0]);
             }
-            _theme = (ThemeEnum)Enum.Parse(typeof(ThemeEnum), themeArgs[0]);
 
             if (_commandLineArgsHelper.TryGetCommandValue($"-{ArgumentTypeEnum.http}", out List<string> httpArgs))
             {
@@ -162,7 +179,7 @@ namespace JiuLing.AutoUpgrade
                 }
                 catch (Exception)
                 {
-                    throw new ArgumentException("Http参数配置异常");
+                    throw new ArgumentException(lang.HttpParameterError);
                 }
             }
 
@@ -182,11 +199,11 @@ namespace JiuLing.AutoUpgrade
                 }
                 catch (Exception)
                 {
-                    throw new ArgumentException("Ftp参数配置异常");
+                    throw new ArgumentException(lang.FtpParameterError);
                 }
             }
 
-            throw new ArgumentException("不支持的更新方式");
+            throw new ArgumentException(lang.UnsupportedUpdateMethod);
         }
 
         private bool CheckSystemIsDarkTheme()
