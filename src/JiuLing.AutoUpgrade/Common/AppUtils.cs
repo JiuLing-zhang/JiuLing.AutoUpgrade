@@ -19,12 +19,12 @@ namespace JiuLing.AutoUpgrade.Common
 
             foreach (Process p in process)
             {
-                string fileName = p.MainModule?.FileName ?? throw new ArgumentException(lang.StartupPathNotFound);
-                string processDirectory = Path.GetDirectoryName(fileName) ?? throw new ArgumentException(lang.StartupDirectoryNotFound);
+                string fileName = p.MainModule?.FileName ?? throw new ArgumentException(AutoUpgrade.Properties.Resources.StartupPathNotFound);
+                string processDirectory = Path.GetDirectoryName(fileName) ?? throw new ArgumentException(AutoUpgrade.Properties.Resources.StartupDirectoryNotFound);
 
                 if (Path.GetDirectoryName(GlobalArgs.AppPath) != Path.Combine(processDirectory, GlobalArgs.AppReleasedDirectoryName))
                 {
-                    throw new ApplicationException(lang.ProgramDirectoryError);
+                    throw new ApplicationException(AutoUpgrade.Properties.Resources.ProgramDirectoryError);
                 }
 
                 GlobalArgs.MainAppPath = processDirectory;
@@ -35,7 +35,7 @@ namespace JiuLing.AutoUpgrade.Common
                     FileName = fileName,
                 };
             }
-            throw new ApplicationException($"{lang.MainProcessNotFound} {mainProcessName}");
+            throw new ApplicationException($"{AutoUpgrade.Properties.Resources.MainProcessNotFound} {mainProcessName}");
         }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace JiuLing.AutoUpgrade.Common
             FileVersionInfo info = FileVersionInfo.GetVersionInfo(mainProcess.FileName);
             if (info.FileVersion == null)
             {
-                throw new ArgumentException(lang.MainProcessVersionError);
+                throw new ArgumentException(AutoUpgrade.Properties.Resources.MainProcessVersionError);
             }
             return info.FileVersion;
         }

@@ -34,7 +34,7 @@ namespace JiuLing.AutoUpgrade.Net
                 {
                     if (responseStream == null)
                     {
-                        throw new Exception($"{lang.ExTextReadingFailed}{lang.StreamIsEmpty}");
+                        throw new Exception($"{AutoUpgrade.Properties.Resources.ExTextReadingFailed}{AutoUpgrade.Properties.Resources.StreamIsEmpty}");
                     }
                     using (var memoryStream = new MemoryStream())
                     {
@@ -59,7 +59,7 @@ namespace JiuLing.AutoUpgrade.Net
                 {
                     if (responseStream == null)
                     {
-                        throw new Exception($"{lang.ExFileReadingFailed}{lang.StreamIsEmpty}");
+                        throw new Exception($"{AutoUpgrade.Properties.Resources.ExFileReadingFailed}{AutoUpgrade.Properties.Resources.StreamIsEmpty}");
                     }
                     long contentLength = GetFileSize(filePath);
                     var buffer = new byte[bufferSize];

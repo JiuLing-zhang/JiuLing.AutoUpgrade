@@ -30,13 +30,13 @@ namespace JiuLing.AutoUpgrade.Strategies
                 var upgradeInfo = result.ToObject<AppUpgradeInfo>();
                 if (upgradeInfo == null)
                 {
-                    throw new Exception(lang.DataError);
+                    throw new Exception(AutoUpgrade.Properties.Resources.DataError);
                 }
                 return upgradeInfo;
             }
             catch (Exception)
             {
-                throw new Exception(lang.UnableConnectServer);
+                throw new Exception(AutoUpgrade.Properties.Resources.UnableConnectServer);
             }
 
         }

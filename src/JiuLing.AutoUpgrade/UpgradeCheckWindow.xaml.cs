@@ -42,7 +42,7 @@ namespace JiuLing.AutoUpgrade
                 await UpgradeChecker.DoAsync();
                 if (UpgradeInfo.IsNeedUpdate == false)
                 {
-                    ShowMessage(lang.MsgNoNeedUpdate);
+                    ShowMessage(AutoUpgrade.Properties.Resources.MsgNoNeedUpdate);
                     BtnRetry.Visibility = Visibility.Hidden;
                     return;
                 }
@@ -52,7 +52,7 @@ namespace JiuLing.AutoUpgrade
             }
             catch (Exception ex)
             {
-                ShowMessage($"{lang.ExCheck}{ex.Message}");
+                ShowMessage($"{AutoUpgrade.Properties.Resources.ExCheck}{ex.Message}");
             }
         }
 

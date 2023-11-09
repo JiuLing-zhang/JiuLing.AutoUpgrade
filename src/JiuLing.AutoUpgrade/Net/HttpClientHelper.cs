@@ -45,7 +45,7 @@ namespace JiuLing.AutoUpgrade.Net
             {
                 progress?.Report(0);
                 var content = responseMessage.Content;
-                long contentLength = content.Headers.ContentLength ?? throw new Exception(lang.UnknownFileSize);
+                long contentLength = content.Headers.ContentLength ?? throw new Exception(AutoUpgrade.Properties.Resources.UnknownFileSize);
                 using (var responseStream = await content.ReadAsStreamAsync())
                 {
                     var buffer = new byte[bufferSize];

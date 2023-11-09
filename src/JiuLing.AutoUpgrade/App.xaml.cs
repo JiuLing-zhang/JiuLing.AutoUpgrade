@@ -31,7 +31,7 @@ namespace JiuLing.AutoUpgrade
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"{lang.ExUpdateFailed}{lang.ParameterException}{ex.Message}", lang.Title, MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"{AutoUpgrade.Properties.Resources.ExUpdateFailed}{AutoUpgrade.Properties.Resources.ParameterException}{ex.Message}", AutoUpgrade.Properties.Resources.Title, MessageBoxButton.OK, MessageBoxImage.Error);
                 App.Current.Shutdown();
                 return;
             }
@@ -115,7 +115,7 @@ namespace JiuLing.AutoUpgrade
             var upgradeConfig = new UpgradeConfigInfo();
             if (!_commandLineArgsHelper.TryGetCommandValue($"-{ArgumentTypeEnum.p}", out List<string> mainProcessArgs))
             {
-                throw new ArgumentException(lang.MissingMainProcessParameter);
+                throw new ArgumentException(AutoUpgrade.Properties.Resources.MissingMainProcessParameter);
             }
             upgradeConfig.MainProcessName = mainProcessArgs[0];
 
@@ -130,7 +130,7 @@ namespace JiuLing.AutoUpgrade
             {
                 cultureInfo = new CultureInfo(CultureInfo.CurrentCulture.Name);
             }
-            lang.Culture = cultureInfo;
+            AutoUpgrade.Properties.Resources.Culture = cultureInfo;
 
             TimeSpan timeout;
             if (!_commandLineArgsHelper.TryGetCommandValue($"-{ArgumentTypeEnum.t}", out List<string> timeoutArgs))
@@ -179,7 +179,7 @@ namespace JiuLing.AutoUpgrade
                 }
                 catch (Exception)
                 {
-                    throw new ArgumentException(lang.HttpParameterError);
+                    throw new ArgumentException(AutoUpgrade.Properties.Resources.HttpParameterError);
                 }
             }
 
@@ -199,11 +199,11 @@ namespace JiuLing.AutoUpgrade
                 }
                 catch (Exception)
                 {
-                    throw new ArgumentException(lang.FtpParameterError);
+                    throw new ArgumentException(AutoUpgrade.Properties.Resources.FtpParameterError);
                 }
             }
 
-            throw new ArgumentException(lang.UnsupportedUpdateMethod);
+            throw new ArgumentException(AutoUpgrade.Properties.Resources.UnsupportedUpdateMethod);
         }
 
         private bool CheckSystemIsDarkTheme()

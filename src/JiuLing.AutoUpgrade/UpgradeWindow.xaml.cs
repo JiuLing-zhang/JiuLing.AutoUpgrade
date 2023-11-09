@@ -33,7 +33,7 @@ namespace JiuLing.AutoUpgrade
             var log = UpgradeInfo.AppNewVersion.Log.Trim();
             if (log.IsEmpty())
             {
-                log = lang.Nothing;
+                log = AutoUpgrade.Properties.Resources.Nothing;
             }
             TxtLog.Text = log;
             TxtWarn.Visibility = UpgradeInfo.MainProcess.AllowRun ? Visibility.Hidden : Visibility.Visible;
@@ -71,7 +71,7 @@ namespace JiuLing.AutoUpgrade
                 var process = new Progress<float>((percent) =>
                 {
                     ProgressBarPercent.Value = percent;
-                    TxtPercent.Text = $"{lang.Updating} {percent * 100:f1} %";
+                    TxtPercent.Text = $"{AutoUpgrade.Properties.Resources.Updating} {percent * 100:f1} %";
                 });
 
                 await UpgradeTemplateFactory.Create(UpgradeInfo.UpgradeConfig)
@@ -96,7 +96,7 @@ namespace JiuLing.AutoUpgrade
 
                                 if (UpgradeInfo.AppNewVersion.SignValue?.ToLower() != fileSign)
                                 {
-                                    throw new Exception(lang.FileSignatureError);
+                                    throw new Exception(AutoUpgrade.Properties.Resources.FileSignatureError);
                                 }
                             }
                             KillMainApp();
@@ -108,7 +108,7 @@ namespace JiuLing.AutoUpgrade
             }
             catch (Exception ex)
             {
-                ShowFinalMessage($"{lang.ExUpdateFailed}{ex.Message}");
+                ShowFinalMessage($"{AutoUpgrade.Properties.Resources.ExUpdateFailed}{ex.Message}");
             }
         }
 

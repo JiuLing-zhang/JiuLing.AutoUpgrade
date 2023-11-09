@@ -3,10 +3,10 @@
                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                  xmlns:local="clr-namespace:JiuLing.AutoUpgrade"
+                  xmlns:props="clr-namespace:JiuLing.AutoUpgrade.Properties"
                   xmlns:mui="http://firstfloorsoftware.com/ModernUI"
                   mc:Ignorable="d"
-                  Title="{x:Static local:lang.Title}" 
+                  Title="{x:Static props:Resources.Title}" 
                   Height="450" 
                   Width="700"          
                   ResizeMode="NoResize"
@@ -47,7 +47,7 @@
                     VerticalAlignment="Center">
             <TextBlock Margin="0 0 0 15"
                       HorizontalAlignment="Center"
-                      Text="{x:Static local:lang.Checking}"/>
+                      Text="{x:Static props:Resources.Checking}"/>
             <ProgressBar IsIndeterminate="True"/>
         </StackPanel>
 
@@ -61,14 +61,14 @@
                         TextWrapping="Wrap"
                         HorizontalAlignment="Center" />
             <Button x:Name="BtnRetry"
-                    Content="{x:Static local:lang.Retry}"
+                    Content="{x:Static props:Resources.Retry}"
                     Click="BtnRetry_Click"
                     HorizontalAlignment="Center"
                     Margin="0 10 0 0" />
         </StackPanel>
 
         <Button Grid.Row="2"
-                Content="{x:Static local:lang.Close}"
+                Content="{x:Static props:Resources.Close}"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Bottom"
                 Height="30"

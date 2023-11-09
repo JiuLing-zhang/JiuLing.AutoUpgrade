@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -46,7 +46,7 @@
     
     mimetype: application/x-microsoft.net.object.binary.base64
     value   : The object must be serialized with 
-            : System.Serialization.Formatters.Binary.BinaryFormatter
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
     
     mimetype: application/x-microsoft.net.object.soap.base64
@@ -60,6 +60,7 @@
             : and then encoded with base64 encoding.
     -->
   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
@@ -68,9 +69,10 @@
               <xsd:sequence>
                 <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="name" use="required" type="xsd:string" />
               <xsd:attribute name="type" type="xsd:string" />
               <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
@@ -85,9 +87,10 @@
                 <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
                 <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
               <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
               <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
@@ -109,111 +112,111 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-<data name="Title" xml:space="preserve">
-    <value></value>
+  <data name="Title" xml:space="preserve">
+    <value>自动更新</value>
   </data>
   <data name="Retry" xml:space="preserve">
-    <value></value>
+    <value>重试</value>
   </data>
   <data name="Close" xml:space="preserve">
-    <value></value>
+    <value>关闭</value>
   </data>
   <data name="Checking" xml:space="preserve">
-    <value></value>
+    <value>正在检查更新</value>
   </data>
   <data name="ExCheck" xml:space="preserve">
-    <value></value>
+    <value>检查失败：</value>
   </data>
   <data name="MsgNoNeedUpdate" xml:space="preserve">
-    <value></value>
+    <value>当前版本为最新版</value>
   </data>
   <data name="MainProcessNotFound" xml:space="preserve">
-    <value></value>
+    <value>未找到主进程</value>
   </data>
   <data name="MainProcessVersionError" xml:space="preserve">
-    <value></value>
+    <value>主程序版本号异常</value>
   </data>
   <data name="StartupPathNotFound" xml:space="preserve">
-    <value></value>
+    <value>未找到主进程启动路径</value>
   </data>
   <data name="StartupDirectoryNotFound" xml:space="preserve">
-    <value></value>
+    <value>未找到主进程启动目录</value>
   </data>
   <data name="StreamIsEmpty" xml:space="preserve">
-    <value></value>
+    <value>未读取到任何数据流。</value>
   </data>
   <data name="ExTextReadingFailed" xml:space="preserve">
-    <value></value>
+    <value>文本读取失败:</value>
   </data>
   <data name="ExFileReadingFailed" xml:space="preserve">
-    <value></value>
+    <value>文件读取失败:</value>
   </data>
   <data name="UnknownFileSize" xml:space="preserve">
-    <value></value>
+    <value>未知的文件大小</value>
   </data>
   <data name="UnableConnectServer" xml:space="preserve">
-    <value></value>
+    <value>无法连接到服务器</value>
   </data>
   <data name="DataError" xml:space="preserve">
-    <value></value>
+    <value>服务器返回的版本信息不合法</value>
   </data>
   <data name="UnsupportedUpdateMethod" xml:space="preserve">
-    <value></value>
+    <value>不支持的更新方式</value>
   </data>
   <data name="ExUpdateFailed" xml:space="preserve">
-    <value></value>
+    <value>更新失败：</value>
   </data>
   <data name="ParameterException" xml:space="preserve">
-    <value></value>
+    <value>参数配置异常。</value>
   </data>
   <data name="MissingMainProcessParameter" xml:space="preserve">
-    <value></value>
+    <value>缺少主进程参数</value>
   </data>
   <data name="HttpParameterError" xml:space="preserve">
-    <value></value>
+    <value>Http 参数配置异常</value>
   </data>
   <data name="FtpParameterError" xml:space="preserve">
-    <value></value>
+    <value>Ftp 参数配置异常</value>
   </data>
   <data name="ProgramDirectoryError" xml:space="preserve">
-    <value></value>
+    <value>主程序和自动更新程序不在同一目录</value>
   </data>
   <data name="NewVersionFound" xml:space="preserve">
-    <value></value>
+    <value>有可用更新</value>
   </data>
   <data name="NewVersion" xml:space="preserve">
-    <value></value>
+    <value>新版本:</value>
   </data>
   <data name="Size" xml:space="preserve">
-    <value></value>
+    <value>大小:</value>
   </data>
   <data name="ReleaseTime" xml:space="preserve">
-    <value></value>
+    <value>发布时间:</value>
   </data>
   <data name="CurrentVersion" xml:space="preserve">
-    <value></value>
+    <value>当前版本:</value>
   </data>
   <data name="UpdateContent" xml:space="preserve">
-    <value></value>
+    <value>更新内容</value>
   </data>
   <data name="Update" xml:space="preserve">
-    <value></value>
+    <value>更新</value>
   </data>
   <data name="ProgramExpired" xml:space="preserve">
-    <value></value>
+    <value>当前程序已不能正常使用，请更新！</value>
   </data>
   <data name="Updating" xml:space="preserve">
-    <value></value>
+    <value>正在更新</value>
   </data>
   <data name="Nothing" xml:space="preserve">
-    <value></value>
+    <value>无</value>
   </data>
   <data name="FileSignatureError" xml:space="preserve">
-    <value></value>
+    <value>文件校验失败</value>
   </data>
 </root>
