@@ -208,7 +208,7 @@
     <value>更新</value>
   </data>
   <data name="ProgramExpired" xml:space="preserve">
-    <value>当前程序已不能正常使用，请更新！</value>
+    <value>当前版本已过期，请更新！</value>
   </data>
   <data name="Updating" xml:space="preserve">
     <value>正在更新</value>
@@ -218,5 +218,8 @@
   </data>
   <data name="FileSignatureError" xml:space="preserve">
     <value>文件校验失败</value>
+  </data>
+  <data name="Skip" xml:space="preserve">
+    <value>不再提示该版本</value>
   </data>
 </root>

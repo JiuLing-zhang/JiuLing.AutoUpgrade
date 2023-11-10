@@ -26,6 +26,6 @@ namespace JiuLing.AutoUpgrade.Shell
         /// <summary>
         /// 语言
         /// </summary>
-        public string Lang { get; set; } = "zh";
+        public string Lang { get; set; }
     }
 }

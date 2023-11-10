@@ -36,7 +36,16 @@ namespace JiuLing.AutoUpgrade
                 log = AutoUpgrade.Properties.Resources.Nothing;
             }
             TxtLog.Text = log;
-            TxtWarn.Visibility = UpgradeInfo.MainProcess.AllowRun ? Visibility.Hidden : Visibility.Visible;
+            if (UpgradeInfo.MainProcess.AllowRun)
+            {
+                TxtWarn.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                TxtWarn.Visibility = Visibility.Visible;
+                BtnSkip.Visibility = Visibility.Collapsed;
+                BtnCancel.Visibility = Visibility.Collapsed;
+            }
         }
 
         private void ModernWindow_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -59,7 +68,12 @@ namespace JiuLing.AutoUpgrade
                 //TODO 这里可以考虑记录日志？
             }
         }
-
+        private void BtnSkip_Click(object sender, RoutedEventArgs e)
+        {
+            var versionSkipChecker = new VersionSkipChecker(UpgradeInfo.UpgradeConfig.MainProcessName, UpgradeInfo.AppNewVersion.Version);
+            versionSkipChecker.SetSkip();
+            Application.Current.Shutdown();
+        }
         private async void BtnUpgrade_Click(object sender, RoutedEventArgs e)
         {
             try

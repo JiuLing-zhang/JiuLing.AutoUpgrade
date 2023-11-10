@@ -15,6 +15,13 @@ namespace JiuLing.AutoUpgrade
             var upgradeStrategy = UpgradeStrategyFactory.Create(UpgradeInfo.UpgradeConfig);
             UpgradeInfo.AppNewVersion = await new UpgradeStrategyContext(upgradeStrategy).GetUpgradeInfo();
 
+            var versionSkipChecker = new VersionSkipChecker(UpgradeInfo.UpgradeConfig.MainProcessName, UpgradeInfo.AppNewVersion.Version);
+            if (versionSkipChecker.CheckSkip())
+            {
+                UpgradeInfo.MainProcess.AllowRun = true;
+                UpgradeInfo.IsNeedUpdate = false;
+                return;
+            }
 
             if (UpgradeInfo.AppNewVersion.MinVersion.IsEmpty())
             {

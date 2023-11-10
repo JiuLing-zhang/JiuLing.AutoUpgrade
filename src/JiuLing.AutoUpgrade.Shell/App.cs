@@ -204,7 +204,10 @@ namespace JiuLing.AutoUpgrade.Shell
 
             noticesArgument = $"{noticesArgument}-{ArgumentTypeEnum.theme} {(int)_upgradeSetting.Theme} ";
 
-            noticesArgument = $"{noticesArgument}-{ArgumentTypeEnum.lang} {_upgradeSetting.Lang} ";
+            if (!string.IsNullOrEmpty(_upgradeSetting.Lang))
+            {
+                noticesArgument = $"{noticesArgument}-{ArgumentTypeEnum.lang} {_upgradeSetting.Lang} ";
+            }
             return noticesArgument;
         }
 

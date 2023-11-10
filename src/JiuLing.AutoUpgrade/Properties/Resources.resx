@@ -114,7 +114,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-<data name="Title" xml:space="preserve">
+  <data name="Title" xml:space="preserve">
     <value></value>
   </data>
   <data name="Retry" xml:space="preserve">
@@ -214,6 +214,9 @@
     <value></value>
   </data>
   <data name="FileSignatureError" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Skip" xml:space="preserve">
     <value></value>
   </data>
 </root>

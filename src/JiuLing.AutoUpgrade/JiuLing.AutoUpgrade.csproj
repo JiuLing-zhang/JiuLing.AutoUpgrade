@@ -197,6 +197,7 @@
       <DependentUpon>UpgradeWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\UpgradeInfo.cs" />
+    <Compile Include="VersionSkipChecker.cs" />
     <Page Include="UpgradeCheckWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

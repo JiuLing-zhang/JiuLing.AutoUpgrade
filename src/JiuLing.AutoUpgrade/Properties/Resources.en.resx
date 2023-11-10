@@ -219,4 +219,7 @@
   <data name="FileSignatureError" xml:space="preserve">
     <value>File signature error</value>
   </data>
+  <data name="Skip" xml:space="preserve">
+    <value>Don’t prompt for this version again</value>
+  </data>
 </root>
