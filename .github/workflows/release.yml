@@ -25,10 +25,10 @@ jobs:
       - name: Build core app
         run: msbuild .\src\JiuLing.AutoUpgrade\JiuLing.AutoUpgrade.csproj /P:Configuration=Release
 
-      - name: Setup .NET 7
+      - name: Setup .NET 8
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: 7.0.x
+          dotnet-version: 8.0.x
           
       - name: Restore dependencies
         run: dotnet restore .\src\JiuLing.AutoUpgrade.sln
