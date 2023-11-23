@@ -28,17 +28,9 @@ body:
       label: 问题补充
       description: 如果可以，请补充提供下错误截图等。
       placeholder: 问题补充
-  - type: dropdown
+  - type: textarea
     id: version
     attributes:
       label: 程序版本
       description: 错误出现在哪个版本中。
-      options:
-        - 1.2.8
-        - 1.2.7
-        - 1.2.6
-        - 1.2.5
-        - 1.2.4
-        - 更早
-    validations:
-      required: true
+      placeholder: 出错的程序版本
