@@ -64,7 +64,7 @@
                              Margin="0 0 0 20"
                              Style="{StaticResource Fixed}"/>
                     <ScrollViewer VerticalScrollBarVisibility="Auto" Height="220">
-                        <TextBlock x:Name="TxtLog"/>
+                        <TextBlock x:Name="TxtLog" TextWrapping="Wrap"/>
                     </ScrollViewer>
                 </StackPanel>
             </Grid>
