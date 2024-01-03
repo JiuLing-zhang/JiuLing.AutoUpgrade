@@ -36,6 +36,10 @@
         /// <summary>
         /// 语言
         /// </summary>
-        lang
+        lang,
+        /// <summary>
+        /// 图标
+        /// </summary>
+        icon
     }
 }

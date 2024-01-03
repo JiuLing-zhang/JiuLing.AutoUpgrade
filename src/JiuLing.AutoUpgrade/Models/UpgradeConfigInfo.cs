@@ -1,5 +1,6 @@
 ﻿using JiuLing.AutoUpgrade.Enums;
 using System;
+using System.Windows.Media.Imaging;
 
 namespace JiuLing.AutoUpgrade.Models
 {
@@ -21,6 +22,11 @@ namespace JiuLing.AutoUpgrade.Models
         /// 请求连接配置
         /// </summary>
         public dynamic ConnectionConfig { get; set; }
+
+        /// <summary>
+        /// 图标
+        /// </summary>
+        public BitmapFrame Icon { get; set; }
     }
 
     internal class HttpConnectionConfig

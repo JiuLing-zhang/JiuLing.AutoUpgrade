@@ -208,6 +208,17 @@ namespace JiuLing.AutoUpgrade.Shell
             {
                 noticesArgument = $"{noticesArgument}-{ArgumentTypeEnum.lang} {_upgradeSetting.Lang} ";
             }
+
+            if (!string.IsNullOrEmpty(_upgradeSetting.IconPath))
+            {
+                if (!File.Exists(_upgradeSetting.IconPath))
+                {
+                    throw new FileNotFoundException($"文件不存在, file does not exist. {_upgradeSetting.IconPath}");
+                }
+                var fullPath = Path.GetFullPath(_upgradeSetting.IconPath);
+                noticesArgument = $"{noticesArgument}-{ArgumentTypeEnum.icon} {fullPath} ";
+            }
+
             return noticesArgument;
         }
 

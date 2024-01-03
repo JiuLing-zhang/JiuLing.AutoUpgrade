@@ -27,5 +27,9 @@ namespace JiuLing.AutoUpgrade.Shell
         /// 语言
         /// </summary>
         public string Lang { get; set; }
+        /// <summary>
+        /// 图标配置
+        /// </summary>
+        public string IconPath { get; set; }
     }
 }

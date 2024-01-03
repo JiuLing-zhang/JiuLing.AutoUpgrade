@@ -10,7 +10,8 @@ using System.Windows;
 using JiuLing.AutoUpgrade.Common;
 using JiuLing.AutoUpgrade.Shared;
 using Microsoft.Win32;
-using JiuLing.CommonLibs.ExtensionMethods;
+using System.IO;
+using System.Windows.Media.Imaging;
 
 namespace JiuLing.AutoUpgrade
 {
@@ -23,7 +24,6 @@ namespace JiuLing.AutoUpgrade
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-
             try
             {
                 UpgradeInfo.UpgradeConfig = ReadUpgradeConfigFromCommandArgs();
@@ -56,7 +56,7 @@ namespace JiuLing.AutoUpgrade
 
             if (!UpgradeInfo.UpgradeSetting.IsBackgroundCheck)
             {
-                new UpgradeCheckWindow().Show();
+                Current.MainWindow = new UpgradeCheckWindow();
             }
             else
             {
@@ -70,14 +70,16 @@ namespace JiuLing.AutoUpgrade
                         Application.Current.Shutdown();
                         return;
                     }
-                    new UpgradeWindow().Show();
-
+                    Current.MainWindow = new UpgradeWindow();
                 }
                 catch (Exception ex)
                 {
                     Application.Current.Shutdown();
+                    return;
                 }
             }
+            Current.MainWindow.Icon = UpgradeInfo.UpgradeConfig.Icon;
+            Current.MainWindow.Show();
         }
 
         /// <summary>
@@ -108,11 +110,24 @@ namespace JiuLing.AutoUpgrade
 
             * -lang [zh|en]
               语言
+
+            * -icon path
+              设置程序图标
             **********************************************/
 
             CommandLineArgsHelper _commandLineArgsHelper = new CommandLineArgsHelper();
 
             var upgradeConfig = new UpgradeConfigInfo();
+            if (_commandLineArgsHelper.TryGetCommandValue($"-{ArgumentTypeEnum.icon}", out List<string> iconArgs))
+            {
+                var iconPath = iconArgs[0];
+                if (File.Exists(iconPath))
+                {
+                    Uri iconUri = new Uri(iconPath, UriKind.RelativeOrAbsolute);
+                    upgradeConfig.Icon = BitmapFrame.Create(iconUri);
+                }
+            }
+
             if (!_commandLineArgsHelper.TryGetCommandValue($"-{ArgumentTypeEnum.p}", out List<string> mainProcessArgs))
             {
                 throw new ArgumentException(AutoUpgrade.Properties.Resources.MissingMainProcessParameter);
