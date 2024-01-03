@@ -94,6 +94,18 @@ AutoUpgradeFactory.Create().UseHttpMode("https://raw.githubusercontent.com/JiuLi
 ```
 
 ## 高级设置 Advanced Config  
+* 设置图标  
+* Set icon  
+
+```C#
+    app.SetUpgrade(config =>
+    {
+        config.IconPath = "icon.ico";
+        // or
+        config.IconPath = @"C:\icon.ico";
+    });
+```
+
 * 检查更新时的请求超时时间（默认 5 秒）    
 * Request timeout when checking for updates (default: 5 seconds) 
 
