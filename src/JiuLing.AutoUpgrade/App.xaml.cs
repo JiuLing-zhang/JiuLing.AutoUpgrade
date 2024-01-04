@@ -56,7 +56,7 @@ namespace JiuLing.AutoUpgrade
 
             if (!UpgradeInfo.UpgradeSetting.IsBackgroundCheck)
             {
-                Current.MainWindow = new UpgradeCheckWindow();
+                new UpgradeCheckWindow().Show();
             }
             else
             {
@@ -70,7 +70,7 @@ namespace JiuLing.AutoUpgrade
                         Application.Current.Shutdown();
                         return;
                     }
-                    Current.MainWindow = new UpgradeWindow();
+                    new UpgradeWindow().Show();
                 }
                 catch (Exception ex)
                 {
@@ -78,8 +78,6 @@ namespace JiuLing.AutoUpgrade
                     return;
                 }
             }
-            Current.MainWindow.Icon = UpgradeInfo.UpgradeConfig.Icon;
-            Current.MainWindow.Show();
         }
 
         /// <summary>
