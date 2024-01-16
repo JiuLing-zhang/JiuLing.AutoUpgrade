@@ -26,7 +26,7 @@ namespace JiuLing.AutoUpgrade.Models
         /// <summary>
         /// 图标
         /// </summary>
-        public BitmapFrame Icon { get; set; }
+        public BitmapFrame Icon { get; set; } = null;
     }
 
     internal class HttpConnectionConfig

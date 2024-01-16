@@ -121,8 +121,16 @@ namespace JiuLing.AutoUpgrade
                 var iconPath = iconArgs[0];
                 if (File.Exists(iconPath))
                 {
-                    Uri iconUri = new Uri(iconPath, UriKind.RelativeOrAbsolute);
-                    upgradeConfig.Icon = BitmapFrame.Create(iconUri);
+                    try
+                    {
+                        var tempFileName = Path.GetTempFileName();
+                        File.Copy(iconPath, tempFileName, true);
+                        Uri iconUri = new Uri(tempFileName, UriKind.RelativeOrAbsolute);
+                        upgradeConfig.Icon = BitmapFrame.Create(iconUri);
+                    }
+                    catch (Exception)
+                    {
+                    }
                 }
             }
 

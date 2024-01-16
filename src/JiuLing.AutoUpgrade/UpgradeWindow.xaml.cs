@@ -18,7 +18,10 @@ namespace JiuLing.AutoUpgrade
         public UpgradeWindow()
         {
             InitializeComponent();
-            this.Icon = UpgradeInfo.UpgradeConfig.Icon;
+            if (UpgradeInfo.UpgradeConfig.Icon != null)
+            {
+                this.Icon = UpgradeInfo.UpgradeConfig.Icon;
+            }
         }
 
         private void ModernWindow_Loaded(object sender, RoutedEventArgs e)
