@@ -1,4 +1,5 @@
 ﻿using JiuLing.AutoUpgrade.Shared;
+using JiuLing.AutoUpgrade.Shell.Enums;
 
 namespace JiuLing.AutoUpgrade.Shell
 {
@@ -31,5 +32,10 @@ namespace JiuLing.AutoUpgrade.Shell
         /// 图标配置
         /// </summary>
         public string IconPath { get; set; }
+
+        /// <summary>
+        /// 版本号的显示格式
+        /// </summary>
+        public VersionFormatEnum VersionFormat { get; set; } = VersionFormatEnum.MajorMinorBuildRevision;
     }
 }

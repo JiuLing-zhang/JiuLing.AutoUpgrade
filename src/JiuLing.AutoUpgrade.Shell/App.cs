@@ -209,6 +209,8 @@ namespace JiuLing.AutoUpgrade.Shell
                 noticesArgument = $"{noticesArgument}-{ArgumentTypeEnum.lang} {_upgradeSetting.Lang} ";
             }
 
+            noticesArgument = $"{noticesArgument}-{ArgumentTypeEnum.versionFormat} {(int)_upgradeSetting.VersionFormat} ";
+
             if (!string.IsNullOrEmpty(_upgradeSetting.IconPath))
             {
                 if (!File.Exists(_upgradeSetting.IconPath))

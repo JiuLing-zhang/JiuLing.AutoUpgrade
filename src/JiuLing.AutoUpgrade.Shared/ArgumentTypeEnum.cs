@@ -40,6 +40,10 @@
         /// <summary>
         /// 图标
         /// </summary>
-        icon
+        icon,
+        /// <summary>
+        /// 版本号展示格式
+        /// </summary>
+        versionFormat
     }
 }

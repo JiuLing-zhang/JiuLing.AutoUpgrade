@@ -28,8 +28,10 @@ namespace JiuLing.AutoUpgrade
         {
             TxtTitle.Text = UpgradeInfo.MainProcess.Title;
 
-            LblCurrentVersion.Text = UpgradeInfo.MainAppVersion;
-            LblVersion.Text = UpgradeInfo.AppNewVersion.Version;
+            var currentVersion = new Version(UpgradeInfo.MainAppVersion);
+            LblCurrentVersion.Text = currentVersion.ToFormatString(UpgradeInfo.UpgradeConfig.VersionFormat); ;
+            var version = new Version(UpgradeInfo.AppNewVersion.Version);
+            LblVersion.Text = version.ToFormatString(UpgradeInfo.UpgradeConfig.VersionFormat);
 
             LblSize.Text = !UpgradeInfo.AppNewVersion.FileLength.HasValue ? "-" : $"{(decimal)UpgradeInfo.AppNewVersion.FileLength.Value / 1024 / 1024:N2} MB";
             LblTime.Text = !UpgradeInfo.AppNewVersion.CreateTime.HasValue ? "-" : UpgradeInfo.AppNewVersion.CreateTime.Value.ToString("yyyy-MM-dd");

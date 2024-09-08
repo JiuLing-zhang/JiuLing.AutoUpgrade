@@ -1,6 +1,7 @@
 ﻿using JiuLing.AutoUpgrade.Enums;
 using System;
 using System.Windows.Media.Imaging;
+using JiuLing.CommonLibs.Enums;
 
 namespace JiuLing.AutoUpgrade.Models
 {
@@ -27,6 +28,11 @@ namespace JiuLing.AutoUpgrade.Models
         /// 图标
         /// </summary>
         public BitmapFrame Icon { get; set; } = null;
+
+        /// <summary>
+        /// 版本号的显示格式
+        /// </summary>
+        public VersionFormatEnum VersionFormat { get; set; }
     }
 
     internal class HttpConnectionConfig

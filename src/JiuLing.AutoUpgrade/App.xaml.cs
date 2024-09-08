@@ -12,6 +12,7 @@ using JiuLing.AutoUpgrade.Shared;
 using Microsoft.Win32;
 using System.IO;
 using System.Windows.Media.Imaging;
+using JiuLing.CommonLibs.Enums;
 
 namespace JiuLing.AutoUpgrade
 {
@@ -111,6 +112,9 @@ namespace JiuLing.AutoUpgrade
 
             * -icon path
               设置程序图标
+
+            * -versionFormat [Major|MajorMinor|MajorMinorBuild|MajorMinorBuildRevision]
+            版本号显示格式
             **********************************************/
 
             CommandLineArgsHelper _commandLineArgsHelper = new CommandLineArgsHelper();
@@ -184,6 +188,11 @@ namespace JiuLing.AutoUpgrade
             if (_commandLineArgsHelper.TryGetCommandValue($"-{ArgumentTypeEnum.theme}", out List<string> themeArgs))
             {
                 _theme = (ThemeEnum)Enum.Parse(typeof(ThemeEnum), themeArgs[0]);
+            }
+
+            if (_commandLineArgsHelper.TryGetCommandValue($"-{ArgumentTypeEnum.versionFormat}", out List<string> versionFormat))
+            {
+                upgradeConfig.VersionFormat = (VersionFormatEnum)Enum.Parse(typeof(VersionFormatEnum), versionFormat[0]);
             }
 
             if (_commandLineArgsHelper.TryGetCommandValue($"-{ArgumentTypeEnum.http}", out List<string> httpArgs))
