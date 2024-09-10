@@ -62,7 +62,7 @@ app.Run();
 // or
 await app.RunAsync();
 ```
-> 链式写法
+> 链式写法  Advanced
 ```C#
 AutoUpgradeFactory.Create().UseHttpMode("https://raw.githubusercontent.com/JiuLing-zhang/AutoUpgrade/main/test/AppInfo.json").Run();
 ```
@@ -156,6 +156,19 @@ AutoUpgradeFactory.Create().UseHttpMode("https://raw.githubusercontent.com/JiuLi
     {
         config.Lang = "zh";
         // config.Lang = "en";
+    });
+```
+
+* 设置版本号显示格式。  
+* Set the version number display format.  
+
+```C#
+    app.SetUpgrade(config =>
+    {
+        config.VersionFormat = Shell.Enums.VersionFormatEnum.Major; // 1
+        // config.VersionFormat = Shell.Enums.VersionFormatEnum.MajorMinor; // 1.2
+        // config.VersionFormat = Shell.Enums.VersionFormatEnum.MajorMinorBuild; // 1.2.3
+        // config.VersionFormat = Shell.Enums.VersionFormatEnum.MajorMinorBuildRevision; // 1.2.3.4
     });
 ```
 
