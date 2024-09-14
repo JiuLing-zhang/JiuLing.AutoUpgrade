@@ -40,11 +40,9 @@ The core program is developed using `.NET Framework 4.7` (`x64`). Before using t
 
 
 ## Install  
-* 通过 `Nuget` 直接安装。👉👉👉[`JiuLing.AutoUpgrade`](https://www.nuget.org/packages/JiuLing.AutoUpgrade) 
-* 下载最新的 `Release` 版本自己引用到项目。👉👉👉[`下载`](https://github.com/JiuLing-zhang/JiuLing.AutoUpgrade/releases)  
 
 🟢 From [`Nuget`](https://www.nuget.org/packages/JiuLing.AutoUpgrade)  
-🟢 From [`Release`](https://github.com/JiuLing-zhang/JiuLing.AutoUpgrade/releases)    
+🟢 From [`Release`](https://github.com/JiuLing-zhang/JiuLing.AutoUpgrade/releases)  
 
 ## Getting Started  
 1️⃣ Import namespace  
