@@ -5,6 +5,6 @@
   "DownloadUrl": "https://github.com/JiuLing-zhang/AutoUpgrade/raw/main/test/UpgradePackage1.2.0.zip",
   "Log": "1、Http更新。\n\n\n\n\n\n\n2、修改了若干bug。\n\n\n\n\n\n\n\n3、这个是用来测试滚动条的。",
   "CreateTime": "2022-01-18T11:11:11",
-  "SignType": "md5",
-  "SignValue": "f42c6cb229a0a1237c9945448342d59e"
+  "SignType": "sha1",
+  "SignValue": "d3397bc8be5201b5b5029c3037302822a37291b0"
 }
