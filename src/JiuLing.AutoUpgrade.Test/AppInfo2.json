@@ -2,7 +2,7 @@
   "Name": "AutoUpgrade.Test",
   "Version": "1.2.0",
   "MinVersion": "1.1.0",
-  "FileLength": 2048,
+  "FileLength": 1887436,
   "DownloadUrl": "https://raw.githubusercontent.com/JiuLing-zhang/JiuLing.AutoUpgrade/refs/heads/main/src/JiuLing.AutoUpgrade.Test/UpgradePackage1.2.0.zip",
   "Log": "1、Http更新。\n2、修改了若干bug。",
   "CreateTime": "2022-01-18T11:11:11",
