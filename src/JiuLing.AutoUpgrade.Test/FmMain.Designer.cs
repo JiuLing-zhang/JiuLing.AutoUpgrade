@@ -81,7 +81,7 @@
             // 
             // BtnCheckUpgrade
             // 
-            BtnCheckUpgrade.Location = new Point(15, 344);
+            BtnCheckUpgrade.Location = new Point(15, 388);
             BtnCheckUpgrade.Margin = new Padding(4);
             BtnCheckUpgrade.Name = "BtnCheckUpgrade";
             BtnCheckUpgrade.Size = new Size(192, 56);
@@ -92,7 +92,7 @@
             // 
             // BtnCheckUpgradeUsingFtp
             // 
-            BtnCheckUpgradeUsingFtp.Location = new Point(15, 520);
+            BtnCheckUpgradeUsingFtp.Location = new Point(15, 559);
             BtnCheckUpgradeUsingFtp.Margin = new Padding(4);
             BtnCheckUpgradeUsingFtp.Name = "BtnCheckUpgradeUsingFtp";
             BtnCheckUpgradeUsingFtp.Size = new Size(192, 56);
@@ -104,7 +104,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(15, 316);
+            label2.Location = new Point(18, 308);
             label2.Margin = new Padding(4, 0, 4, 0);
             label2.Name = "label2";
             label2.Size = new Size(69, 20);
@@ -114,17 +114,18 @@
             // txtUpgradeUrl
             // 
             txtUpgradeUrl.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            txtUpgradeUrl.Location = new Point(95, 313);
+            txtUpgradeUrl.Location = new Point(95, 305);
             txtUpgradeUrl.Margin = new Padding(4);
+            txtUpgradeUrl.Multiline = true;
             txtUpgradeUrl.Name = "txtUpgradeUrl";
-            txtUpgradeUrl.Size = new Size(719, 27);
+            txtUpgradeUrl.Size = new Size(464, 70);
             txtUpgradeUrl.TabIndex = 5;
-            txtUpgradeUrl.Text = "https://raw.githubusercontent.com/JiuLing-zhang/AutoUpgrade/main/test/AppInfo.json";
+            txtUpgradeUrl.Text = "https://raw.githubusercontent.com/JiuLing-zhang/JiuLing.AutoUpgrade/refs/heads/main/src/JiuLing.AutoUpgrade.Test/AppInfo.json";
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(15, 414);
+            label3.Location = new Point(15, 453);
             label3.Margin = new Padding(4, 0, 4, 0);
             label3.Name = "label3";
             label3.Size = new Size(69, 20);
@@ -134,16 +135,16 @@
             // TxtFtpUpgradePath
             // 
             TxtFtpUpgradePath.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            TxtFtpUpgradePath.Location = new Point(95, 410);
+            TxtFtpUpgradePath.Location = new Point(95, 449);
             TxtFtpUpgradePath.Margin = new Padding(4);
             TxtFtpUpgradePath.Name = "TxtFtpUpgradePath";
-            TxtFtpUpgradePath.Size = new Size(719, 27);
+            TxtFtpUpgradePath.Size = new Size(464, 27);
             TxtFtpUpgradePath.TabIndex = 7;
             // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(31, 449);
+            label4.Location = new Point(31, 488);
             label4.Margin = new Padding(4, 0, 4, 0);
             label4.Name = "label4";
             label4.Size = new Size(54, 20);
@@ -152,7 +153,7 @@
             // 
             // TxtUserName
             // 
-            TxtUserName.Location = new Point(95, 446);
+            TxtUserName.Location = new Point(95, 485);
             TxtUserName.Margin = new Padding(4);
             TxtUserName.Name = "TxtUserName";
             TxtUserName.Size = new Size(237, 27);
@@ -160,7 +161,7 @@
             // 
             // TxtPassword
             // 
-            TxtPassword.Location = new Point(95, 486);
+            TxtPassword.Location = new Point(95, 525);
             TxtPassword.Margin = new Padding(4);
             TxtPassword.Name = "TxtPassword";
             TxtPassword.PasswordChar = '♥';
@@ -170,7 +171,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(46, 489);
+            label5.Location = new Point(46, 528);
             label5.Margin = new Padding(4, 0, 4, 0);
             label5.Name = "label5";
             label5.Size = new Size(39, 20);
@@ -179,7 +180,7 @@
             // 
             // BtnCheckUpgradeAsync
             // 
-            BtnCheckUpgradeAsync.Location = new Point(215, 344);
+            BtnCheckUpgradeAsync.Location = new Point(215, 388);
             BtnCheckUpgradeAsync.Margin = new Padding(4);
             BtnCheckUpgradeAsync.Name = "BtnCheckUpgradeAsync";
             BtnCheckUpgradeAsync.Size = new Size(192, 56);
@@ -190,7 +191,7 @@
             // 
             // BtnCheckUpgradeUsingFtpAsync
             // 
-            BtnCheckUpgradeUsingFtpAsync.Location = new Point(215, 520);
+            BtnCheckUpgradeUsingFtpAsync.Location = new Point(215, 559);
             BtnCheckUpgradeUsingFtpAsync.Margin = new Padding(4);
             BtnCheckUpgradeUsingFtpAsync.Name = "BtnCheckUpgradeUsingFtpAsync";
             BtnCheckUpgradeUsingFtpAsync.Size = new Size(192, 56);
@@ -215,7 +216,7 @@
             groupBoxSetting.Controls.Add(checkBoxSignCheck);
             groupBoxSetting.Location = new Point(15, 66);
             groupBoxSetting.Name = "groupBoxSetting";
-            groupBoxSetting.Size = new Size(691, 232);
+            groupBoxSetting.Size = new Size(545, 232);
             groupBoxSetting.TabIndex = 14;
             groupBoxSetting.TabStop = false;
             groupBoxSetting.Text = "更新选项";
@@ -338,7 +339,7 @@
             // 
             AutoScaleDimensions = new SizeF(9F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(833, 583);
+            ClientSize = new Size(572, 625);
             Controls.Add(groupBoxSetting);
             Controls.Add(BtnCheckUpgradeUsingFtpAsync);
             Controls.Add(BtnCheckUpgradeAsync);
