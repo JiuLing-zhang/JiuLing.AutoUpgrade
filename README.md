@@ -47,7 +47,7 @@
 ## 使用  
 1️⃣ 导入命名空间  
 ```C#
-using JiuLing.AutoUpgrade.Shell.Creator;
+using JiuLing.AutoUpgrade.Shell;
 ```
 2️⃣ 创建更新程序  
 ```C#
