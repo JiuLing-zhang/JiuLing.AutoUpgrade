@@ -1,4 +1,6 @@
-﻿namespace JiuLing.AutoUpgrade.Shell.Creator
+﻿using JiuLing.AutoUpgrade.Shell.Creator;
+
+namespace JiuLing.AutoUpgrade.Shell
 {
     /// <summary>
     /// 自动更新组件工厂
