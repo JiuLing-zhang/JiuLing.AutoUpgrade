@@ -53,7 +53,8 @@ jobs:
         shell: pwsh
         run: |
           $changelog = Get-Content -Path "${{github.workspace}}\CHANGELOG.md"
-          $latestLog = $changelog -join "`n" -replace "(?s).*?(## \d+\.\d+\.\d+)",'$1' -replace "(?s)(## \d+\.\d+\.\d+).*",'$1'
+          $latestVersion = $changelog | Select-String -Pattern '^## ' | Select-Object -First 1
+          $latestLog = $changelog -join "`n" -replace "(?s)(## $($latestVersion.Line.Trim()))(.*?)(?=## |$)", '$2'
           Set-Content -Path "${{github.workspace}}\LATEST_CHANGELOG.md" -Value $latestLog
 
       - name: Release
