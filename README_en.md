@@ -13,6 +13,8 @@
 
 A simple and easy-to-use automatic update component。 👉👉[中文版](./README.md)  
 
+**🤖 [Upgrade Guide from v2.1 to v2.2](./v2.1_to_v2.2.md)**  
+
 <div align="center">
 <img src="https://github.com/JiuLing-zhang/JiuLing.AutoUpgrade/raw/main/docs/resources/images/demo1.png" width="40%">
 <img src="https://github.com/JiuLing-zhang/JiuLing.AutoUpgrade/raw/main/docs/resources/images/demo2.png" width="40%">
@@ -49,19 +51,15 @@ The core program is developed using `.NET Framework 4.7` (`x64`). Before using t
 ```C#
 using JiuLing.AutoUpgrade.Shell;
 ```
-2️⃣ Create app  
+2️⃣ Create upgrade app  
 ```C#
-var app = AutoUpgradeFactory.Create();
-```
-3️⃣ Config update Type  
-```C#
-//Http 方式更新
-app.UseHttpMode("https://raw.githubusercontent.com/JiuLing-zhang/AutoUpgrade/main/test/AppInfo.json");
+// HTTP model
+IUpgradeApp app = UpgradeFactory.CreateHttpApp("url");
 
-//Ftp 方式更新
-app.UseFtpMode("upgradePath", "userName", "password");
+// FTP model
+IUpgradeApp app = UpgradeFactory.CreateFtpApp("path", "username", "password");
 ```
-4️⃣ Do update  
+3️⃣ Do update  
 ```C#
 app.Run();
 // or
@@ -69,7 +67,7 @@ await app.RunAsync();
 ```
 > 🫧 Advanced
 ```C#
-AutoUpgradeFactory.Create().UseHttpMode("https://raw.githubusercontent.com/JiuLing-zhang/AutoUpgrade/main/test/AppInfo.json").Run();
+await UpgradeFactory.CreateHttpApp("url").RunAsync();
 ```
 
 **💠 The update API should return the following json format:**  
@@ -97,75 +95,63 @@ AutoUpgradeFactory.Create().UseHttpMode("https://raw.githubusercontent.com/JiuLi
 ```
 
 ## 🔨 Advanced Config  
+
+🧰 Build and Enable Settings  
+```c#
+var setting = new UpgradeSettingBuilder();
+// setting.WithLang("").WithSignCheck(true).WithIcon("").With...
+
+IUpgradeApp app = UpgradeFactory.CreateHttpApp("url");
+app.SetUpgrade(setting)
+await app.RunAsync();
+```
+
 ⚡ Set icon  
 
 ```C#
-    app.SetUpgrade(config =>
-    {
-        config.IconPath = "icon.ico";
-        // or
-        config.IconPath = @"C:\icon.ico";
-    });
+setting.WithIcon("icon.ico");
 ```
 
 🌀 Request timeout when checking for updates (default: 5 seconds)  
 
 ```C#
-    app.SetUpgrade(config =>
-    {
-        config.TimeoutSecond = 60;
-    });
+setting.WithTimeout(60);
 ```
 
 🎁 Whether to check for updates in the background (default: `false`)  
 
 ```C#
-    app.SetUpgrade(config =>
-    {
-        config.IsBackgroundCheck = true;
-    });
+setting.WithBackgroundCheck(true);
 ```
 
 ⚽ Enable signature verification, supporting both `MD5` and `SHA1` methods.  
 
 ```C#
-    app.SetUpgrade(config =>
-    {
-        config.IsCheckSign = true;
-    });
+setting.WithSignCheck(true);
 ```
 
 🎲 Set the dark theme (default: follow the operating system).  
 
 ```C#
-    app.SetUpgrade(config =>
-    {
-        config.Theme = Shared.ThemeEnum.System;
-        // config.Theme = Shared.ThemeEnum.Light;
-        // config.Theme = Shared.ThemeEnum.Dark;
-    });
+setting.WithTheme(ThemeEnum.System);
+// setting.WithTheme(ThemeEnum.Light);
+// setting.WithTheme(ThemeEnum.Dark);
 ```
 
 💎 Globalization (default: zh) (Only supports zh、en)  
 
 ```C#
-    app.SetUpgrade(config =>
-    {
-        config.Lang = "zh";
-        // config.Lang = "en";
-    });
+setting.WithLang("zh");
+// setting.WithLang("en");
 ```
 
 📌 Set the version number display format.  
 
 ```C#
-    app.SetUpgrade(config =>
-    {
-        config.VersionFormat = Shell.Enums.VersionFormatEnum.Major; // 1
-        // config.VersionFormat = Shell.Enums.VersionFormatEnum.MajorMinor; // 1.2
-        // config.VersionFormat = Shell.Enums.VersionFormatEnum.MajorMinorBuild; // 1.2.3
-        // config.VersionFormat = Shell.Enums.VersionFormatEnum.MajorMinorBuildRevision; // 1.2.3.4
-    });
+setting.WithVersionFormat(VersionFormatEnum.MajorMinorBuildRevision);
+// setting.WithVersionFormat(VersionFormatEnum.MajorMinorBuild);
+// setting.WithVersionFormat(VersionFormatEnum.MajorMinor);
+// setting.WithVersionFormat(VersionFormatEnum.Major);
 ```
 
 ## License

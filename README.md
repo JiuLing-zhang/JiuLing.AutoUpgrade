@@ -11,7 +11,9 @@
 
 </div>
 
-一个简单、易用的自动更新组件。 👉👉[English Version](./README_en.md)    
+👾 一个简单、易用的自动更新组件。 👉👉[English Version](./README_en.md)  
+
+**🤖 [v2.1 到 v2.2 升级指南](./v2.1_to_v2.2.md)**  
 
 <div align="center">
 <img src="https://github.com/JiuLing-zhang/JiuLing.AutoUpgrade/raw/main/docs/resources/images/demo1.png" width="40%">
@@ -45,21 +47,18 @@
 ## 使用  
 1️⃣ 导入命名空间  
 ```C#
-using JiuLing.AutoUpgrade.Shell;
+using JiuLing.AutoUpgrade.Shell.Creator;
 ```
-2️⃣ 创建更新  
+2️⃣ 创建更新程序  
 ```C#
-var app = AutoUpgradeFactory.Create();
-```
-3️⃣ 选择更新方式  
-```C#
-//Http 方式更新
-app.UseHttpMode("https://raw.githubusercontent.com/JiuLing-zhang/AutoUpgrade/main/test/AppInfo.json");
+// HTTP 方式
+IUpgradeApp app = UpgradeFactory.CreateHttpApp("url");
 
-//Ftp 方式更新
-app.UseFtpMode("upgradePath", "userName", "password");
+// FTP 方式
+IUpgradeApp app = UpgradeFactory.CreateFtpApp("path", "username", "password");
 ```
-4️⃣ 启动  
+
+3️⃣ 启动  
 ```C#
 app.Run();
 // or
@@ -68,7 +67,7 @@ await app.RunAsync();
 
 > 🫧 链式写法
 ```C#
-AutoUpgradeFactory.Create().UseHttpMode("https://raw.githubusercontent.com/JiuLing-zhang/AutoUpgrade/main/test/AppInfo.json").Run();
+await UpgradeFactory.CreateHttpApp("url").RunAsync();
 ```
 
 **💠 自动更新接口需要返回如下格式的 `json` 内容。**  
@@ -96,75 +95,63 @@ AutoUpgradeFactory.Create().UseHttpMode("https://raw.githubusercontent.com/JiuLi
 ```
 
 ## 🔨 高级设置  
+
+🧰 构建并启用设置  
+```c#
+var setting = new UpgradeSettingBuilder();
+// setting.WithLang("").WithSignCheck(true).WithIcon("").With...
+
+IUpgradeApp app = UpgradeFactory.CreateHttpApp("url");
+app.SetUpgrade(setting)
+await app.RunAsync();
+```
+
 ⚡ 设置图标   
 
 ```C#
-    app.SetUpgrade(config =>
-    {
-        config.IconPath = "icon.ico";
-        // or
-        config.IconPath = @"C:\icon.ico";
-    });
+setting.WithIcon("icon.ico");
 ```
 
 🌀 检查更新时的请求超时时间（默认 5 秒）  
 
 ```C#
-    app.SetUpgrade(config =>
-    {
-        config.TimeoutSecond = 60;
-    });
+setting.WithTimeout(60);
 ```
 
 🎁 是否在后台进行更新检查（默认为否）  
 
 ```C#
-    app.SetUpgrade(config =>
-    {
-        config.IsBackgroundCheck = true;
-    });
+setting.WithBackgroundCheck(true);
 ```
 
 ⚽ 对下载的文件启用签名校验，支持 `MD5` 和 `SHA1` 两种方式（默认为不启用）  
 
 ```C#
-    app.SetUpgrade(config =>
-    {
-        config.IsCheckSign = true;
-    });
+setting.WithSignCheck(true);
 ```
 
 🎲 设置主题，支持“跟随系统”、“浅色主题”、“深色主题”（默认为跟随系统）  
 
 ```C#
-    app.SetUpgrade(config =>
-    {
-        config.Theme = Shared.ThemeEnum.System;
-        // config.Theme = Shared.ThemeEnum.Light;
-        // config.Theme = Shared.ThemeEnum.Dark;
-    });
+setting.WithTheme(ThemeEnum.System);
+// setting.WithTheme(ThemeEnum.Light);
+// setting.WithTheme(ThemeEnum.Dark);
 ```
 
 💎 设置多语言，支持中文、英文（默认为中文）。  
 
 ```C#
-    app.SetUpgrade(config =>
-    {
-        config.Lang = "zh";
-        // config.Lang = "en";
-    });
+setting.WithLang("zh");
+// setting.WithLang("en");
 ```
 
 📌 设置版本号显示格式。  
 
 ```C#
-    app.SetUpgrade(config =>
-    {
-        config.VersionFormat = Shell.Enums.VersionFormatEnum.Major; // 1
-        // config.VersionFormat = Shell.Enums.VersionFormatEnum.MajorMinor; // 1.2
-        // config.VersionFormat = Shell.Enums.VersionFormatEnum.MajorMinorBuild; // 1.2.3
-        // config.VersionFormat = Shell.Enums.VersionFormatEnum.MajorMinorBuildRevision; // 1.2.3.4
-    });
+setting.WithVersionFormat(VersionFormatEnum.MajorMinorBuildRevision);
+// setting.WithVersionFormat(VersionFormatEnum.MajorMinorBuild);
+// setting.WithVersionFormat(VersionFormatEnum.MajorMinor);
+// setting.WithVersionFormat(VersionFormatEnum.Major);
 ```
 
 ## 项目说明  
