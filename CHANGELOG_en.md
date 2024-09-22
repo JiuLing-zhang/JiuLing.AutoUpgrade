@@ -1,6 +1,12 @@
+## 2.2.2
+
+### 🔥 Changelog [中文版本](./CHANGELOG.md)
+* 🌀 Tested if auto-build is functional
+
 ## 2.2.1
 
 ### 🔥 Changelog [中文版本](./CHANGELOG.md)
+* 🌈 Removed unused code
 * 🌀 Tested if auto-build is functional
 
 ## 2.2.0
