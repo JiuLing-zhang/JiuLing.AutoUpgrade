@@ -1,4 +1,5 @@
 using JiuLing.AutoUpgrade.Shared;
+using JiuLing.AutoUpgrade.Shell;
 using JiuLing.AutoUpgrade.Shell.Creator;
 using JiuLing.AutoUpgrade.Shell.Enums;
 
