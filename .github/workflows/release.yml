@@ -25,6 +25,10 @@ jobs:
       - name: Build core app
         run: msbuild .\src\JiuLing.AutoUpgrade\JiuLing.AutoUpgrade.csproj /P:Configuration=Release
 
+      - name: Waiting for file copy
+        run: Start-Sleep -s 30
+        shell: powershell
+
       - name: Setup .NET 8
         uses: actions/setup-dotnet@v1
         with:
@@ -50,7 +54,7 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         with:
           # 配置【README地址】
-          body_path: ${{ github.workspace }}-CHANGELOG.md
+          body_path: ${{github.workspace}}\CHANGELOG.md
           # 配置【zip文件地址】
           files: ${{github.workspace}}\src\JiuLing.AutoUpgrade.Shell\bin\Release\JiuLing.AutoUpgrade.Shell_${{ steps.tagName.outputs.tag }}.zip
 
