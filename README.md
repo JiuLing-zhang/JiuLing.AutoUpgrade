@@ -75,6 +75,7 @@ AutoUpgradeFactory.Create().UseHttpMode("https://raw.githubusercontent.com/JiuLi
 
 - Version: ❗[必须] 最新的版本号  
 - DownloadUrl: ❗[必须] 程序的下载路径  
+- FileLength: 文件大小，字节  
 - MinVersion: 程序运行的最低版本号，低于此版本将无法运行  
 - Log: 更新日志  
 - CreateTime: 时间
@@ -83,13 +84,14 @@ AutoUpgradeFactory.Create().UseHttpMode("https://raw.githubusercontent.com/JiuLi
 
 ```json
 {
-    "Version":"1.2.0",
-    "MinVersion":"1.1.0",
-    "DownloadUrl":"xxxxx/update.zip",
-    "Log":"1、修复了若干bug。2、新增了若干需求。",
-    "CreateTime":"2022-01-16 12:12:12",
-    "SignType":"MD5",
-    "SignValue":"f42c6cb229a0a1237c9945448342d59e"
+    "Version": "1.2.0",
+    "DownloadUrl": "xxxxx/update.zip",
+    "FileLength": 1887436,
+    "MinVersion": "1.1.0",
+    "Log": "1、修复了若干bug。2、新增了若干需求。",
+    "CreateTime": "2022-01-16 12:12:12",
+    "SignType": "MD5",
+    "SignValue": "f42c6cb229a0a1237c9945448342d59e"
 }
 ```
 

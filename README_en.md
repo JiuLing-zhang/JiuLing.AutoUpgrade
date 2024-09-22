@@ -74,23 +74,25 @@ AutoUpgradeFactory.Create().UseHttpMode("https://raw.githubusercontent.com/JiuLi
 
 **💠 The update API should return the following json format:**  
 
-- Version: ❗[Required] The latest version number
-- DownloadUrl: ❗[Required] The download URL of the application
-- MinVersion: The minimum version required for the application to run; versions below this will not be able to run
-- Log: Update log
-- CreateTime: Timestamp
-- SignType: Signature type used for file verification
-- SignValue: Signature value for file verification
+- Version: ❗[Required] The latest version number  
+- DownloadUrl: ❗[Required] The download URL of the application  
+- FileLength: File length (byte)  
+- MinVersion: The minimum version required for the application to run; versions below this will not be able to run  
+- Log: Update log  
+- CreateTime: Timestamp  
+- SignType: Signature type used for file verification  
+- SignValue: Signature value for file verification  
 
 ```json
 {
-    "Version":"1.2.0",
-    "MinVersion":"1.1.0",
-    "DownloadUrl":"xxxxx/update.zip",
-    "Log":"1、修复了若干bug。2、新增了若干需求。",
-    "CreateTime":"2022-01-16 12:12:12",
-    "SignType":"MD5",
-    "SignValue":"f42c6cb229a0a1237c9945448342d59e"
+    "Version": "1.2.0",
+    "DownloadUrl": "xxxxx/update.zip",
+    "FileLength": 1887436,
+    "MinVersion": "1.1.0",
+    "Log": "1、修复了若干bug。2、新增了若干需求。",
+    "CreateTime": "2022-01-16 12:12:12",
+    "SignType": "MD5",
+    "SignValue": "f42c6cb229a0a1237c9945448342d59e"
 }
 ```
 
