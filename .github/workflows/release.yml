@@ -48,21 +48,13 @@ jobs:
         shell: pwsh
         # 配置【编译后的文件地址】
         run: Compress-Archive -Path ${{github.workspace}}\src\JiuLing.AutoUpgrade.Shell\bin\Release\* -DestinationPath ${{github.workspace}}\src\JiuLing.AutoUpgrade.Shell\bin\Release\JiuLing.AutoUpgrade.Shell_${{ steps.tagName.outputs.tag }}.zip
-        # 截取最新日志
-      - name: Extract latest release notes
-        shell: pwsh
-        run: |
-          $changelog = Get-Content -Path "${{github.workspace}}\CHANGELOG.md"
-          $latestVersion = $changelog | Select-String -Pattern '^## ' | Select-Object -First 1
-          $latestLog = $changelog -join "`n" -replace "(?s)(## $($latestVersion.Line.Trim()))(.*?)(?=## |$)", '$2'
-          Set-Content -Path "${{github.workspace}}\LATEST_CHANGELOG.md" -Value $latestLog
 
       - name: Release
         uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/')
         with:
           # 配置【README地址】
-          body_path: ${{github.workspace}}\LATEST_CHANGELOG.md
+          body_path: ${{github.workspace}}\CHANGELOG.md
           # 配置【zip文件地址】
           files: ${{github.workspace}}\src\JiuLing.AutoUpgrade.Shell\bin\Release\JiuLing.AutoUpgrade.Shell_${{ steps.tagName.outputs.tag }}.zip
 
