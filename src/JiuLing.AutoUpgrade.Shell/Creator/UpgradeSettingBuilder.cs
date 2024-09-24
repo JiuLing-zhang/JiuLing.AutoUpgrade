@@ -104,7 +104,7 @@ namespace JiuLing.AutoUpgrade.Shell.Creator
         /// 构建配置
         /// </summary>
         /// <returns></returns>
-        public UpgradeSetting Build()
+        internal UpgradeSetting Build()
         {
             return _upgradeSetting;
         }

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace JiuLing.AutoUpgrade.Shell.Creator
 {
@@ -13,6 +14,14 @@ namespace JiuLing.AutoUpgrade.Shell.Creator
         /// <param name="builder">更新参数构建器</param>
         /// <returns></returns>
         IUpgradeApp SetUpgrade(UpgradeSettingBuilder builder);
+
+        /// <summary>
+        /// 设置更新参数
+        /// </summary>
+        /// <param name="configAction">更新参数构建器</param>
+        /// <returns></returns>
+        IUpgradeApp SetUpgrade(Action<UpgradeSettingBuilder> configAction);
+
         /// <summary>
         /// 启动
         /// </summary>

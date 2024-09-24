@@ -12,11 +12,13 @@ namespace JiuLing.AutoUpgrade.Shell.Creator
         protected readonly string _coreAppDirectory;
         protected readonly string _coreAppFullFileName;
         protected UpgradeSetting _upgradeSetting;
+        private readonly UpgradeSettingBuilder _upgradeSettingBuilder;
         protected static Mutex _mutex;
 
         internal BaseUpgradeApp()
         {
             _upgradeSetting = new UpgradeSetting();
+            _upgradeSettingBuilder = new UpgradeSettingBuilder();
             _coreAppDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "JiuLing.AutoUpgrade.Core.Temp");
             _coreAppFullFileName = Path.Combine(_coreAppDirectory, "JiuLing.AutoUpgrade.exe");
         }
@@ -24,6 +26,13 @@ namespace JiuLing.AutoUpgrade.Shell.Creator
         public IUpgradeApp SetUpgrade(UpgradeSettingBuilder builder)
         {
             _upgradeSetting = builder.Build();
+            return this;
+        }
+
+        public IUpgradeApp SetUpgrade(Action<UpgradeSettingBuilder> configAction)
+        {
+            configAction?.Invoke(_upgradeSettingBuilder);
+            _upgradeSetting = _upgradeSettingBuilder.Build();
             return this;
         }
 
