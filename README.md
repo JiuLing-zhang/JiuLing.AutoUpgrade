@@ -96,14 +96,19 @@ await UpgradeFactory.CreateHttpApp("url").RunAsync();
 
 ## 🔨 高级设置  
 
-🧰 构建并启用设置  
-```c#
-var setting = new UpgradeSettingBuilder();
-// setting.WithLang("").WithSignCheck(true).WithIcon("").With...
-
-IUpgradeApp app = UpgradeFactory.CreateHttpApp("url");
-app.SetUpgrade(setting)
-await app.RunAsync();
+```C#
+await UpgradeFactory.CreateHttpApp("url")
+    .SetUpgrade(builder =>
+    {
+        builder.WithIcon("path")
+        .WithTimeout(60)
+        .WithBackgroundCheck(true)
+        .WithSignCheck(true)
+        .WithTheme(ThemeEnum.System)
+        .WithLang("zh")
+        .WithVersionFormat(VersionFormatEnum.MajorMinorBuild);
+    })
+    .RunAsync();
 ```
 
 ⚡ 设置图标   
