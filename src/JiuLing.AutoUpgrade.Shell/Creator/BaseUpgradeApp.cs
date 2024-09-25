@@ -23,6 +23,7 @@ namespace JiuLing.AutoUpgrade.Shell.Creator
             _coreAppFullFileName = Path.Combine(_coreAppDirectory, "JiuLing.AutoUpgrade.exe");
         }
 
+        [Obsolete("已过时，请改用 lambda 方式调用")]
         public IUpgradeApp SetUpgrade(UpgradeSettingBuilder builder)
         {
             _upgradeSetting = builder.Build();

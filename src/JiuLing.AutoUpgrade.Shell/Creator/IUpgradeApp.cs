@@ -13,6 +13,7 @@ namespace JiuLing.AutoUpgrade.Shell.Creator
         /// </summary>
         /// <param name="builder">更新参数构建器</param>
         /// <returns></returns>
+        [Obsolete("已过时，请改用 lambda 方式调用")]
         IUpgradeApp SetUpgrade(UpgradeSettingBuilder builder);
 
         /// <summary>

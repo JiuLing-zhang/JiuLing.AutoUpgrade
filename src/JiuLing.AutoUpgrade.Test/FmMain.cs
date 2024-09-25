@@ -84,7 +84,7 @@ public partial class FmMain : Form
         _upgradeApp = UpgradeFactory.CreateHttpApp(txtUpgradeUrl.Text);
         if (!checkBoxDefaultConfig.Checked)
         {
-            _upgradeApp.SetUpgrade(BuildUpgradeSetting());
+            _upgradeApp.SetUpgrade(BuildUpgradeSetting);
         }
         return _upgradeApp;
     }
@@ -94,40 +94,38 @@ public partial class FmMain : Form
         _upgradeApp = UpgradeFactory.CreateFtpApp(TxtFtpUpgradePath.Text, TxtUserName.Text, TxtPassword.Text);
         if (!checkBoxDefaultConfig.Checked)
         {
-            _upgradeApp.SetUpgrade(BuildUpgradeSetting());
+            _upgradeApp.SetUpgrade(BuildUpgradeSetting);
         }
         return _upgradeApp;
     }
 
-    private UpgradeSettingBuilder BuildUpgradeSetting()
+    private void BuildUpgradeSetting(UpgradeSettingBuilder builder)
     {
-        var setting = new UpgradeSettingBuilder();
-        setting.WithSignCheck(checkBoxSignCheck.Checked);
-        setting.WithTimeout(Convert.ToInt32(numericUpDownTimeoutSecond.Value));
+        builder.WithSignCheck(checkBoxSignCheck.Checked);
+        builder.WithTimeout(Convert.ToInt32(numericUpDownTimeoutSecond.Value));
 
         var theme = comboBoxTheme.Text;
         if (!string.IsNullOrEmpty(theme))
         {
-            setting.WithTheme((ThemeEnum)Enum.Parse(typeof(ThemeEnum), theme));
+            builder.WithTheme((ThemeEnum)Enum.Parse(typeof(ThemeEnum), theme));
         }
 
         var lang = comboBoxLang.Text;
         if (!string.IsNullOrEmpty(lang))
         {
-            setting.WithLang(lang);
+            builder.WithLang(lang);
         }
 
         var icon = comboBoxIcon.Text;
         if (!string.IsNullOrEmpty(icon))
         {
-            setting.WithIcon(icon);
+            builder.WithIcon(icon);
         }
 
         var versionFormat = comboBoxVersionFormat.Text;
         if (!string.IsNullOrEmpty(versionFormat))
         {
-            setting.WithVersionFormat((VersionFormatEnum)Enum.Parse(typeof(VersionFormatEnum), versionFormat));
+            builder.WithVersionFormat((VersionFormatEnum)Enum.Parse(typeof(VersionFormatEnum), versionFormat));
         }
-        return setting;
     }
 }
