@@ -81,11 +81,14 @@ namespace JiuLing.AutoUpgrade.Shell.Creator
         /// <returns></returns>
         public UpgradeSettingBuilder WithIcon(string path)
         {
-            if (!File.Exists(path))
+            if (!string.IsNullOrEmpty(path))
             {
-                throw new FileNotFoundException($"图标文件不存在: {path}");
+                if (!File.Exists(path))
+                {
+                    throw new FileNotFoundException($"图标文件不存在: {path}");
+                }
+                _upgradeSetting.IconPath = path;
             }
-            _upgradeSetting.IconPath = path;
             return this;
         }
 
