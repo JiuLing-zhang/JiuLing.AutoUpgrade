@@ -4,13 +4,15 @@ on:
   push:
     branches: [ main ]
     paths-ignore:
-    - 'README.md'
-    - 'README_en.md'
+    - '**.md'
+    - '.github/**'
+    - 'docs/**'
   pull_request:
     branches: [ main ]
     paths-ignore:
-    - 'README.md'
-    - 'README_en.md'
+    - '**.md'
+    - '.github/**'
+    - 'docs/**'
 
 jobs:
   build:
