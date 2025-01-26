@@ -183,15 +183,15 @@
     <Compile Include="UpgradeCheckWindow.xaml.cs">
       <DependentUpon>UpgradeCheckWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Updaters\UpdateStrategyBase.cs" />
-    <Compile Include="Updaters\UpdateContext.cs" />
-    <Compile Include="Updaters\UpdateStrategyFactory.cs" />
-    <Compile Include="Updaters\FtpUpdateStrategy.cs" />
-    <Compile Include="Updaters\HttpUpdateStrategy.cs" />
-    <Compile Include="Downloaders\DownloaderBase.cs" />
-    <Compile Include="Downloaders\DownloaderFactory.cs" />
-    <Compile Include="Downloaders\FtpDownloader.cs" />
-    <Compile Include="Downloaders\HttpDownloader.cs" />
+    <Compile Include="Updater\UpdateStrategyBase.cs" />
+    <Compile Include="Updater\UpdateContext.cs" />
+    <Compile Include="Updater\UpdateStrategyFactory.cs" />
+    <Compile Include="Updater\FtpUpdateStrategy.cs" />
+    <Compile Include="Updater\HttpUpdateStrategy.cs" />
+    <Compile Include="Downloader\DownloaderBase.cs" />
+    <Compile Include="Downloader\DownloaderFactory.cs" />
+    <Compile Include="Downloader\FtpDownloader.cs" />
+    <Compile Include="Downloader\HttpDownloader.cs" />
     <Compile Include="UpgradeChecker.cs" />
     <Compile Include="UpgradeWindow.xaml.cs">
       <DependentUpon>UpgradeWindow.xaml</DependentUpon>
