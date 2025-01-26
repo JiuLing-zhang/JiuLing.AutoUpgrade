@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace JiuLing.AutoUpgrade.Templates
 {
-    internal abstract class UpgradeAbstract
+    internal abstract class DownloaderBase
     {
         /// <summary>
         /// 更新

@@ -10,12 +10,12 @@ namespace JiuLing.AutoUpgrade.Strategies
     /// <summary>
     /// Ftp参数构造策略
     /// </summary>
-    internal class UpgradeStrategyUsingFtp : UpgradeStrategy
+    internal class FtpUpdateStrategy : UpdateStrategyBase
     {
         private readonly FtpClientHelper _clientHelper;
         private readonly string _upgradePath;
         private TimeSpan _timeout;
-        public UpgradeStrategyUsingFtp(FtpConnectionConfig connectionConfig)
+        public FtpUpdateStrategy(FtpConnectionConfig connectionConfig)
         {
             _clientHelper = new FtpClientHelper(connectionConfig.UserName, connectionConfig.Password);
             _upgradePath = connectionConfig.UpgradePath;

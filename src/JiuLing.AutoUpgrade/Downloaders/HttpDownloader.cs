@@ -5,7 +5,7 @@ using JiuLing.AutoUpgrade.Net;
 
 namespace JiuLing.AutoUpgrade.Templates
 {
-    internal class UpgradeUsingHttp : UpgradeAbstract
+    internal class HttpDownloader : DownloaderBase
     {
         private readonly HttpClientHelper _clientHelper = new HttpClientHelper();
 

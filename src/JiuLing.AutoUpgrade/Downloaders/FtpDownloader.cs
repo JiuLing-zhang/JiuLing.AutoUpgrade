@@ -6,11 +6,11 @@ using JiuLing.AutoUpgrade.Net;
 
 namespace JiuLing.AutoUpgrade.Templates
 {
-    internal class UpgradeUsingFtp : UpgradeAbstract
+    internal class FtpDownloader : DownloaderBase
     {
         private readonly FtpClientHelper _clientHelper;
 
-        public UpgradeUsingFtp(FtpConnectionConfig connectionConfig)
+        public FtpDownloader(FtpConnectionConfig connectionConfig)
         {
             _clientHelper = new FtpClientHelper(connectionConfig.UserName, connectionConfig.Password);
         }

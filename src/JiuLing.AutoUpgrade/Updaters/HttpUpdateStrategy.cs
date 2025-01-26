@@ -10,12 +10,12 @@ namespace JiuLing.AutoUpgrade.Strategies
     /// <summary>
     /// Http参数构造策略
     /// </summary>
-    internal class UpgradeStrategyUsingHttp : UpgradeStrategy
+    internal class HttpUpdateStrategy : UpdateStrategyBase
     {
         private readonly HttpConnectionConfig _connectionConfig;
 
         private readonly HttpClientHelper _clientHelper = new HttpClientHelper();
-        public UpgradeStrategyUsingHttp(HttpConnectionConfig connectionConfig)
+        public HttpUpdateStrategy(HttpConnectionConfig connectionConfig)
         {
             _connectionConfig = connectionConfig;
         }

@@ -3,10 +3,10 @@ using JiuLing.CommonLibs.Model;
 
 namespace JiuLing.AutoUpgrade.Strategies
 {
-    internal class UpgradeStrategyContext
+    internal class UpdateContext
     {
-        private readonly UpgradeStrategy _strategy;
-        public UpgradeStrategyContext(UpgradeStrategy strategy)
+        private readonly UpdateStrategyBase _strategy;
+        public UpdateContext(UpdateStrategyBase strategy)
         {
             _strategy = strategy;
         }

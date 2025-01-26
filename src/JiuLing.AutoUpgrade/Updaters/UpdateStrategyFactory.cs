@@ -2,22 +2,22 @@
 using JiuLing.AutoUpgrade.Enums;
 using JiuLing.AutoUpgrade.Models;
 
-namespace JiuLing.AutoUpgrade.Templates
+namespace JiuLing.AutoUpgrade.Strategies
 {
-    internal class UpgradeTemplateFactory
+    internal class UpdateStrategyFactory
     {
         /// <summary>
         /// 创建组件
         /// </summary>
         /// <returns></returns>
-        public static UpgradeAbstract Create(UpgradeConfigInfo config)
+        public static UpdateStrategyBase Create(UpgradeConfigInfo config)
         {
             switch (config.UpgradeMode)
             {
                 case UpgradeModeEnum.Http:
-                    return new UpgradeUsingHttp();
+                    return new HttpUpdateStrategy(config.ConnectionConfig);
                 case UpgradeModeEnum.Ftp:
-                    return new UpgradeUsingFtp(config.ConnectionConfig);
+                    return new FtpUpdateStrategy(config.ConnectionConfig);
                 default:
                     throw new ArgumentException(AutoUpgrade.Properties.Resources.UnsupportedUpdateMethod);
             }

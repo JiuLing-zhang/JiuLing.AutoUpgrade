@@ -94,7 +94,7 @@ namespace JiuLing.AutoUpgrade
                     TxtPercent.Text = $"{AutoUpgrade.Properties.Resources.Updating} {percent * 100:f1} %";
                 });
 
-                await UpgradeTemplateFactory.Create(UpgradeInfo.UpgradeConfig)
+                await DownloaderFactory.Create(UpgradeInfo.UpgradeConfig)
                     .Update(UpgradeInfo.AppNewVersion.DownloadUrl, GlobalArgs.MainAppPath, GlobalArgs.TempPackagePath, GlobalArgs.TempZipDirectory,
                         () =>
                         {
