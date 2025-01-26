@@ -2,7 +2,7 @@
 using JiuLing.AutoUpgrade.Enums;
 using JiuLing.AutoUpgrade.Models;
 
-namespace JiuLing.AutoUpgrade.Strategies
+namespace JiuLing.AutoUpgrade.Updater
 {
     internal class UpdateStrategyFactory
     {

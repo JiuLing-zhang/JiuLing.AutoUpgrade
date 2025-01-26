@@ -2,7 +2,7 @@
 using JiuLing.AutoUpgrade.Enums;
 using JiuLing.AutoUpgrade.Models;
 
-namespace JiuLing.AutoUpgrade.Templates
+namespace JiuLing.AutoUpgrade.Downloader
 {
     internal class DownloaderFactory
     {

@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using JiuLing.AutoUpgrade.Models;
 using JiuLing.AutoUpgrade.Net;
 
-namespace JiuLing.AutoUpgrade.Templates
+namespace JiuLing.AutoUpgrade.Downloader
 {
     internal class FtpDownloader : DownloaderBase
     {

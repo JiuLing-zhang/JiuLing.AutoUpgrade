@@ -1,8 +1,8 @@
 ﻿using JiuLing.AutoUpgrade.Common;
-using JiuLing.AutoUpgrade.Strategies;
 using JiuLing.CommonLibs;
 using JiuLing.CommonLibs.ExtensionMethods;
 using System.Threading.Tasks;
+using JiuLing.AutoUpgrade.Updater;
 
 namespace JiuLing.AutoUpgrade
 {

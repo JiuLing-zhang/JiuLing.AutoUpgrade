@@ -4,7 +4,7 @@ using System.IO.Compression;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JiuLing.AutoUpgrade.Templates
+namespace JiuLing.AutoUpgrade.Downloader
 {
     internal abstract class DownloaderBase
     {

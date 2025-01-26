@@ -1,11 +1,11 @@
 ﻿using System;
+using System.Threading.Tasks;
 using JiuLing.AutoUpgrade.Models;
 using JiuLing.AutoUpgrade.Net;
-using System.Threading.Tasks;
-using JiuLing.CommonLibs.Model;
 using JiuLing.CommonLibs.ExtensionMethods;
+using JiuLing.CommonLibs.Model;
 
-namespace JiuLing.AutoUpgrade.Strategies
+namespace JiuLing.AutoUpgrade.Updater
 {
     /// <summary>
     /// Ftp参数构造策略
@@ -14,7 +14,7 @@ namespace JiuLing.AutoUpgrade.Strategies
     {
         private readonly FtpClientHelper _clientHelper;
         private readonly string _upgradePath;
-        private TimeSpan _timeout;
+        private readonly TimeSpan _timeout;
         public FtpUpdateStrategy(FtpConnectionConfig connectionConfig)
         {
             _clientHelper = new FtpClientHelper(connectionConfig.UserName, connectionConfig.Password);

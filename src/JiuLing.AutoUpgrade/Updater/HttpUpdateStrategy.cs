@@ -1,11 +1,11 @@
 ﻿using System;
+using System.Threading.Tasks;
 using JiuLing.AutoUpgrade.Models;
 using JiuLing.AutoUpgrade.Net;
-using System.Threading.Tasks;
-using JiuLing.CommonLibs.Model;
 using JiuLing.CommonLibs.ExtensionMethods;
+using JiuLing.CommonLibs.Model;
 
-namespace JiuLing.AutoUpgrade.Strategies
+namespace JiuLing.AutoUpgrade.Updater
 {
     /// <summary>
     /// Http参数构造策略

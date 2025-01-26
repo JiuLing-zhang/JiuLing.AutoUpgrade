@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using JiuLing.CommonLibs.Model;
 
-namespace JiuLing.AutoUpgrade.Strategies
+namespace JiuLing.AutoUpgrade.Updater
 {
     internal class UpdateContext
     {

@@ -1,12 +1,12 @@
 ﻿using FirstFloor.ModernUI.Windows.Controls;
 using JiuLing.AutoUpgrade.Common;
-using JiuLing.AutoUpgrade.Templates;
 using JiuLing.CommonLibs.ExtensionMethods;
 using JiuLing.CommonLibs.Security;
 using System;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
+using JiuLing.AutoUpgrade.Downloader;
 
 namespace JiuLing.AutoUpgrade
 {

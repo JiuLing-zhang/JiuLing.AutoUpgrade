@@ -3,7 +3,7 @@ using System.IO;
 using System.Threading.Tasks;
 using JiuLing.AutoUpgrade.Net;
 
-namespace JiuLing.AutoUpgrade.Templates
+namespace JiuLing.AutoUpgrade.Downloader
 {
     internal class HttpDownloader : DownloaderBase
     {
