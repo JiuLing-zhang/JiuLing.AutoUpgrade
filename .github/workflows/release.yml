@@ -25,10 +25,6 @@ jobs:
       - name: Build core app
         run: msbuild .\src\JiuLing.AutoUpgrade\JiuLing.AutoUpgrade.csproj /P:Configuration=Release
 
-      - name: Waiting for file copy
-        run: Start-Sleep -s 30
-        shell: powershell
-
       - name: Setup .NET 8
         uses: actions/setup-dotnet@v1
         with:
