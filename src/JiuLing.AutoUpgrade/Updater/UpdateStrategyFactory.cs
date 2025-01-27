@@ -15,9 +15,9 @@ namespace JiuLing.AutoUpgrade.Updater
             switch (config.UpgradeMode)
             {
                 case UpgradeModeEnum.Http:
-                    return new HttpUpdateStrategy(config.ConnectionConfig);
+                    return new HttpUpdateStrategy((HttpConnectionConfig)config.ConnectionConfig);
                 case UpgradeModeEnum.Ftp:
-                    return new FtpUpdateStrategy(config.ConnectionConfig);
+                    return new FtpUpdateStrategy((FtpConnectionConfig)config.ConnectionConfig);
                 default:
                     throw new ArgumentException(AutoUpgrade.Properties.Resources.UnsupportedUpdateMethod);
             }

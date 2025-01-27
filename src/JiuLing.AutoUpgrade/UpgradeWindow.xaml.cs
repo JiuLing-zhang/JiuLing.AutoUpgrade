@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
 using JiuLing.AutoUpgrade.Downloader;
+using JiuLing.AutoUpgrade.Models;
 
 namespace JiuLing.AutoUpgrade
 {

@@ -180,6 +180,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\ConnectionConfigBase.cs" />
+    <Compile Include="Models\FtpConnectionConfig.cs" />
+    <Compile Include="Models\HttpConnectionConfig.cs" />
+    <Compile Include="Models\UpgradeSetting.cs" />
     <Compile Include="UpgradeCheckWindow.xaml.cs">
       <DependentUpon>UpgradeCheckWindow.xaml</DependentUpon>
     </Compile>

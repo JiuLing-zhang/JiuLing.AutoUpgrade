@@ -3,6 +3,7 @@ using System;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using JiuLing.AutoUpgrade.Models;
 
 namespace JiuLing.AutoUpgrade
 {

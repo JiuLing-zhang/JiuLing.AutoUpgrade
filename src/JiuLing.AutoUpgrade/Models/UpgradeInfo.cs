@@ -1,7 +1,6 @@
-﻿using JiuLing.AutoUpgrade.Models;
-using JiuLing.CommonLibs.Model;
+﻿using JiuLing.CommonLibs.Model;
 
-namespace JiuLing.AutoUpgrade
+namespace JiuLing.AutoUpgrade.Models
 {
     internal static class UpgradeInfo
     {

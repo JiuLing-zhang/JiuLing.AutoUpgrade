@@ -1,6 +1,6 @@
-﻿using System;
-using JiuLing.AutoUpgrade.Enums;
+﻿using JiuLing.AutoUpgrade.Enums;
 using JiuLing.AutoUpgrade.Models;
+using System;
 
 namespace JiuLing.AutoUpgrade.Downloader
 {
@@ -17,7 +17,7 @@ namespace JiuLing.AutoUpgrade.Downloader
                 case UpgradeModeEnum.Http:
                     return new HttpDownloader();
                 case UpgradeModeEnum.Ftp:
-                    return new FtpDownloader(config.ConnectionConfig);
+                    return new FtpDownloader((FtpConnectionConfig)config.ConnectionConfig);
                 default:
                     throw new ArgumentException(AutoUpgrade.Properties.Resources.UnsupportedUpdateMethod);
             }
