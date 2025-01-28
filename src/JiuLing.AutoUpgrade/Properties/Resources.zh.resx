@@ -222,4 +222,7 @@
   <data name="Skip" xml:space="preserve">
     <value>不再提示该版本</value>
   </data>
+  <data name="NoUpdatesAvailable" xml:space="preserve">
+    <value>没有可用的更新信息</value>
+  </data>
 </root>

@@ -28,5 +28,17 @@ namespace JiuLing.AutoUpgrade.Shell
         {
             return new FtpApp(upgradePath, username, password);
         }
+
+        /// <summary>
+        /// 创建 GitHub 更新组件
+        /// </summary>
+        /// <param name="user">用户</param>
+        /// <param name="repo">仓库</param>
+        /// <param name="assetName">资源名称</param>
+        /// <returns></returns>
+        public static IUpgradeApp CreateGitHubApp(string user, string repo, string assetName)
+        {
+            return new GitHubApp(user, repo, assetName);
+        }
     }
 }

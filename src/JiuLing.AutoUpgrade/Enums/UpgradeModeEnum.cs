@@ -3,6 +3,7 @@
     enum UpgradeModeEnum
     {
         Http,
-        Ftp
+        Ftp,
+        GitHub
     }
 }

@@ -11,6 +11,25 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JiuLing.AutoUpgrade.Shell",
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "JiuLing.AutoUpgrade.Shared", "JiuLing.AutoUpgrade.Shared\JiuLing.AutoUpgrade.Shared.shproj", "{E0916482-C12F-4894-BA4B-00288571A032}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "README", "README", "{8C24ABF7-0FC2-4B06-B17F-4BD9EFD24CA4}"
+	ProjectSection(SolutionItems) = preProject
+		..\README.md = ..\README.md
+		..\README_en.md = ..\README_en.md
+		..\v2.1_to_v2.2.md = ..\v2.1_to_v2.2.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CHANGELOG", "CHANGELOG", "{67243470-4A91-4321-A35C-D38838DE21F4}"
+	ProjectSection(SolutionItems) = preProject
+		..\CHANGELOG.md = ..\CHANGELOG.md
+		..\CHANGELOG_FULL.md = ..\CHANGELOG_FULL.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{CF66643C-5C67-473B-A813-DC9A9E0BA450}"
+	ProjectSection(SolutionItems) = preProject
+		..\.github\workflows\build.yml = ..\.github\workflows\build.yml
+		..\.github\workflows\release.yml = ..\.github\workflows\release.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

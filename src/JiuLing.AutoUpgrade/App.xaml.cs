@@ -233,6 +233,26 @@ namespace JiuLing.AutoUpgrade
                 }
             }
 
+            if (_commandLineArgsHelper.TryGetCommandValue($"-{ArgumentTypeEnum.github}", out List<string> gitHubArgs))
+            {
+                upgradeConfig.UpgradeMode = UpgradeModeEnum.GitHub;
+                try
+                {
+                    upgradeConfig.ConnectionConfig = new GitHubConnectionConfig()
+                    {
+                        Timeout = timeout,
+                        User = gitHubArgs[0],
+                        Repo = gitHubArgs[1],
+                        AssetName = gitHubArgs[2]
+                    };
+                    return upgradeConfig;
+                }
+                catch (Exception)
+                {
+                    throw new ArgumentException(AutoUpgrade.Properties.Resources.FtpParameterError);
+                }
+            }
+
             throw new ArgumentException(AutoUpgrade.Properties.Resources.UnsupportedUpdateMethod);
         }
 

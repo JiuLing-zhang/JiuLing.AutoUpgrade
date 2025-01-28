@@ -1,9 +1,9 @@
-﻿using System;
+﻿using JiuLing.AutoUpgrade.Shared;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using JiuLing.AutoUpgrade.Shared;
 
 namespace JiuLing.AutoUpgrade.Shell.Creator
 {

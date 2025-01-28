@@ -11,7 +11,7 @@ namespace JiuLing.AutoUpgrade.Net
     internal class HttpClientHelper
     {
         private static HttpClient _httpClient;
-
+        public static HttpClient HttpClient => _httpClient;
         /// <summary>
         /// 初始化
         /// </summary>

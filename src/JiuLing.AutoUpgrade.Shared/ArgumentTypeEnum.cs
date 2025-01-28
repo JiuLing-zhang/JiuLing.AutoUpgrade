@@ -22,6 +22,10 @@
         /// </summary>
         http,
         /// <summary>
+        /// github更新参数
+        /// </summary>
+        github,
+        /// <summary>
         /// 后台检查更新参数
         /// </summary>
         background,

@@ -225,6 +225,15 @@ namespace JiuLing.AutoUpgrade.Properties {
         /// <summary>
         ///   查找类似  的本地化字符串。
         /// </summary>
+        public static string NoUpdatesAvailable {
+            get {
+                return ResourceManager.GetString("NoUpdatesAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似  的本地化字符串。
+        /// </summary>
         public static string ParameterException {
             get {
                 return ResourceManager.GetString("ParameterException", resourceCulture);

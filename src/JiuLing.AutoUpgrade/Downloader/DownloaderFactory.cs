@@ -18,6 +18,8 @@ namespace JiuLing.AutoUpgrade.Downloader
                     return new HttpDownloader();
                 case UpgradeModeEnum.Ftp:
                     return new FtpDownloader((FtpConnectionConfig)config.ConnectionConfig);
+                case UpgradeModeEnum.GitHub:
+                    return new GitHubDownloader();
                 default:
                     throw new ArgumentException(AutoUpgrade.Properties.Resources.UnsupportedUpdateMethod);
             }

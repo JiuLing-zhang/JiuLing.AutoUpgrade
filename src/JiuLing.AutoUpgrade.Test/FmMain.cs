@@ -128,4 +128,38 @@ public partial class FmMain : Form
             builder.WithVersionFormat((VersionFormatEnum)Enum.Parse(typeof(VersionFormatEnum), versionFormat));
         }
     }
+
+    private void BtnCheckUpgradeUsingGitHub_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            BuildUpgradeGitHubApp().Run();
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"操作失败：{ex.Message}");
+        }
+    }
+
+    private async void BtnCheckUpgradeUsingGitHubAsync_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            await BuildUpgradeGitHubApp().RunAsync();
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"操作失败：{ex.Message}");
+        }
+    }
+
+    private IUpgradeApp BuildUpgradeGitHubApp()
+    {
+        _upgradeApp = UpgradeFactory.CreateGitHubApp(TxtUser.Text, TxtRepo.Text, TxtAssetName.Text);
+        if (!checkBoxDefaultConfig.Checked)
+        {
+            _upgradeApp.SetUpgrade(BuildUpgradeSetting);
+        }
+        return _upgradeApp;
+    }
 }
