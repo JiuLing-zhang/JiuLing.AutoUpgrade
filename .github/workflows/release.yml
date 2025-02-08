@@ -33,8 +33,21 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore .\src\JiuLing.AutoUpgrade.sln
         
-      - name: Build shell app
-        run: dotnet build .\src\JiuLing.AutoUpgrade.Shell\JiuLing.AutoUpgrade.Shell.csproj --no-restore -c release
+      - name: Build shell app for netstandard2.0
+        run: dotnet build .\src\JiuLing.AutoUpgrade.Shell\JiuLing.AutoUpgrade.Shell.csproj --no-restore -c release --framework netstandard2.0
+
+      - name: Build shell app for net5.0
+        run: dotnet build .\src\JiuLing.AutoUpgrade.Shell\JiuLing.AutoUpgrade.Shell.csproj --no-restore -c release --framework net5.0
+
+      - name: Build shell app for net6.0
+        run: dotnet build .\src\JiuLing.AutoUpgrade.Shell\JiuLing.AutoUpgrade.Shell.csproj --no-restore -c release --framework net6.0
+
+      - name: Build shell app for net7.0
+        run: dotnet build .\src\JiuLing.AutoUpgrade.Shell\JiuLing.AutoUpgrade.Shell.csproj --no-restore -c release --framework net7.0
+
+      - name: Build shell app for net8.0
+        run: dotnet build .\src\JiuLing.AutoUpgrade.Shell\JiuLing.AutoUpgrade.Shell.csproj --no-restore -c release --framework net8.0
+
 
       - name: Get version
         uses: olegtarasov/get-tag@v2.1
