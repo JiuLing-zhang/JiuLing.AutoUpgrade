@@ -3,10 +3,10 @@
 	<PropertyGroup>
 		<TargetFrameworks>netstandard2.0;net5.0;net6.0;net7.0;net8.0</TargetFrameworks>
 		<PackageId>JiuLing.AutoUpgrade</PackageId>
-		<Version>2.2.6</Version>
+		<Version>2.3.0</Version>
 		<Authors>九零</Authors>
 		<Product>JiuLing.AutoUpgrade</Product>
-		<Description>一个简单的.Net下的自动更新组件。</Description>
+		<Description>一个简单的.NET架构下的自动更新组件。支持通过HTTP、FTP、GitHub Release方式进行程序更新。</Description>
 		<PackageProjectUrl>https://github.com/JiuLing-zhang/JiuLing.AutoUpgrade</PackageProjectUrl>
 		<PackageIcon>nuget_icon.png</PackageIcon>
 		<RootNamespace>$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>

@@ -13,7 +13,7 @@
 
 👾 一个简单、易用的自动更新组件。 👉👉[English Version](./README_en.md)  
 
-**🤖 [v2.1 到 v2.2 升级指南](./v2.1_to_v2.2.md)**  
+**🤖 [从 v2.1 以前的版本进行升级](./v2.1_to_v2.2.md)**  
 
 <div align="center">
 <img src="https://github.com/JiuLing-zhang/JiuLing.AutoUpgrade/raw/main/docs/resources/images/demo1.png" width="40%">
@@ -27,6 +27,7 @@
 \- 🔥 组件支持自更新  
 \- 🌈 支持 `HTTP`  
 \- 🌀 支持 `FTP`  
+\- ⚡ 支持 `GitHub Release`  
 \- ⭐ 版本过期后禁止运行
 
 ## 运行方式  
@@ -45,20 +46,24 @@
 🟢 通过 [`Release`](https://github.com/JiuLing-zhang/JiuLing.AutoUpgrade/releases) 下载。  
 
 ## 使用  
-1️⃣ 导入命名空间  
+### 1️⃣ 导入命名空间  
 ```C#
 using JiuLing.AutoUpgrade.Shell;
 ```
-2️⃣ 创建更新程序  
+### 2️⃣ 创建更新程序  
 ```C#
 // HTTP 方式
 IUpgradeApp app = UpgradeFactory.CreateHttpApp("url");
 
 // FTP 方式
 IUpgradeApp app = UpgradeFactory.CreateFtpApp("path", "username", "password");
+
+// GitHub Release 方式
+// assetName: update.zip
+IUpgradeApp app = UpgradeFactory.CreateGitHubApp("owner", "repo", "assetName");
 ```
 
-3️⃣ 启动  
+### 3️⃣ 启动  
 ```C#
 app.Run();
 // or
@@ -70,29 +75,35 @@ await app.RunAsync();
 await UpgradeFactory.CreateHttpApp("url").RunAsync();
 ```
 
-**💠 自动更新接口需要返回如下格式的 `json` 内容。**  
+### 4️⃣ 服务端配置
+* `HTTP` 和 `FTP` 方式  
+    **💠 自动更新接口需要返回如下格式的 `json` 内容。**  
 
-- Version: ❗[必须] 最新的版本号  
-- DownloadUrl: ❗[必须] 程序的下载路径  
-- FileLength: 文件大小，字节  
-- MinVersion: 程序运行的最低版本号，低于此版本将无法运行  
-- Log: 更新日志  
-- CreateTime: 时间
-- SignType: 文件校验的签名方式  
-- SignValue: 文件校验的签名值  
+    - Version: ❗[必须] 最新的版本号  
+    - DownloadUrl: ❗[必须] 程序的下载路径  
+    - FileLength: 文件大小，字节  
+    - MinVersion: 程序运行的最低版本号，低于此版本将无法运行  
+    - Log: 更新日志  
+    - CreateTime: 时间
+    - SignType: 文件校验的签名方式  
+    - SignValue: 文件校验的签名值  
 
-```json
-{
-    "Version": "1.2.0",
-    "DownloadUrl": "xxxxx/update.zip",
-    "FileLength": 1887436,
-    "MinVersion": "1.1.0",
-    "Log": "1、修复了若干bug。2、新增了若干需求。",
-    "CreateTime": "2022-01-16 12:12:12",
-    "SignType": "MD5",
-    "SignValue": "f42c6cb229a0a1237c9945448342d59e"
-}
-```
+    ```json
+    {
+        "Version": "1.2.0",
+        "DownloadUrl": "xxxxx/update.zip",
+        "FileLength": 1887436,
+        "MinVersion": "1.1.0",
+        "Log": "1、修复了若干bug。2、新增了若干需求。",
+        "CreateTime": "2022-01-16 12:12:12",
+        "SignType": "MD5",
+        "SignValue": "f42c6cb229a0a1237c9945448342d59e"
+    }
+    ```
+
+* `GitHub Release` 方式  
+    - 版本号: 获取 `Release` 的名称  
+    - 程序下载路径: 获取 `Release` 中 `Assets Name` 匹配的文件地址  
 
 ## 🔨 高级设置  
 
