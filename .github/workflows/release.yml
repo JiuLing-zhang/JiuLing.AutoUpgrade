@@ -56,7 +56,7 @@ jobs:
       - name: Create zip
         shell: pwsh
         # 配置【编译后的文件地址】
-        run: Compress-Archive -Path ${{github.workspace}}\src\JiuLing.AutoUpgrade.Shell\bin\Release\* -DestinationPath ${{github.workspace}}\src\JiuLing.AutoUpgrade.Shell\bin\Release\JiuLing.AutoUpgrade.Shell_${{ steps.tagName.outputs.tag }}.zip
+        run: Compress-Archive -Path ${{github.workspace}}\src\JiuLing.AutoUpgrade.Shell\bin\Release\*,${{github.workspace}}\README.md,${{github.workspace}}\THIRD-PARTY-NOTICES.txt -DestinationPath ${{github.workspace}}\src\JiuLing.AutoUpgrade.Shell\bin\Release\JiuLing.AutoUpgrade.Shell_${{ steps.tagName.outputs.tag }}.zip
 
       - name: Release
         uses: softprops/action-gh-release@v2
