@@ -57,6 +57,7 @@
                         x:Name="PanelUpdateDetail">
                 <TextBlock Style="{StaticResource TitleTextBlockStyle}" 
                            Text="{x:Static props:Resources.NewVersionFound}" 
+                           FontSize="16"
                            Margin="0,0,0,10"/>
 
                 <Grid>
@@ -159,15 +160,15 @@
                             Content="{x:Static props:Resources.Skip}"
                             Click="BtnSkip_Click"
                             Style="{StaticResource DefaultButtonStyle}" />
-                    <Button x:Name="BtnUpgrade"
-                            Content="{x:Static props:Resources.Update}"
-                            Click="BtnUpgrade_Click"
-                            Style="{StaticResource AccentButtonStyle}"
-                            Margin="10,0,0,0"/>
                     <Button x:Name="BtnCancel"
                             Content="{x:Static props:Resources.Close}"
                             Click="BtnCancel_Click"
                             Style="{StaticResource DefaultButtonStyle}"
+                            Margin="10,0,0,0"/>
+                    <Button x:Name="BtnUpgrade"
+                            Content="{x:Static props:Resources.Update}"
+                            Click="BtnUpgrade_Click"
+                            Style="{StaticResource AccentButtonStyle}"
                             Margin="10,0,0,0"/>
                 </StackPanel>
             </Grid>

@@ -12,6 +12,7 @@ using System.Globalization;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace JiuLing.AutoUpgrade
@@ -52,6 +53,17 @@ namespace JiuLing.AutoUpgrade
             }
 
             ThemeManager.Current.ApplicationTheme = isDarkTheme ? ApplicationTheme.Dark : ApplicationTheme.Light;
+            // 如果是深色主题，覆盖资源
+            if (ModernWpf.ThemeManager.Current.ActualApplicationTheme == ModernWpf.ApplicationTheme.Dark)
+            {
+                var dict = Application.Current.Resources;
+
+                dict["ApplicationPageBackgroundThemeBrush"] = new SolidColorBrush(Color.FromRgb(0x1E, 0x1E, 0x1E));
+                dict["SystemControlBackgroundAltHighBrush"] = new SolidColorBrush(Color.FromRgb(0x25, 0x25, 0x26));
+                dict["SystemControlForegroundBaseHighBrush"] = new SolidColorBrush(Color.FromRgb(0xD4, 0xD4, 0xD4));
+                dict["TextFillColorSecondaryBrush"] = new SolidColorBrush(Color.FromRgb(0x9D, 0xA1, 0xA6));
+                dict["SystemControlForegroundBaseLowBrush"] = new SolidColorBrush(Color.FromRgb(0x3C, 0x3C, 0x3C));
+            }
 
             if (!UpgradeInfo.UpgradeSetting.IsBackgroundCheck)
             {
