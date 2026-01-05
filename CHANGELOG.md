@@ -1,6 +1,6 @@
-## [2.3.0] 2025-02-10
+## [2.3.2] 2026-01-05
 ### 🔥 更新说明
-* ⚡ 新增：支持通过 `GitHub Release` 方式更新
-* 🌀 重构：优化代码逻辑
+* 🌈 优化：UI 修改为 ModernWpfUI
+* ⚡ 新增：THIRD-PARTY-NOTICES.txt 文件
 
 ### 💬 [历史更新](CHANGELOG_FULL.md)
