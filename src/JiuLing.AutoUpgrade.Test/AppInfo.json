@@ -4,7 +4,7 @@
   "MinVersion": "1.0.0",
   "FileLength": 1887436,
   "DownloadUrl": "https://raw.githubusercontent.com/JiuLing-zhang/JiuLing.AutoUpgrade/refs/heads/main/src/JiuLing.AutoUpgrade.Test/UpgradePackage1.2.0.zip",
-  "Log": "1、Http更新。\n\n\n\n\n\n\n2、修改了若干bug。\n\n\n\n\n\n\n\n3、这个是用来测试滚动条的。",
+  "Log": "1、这是一个版本测试。\n2、祝大家有改不完的 Bug。\n",
   "CreateTime": "2022-01-18T11:11:11",
   "SignType": "sha1",
   "SignValue": "479084ea111b7e0ae0d04cbd28bc42d265a2a29c"
