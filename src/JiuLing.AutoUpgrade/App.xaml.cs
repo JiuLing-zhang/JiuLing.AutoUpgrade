@@ -1,18 +1,18 @@
-﻿using FirstFloor.ModernUI.Presentation;
+﻿using JiuLing.AutoUpgrade.Common;
 using JiuLing.AutoUpgrade.Enums;
 using JiuLing.AutoUpgrade.Models;
+using JiuLing.AutoUpgrade.Shared;
 using JiuLing.CommonLibs;
+using JiuLing.CommonLibs.Enums;
+using Microsoft.Win32;
+using ModernWpf;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
-using JiuLing.AutoUpgrade.Common;
-using JiuLing.AutoUpgrade.Shared;
-using Microsoft.Win32;
-using System.IO;
 using System.Windows.Media.Imaging;
-using JiuLing.CommonLibs.Enums;
 
 namespace JiuLing.AutoUpgrade
 {
@@ -21,10 +21,9 @@ namespace JiuLing.AutoUpgrade
     /// </summary>
     public partial class App : Application
     {
-        private ThemeEnum _theme = ThemeEnum.System;
+        private ThemeEnum _theme = ThemeEnum.Light;
         protected override void OnStartup(StartupEventArgs e)
         {
-            base.OnStartup(e);
             try
             {
                 UpgradeInfo.UpgradeConfig = ReadUpgradeConfigFromCommandArgs();
@@ -40,20 +39,19 @@ namespace JiuLing.AutoUpgrade
             bool isDarkTheme;
             switch (_theme)
             {
-                case ThemeEnum.System:
-                    isDarkTheme = CheckSystemIsDarkTheme();
-                    break;
                 case ThemeEnum.Light:
                     isDarkTheme = false;
                     break;
                 case ThemeEnum.Dark:
                     isDarkTheme = true;
                     break;
+                case ThemeEnum.System:
                 default:
-                    isDarkTheme = false;
+                    isDarkTheme = CheckSystemIsDarkTheme();
                     break;
             }
-            AppearanceManager.Current.ThemeSource = isDarkTheme ? AppearanceManager.DarkThemeSource : AppearanceManager.LightThemeSource;
+
+            ThemeManager.Current.ApplicationTheme = isDarkTheme ? ApplicationTheme.Dark : ApplicationTheme.Light;
 
             if (!UpgradeInfo.UpgradeSetting.IsBackgroundCheck)
             {
@@ -79,6 +77,8 @@ namespace JiuLing.AutoUpgrade
                     return;
                 }
             }
+
+            base.OnStartup(e);
         }
 
         /// <summary>

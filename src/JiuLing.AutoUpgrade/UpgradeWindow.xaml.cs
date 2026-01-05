@@ -1,5 +1,4 @@
-﻿using FirstFloor.ModernUI.Windows.Controls;
-using JiuLing.AutoUpgrade.Common;
+﻿using JiuLing.AutoUpgrade.Common;
 using JiuLing.CommonLibs.ExtensionMethods;
 using JiuLing.CommonLibs.Security;
 using System;
@@ -14,7 +13,7 @@ namespace JiuLing.AutoUpgrade
     /// <summary>
     /// UpgradeWindow.xaml 的交互逻辑
     /// </summary>
-    public partial class UpgradeWindow : ModernWindow
+    public partial class UpgradeWindow : Window
     {
         public UpgradeWindow()
         {
@@ -25,9 +24,9 @@ namespace JiuLing.AutoUpgrade
             }
         }
 
-        private void ModernWindow_Loaded(object sender, RoutedEventArgs e)
+        private void UpgradeWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            TxtTitle.Text = UpgradeInfo.MainProcess.Title;
+            TxtTitle.Text = $"{UpgradeInfo.MainProcess.Title} - {Properties.Resources.Title}";
 
             var currentVersion = new Version(UpgradeInfo.MainAppVersion);
             LblCurrentVersion.Text = currentVersion.ToFormatString(UpgradeInfo.UpgradeConfig.VersionFormat); ;
@@ -55,12 +54,12 @@ namespace JiuLing.AutoUpgrade
             }
         }
 
-        private void ModernWindow_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void UpgradeWindow_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             DragMove();
         }
 
-        private void ModernWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void UpgradeWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             try
             {
@@ -94,6 +93,8 @@ namespace JiuLing.AutoUpgrade
                     ProgressBarPercent.Value = percent;
                     TxtPercent.Text = $"{AutoUpgrade.Properties.Resources.Updating} {percent * 100:f1} %";
                 });
+
+                ((IProgress<float>)process).Report(0f);
 
                 await DownloaderFactory.Create(UpgradeInfo.UpgradeConfig)
                     .Update(UpgradeInfo.AppNewVersion.DownloadUrl, GlobalArgs.MainAppPath, GlobalArgs.TempPackagePath, GlobalArgs.TempZipDirectory,

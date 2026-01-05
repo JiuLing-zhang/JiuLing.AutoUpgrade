@@ -1,78 +1,94 @@
-﻿<mui:ModernWindow x:Class="JiuLing.AutoUpgrade.UpgradeCheckWindow"
-                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                  xmlns:props="clr-namespace:JiuLing.AutoUpgrade.Properties"
-                  xmlns:mui="http://firstfloorsoftware.com/ModernUI"
-                  mc:Ignorable="d"
-                  Title="{x:Static props:Resources.Title}" 
-                  Height="450" 
-                  Width="700"          
-                  ResizeMode="NoResize"
-                  WindowStartupLocation="CenterScreen"
-                  Loaded="ModernWindow_Loaded"
-                  MouseLeftButtonDown="ModernWindow_MouseLeftButtonDown" 
-                  Style="{StaticResource BlankWindow}">
+﻿<Window x:Class="JiuLing.AutoUpgrade.UpgradeCheckWindow"
+        x:Name="Window"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ui="http://schemas.modernwpf.com/2019"
+        xmlns:props="clr-namespace:JiuLing.AutoUpgrade.Properties"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="{x:Static props:Resources.Title}"
+        Height="450"
+        Width="700"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        Loaded="UpgradeCheckWindow_OnLoaded"
+        MouseLeftButtonDown="UpgradeCheckWindow_MouseLeftButtonDown"
+        Background="{DynamicResource ApplicationPageBackgroundThemeBrush}"
+        ui:WindowHelper.UseModernWindowStyle="True"
+        ui:TitleBar.ExtendViewIntoTitleBar="True">
 
-    <Window.Resources>
-        <Style TargetType="Button" x:Key="HyperlinkButtonStyle">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <TextBlock>
-                            <Hyperlink>
-                                <TextBlock Text="{TemplateBinding Content}" TextDecorations="Underline" />
-                            </Hyperlink>
-                        </TextBlock>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </Window.Resources>
+    <Grid>
+        <Grid.Style>
+            <Style TargetType="Grid">
+                <Setter Property="TextElement.Foreground" Value="{DynamicResource SystemControlForegroundBaseHighBrush}" />
+            </Style>
+        </Grid.Style>
 
-    <Grid Margin="10 0 10 5">
         <Grid.RowDefinitions>
-            <RowDefinition Height="60"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="60"></RowDefinition>
+            <RowDefinition Height="{Binding Path=(ui:TitleBar.Height), RelativeSource={RelativeSource AncestorType=Window}}" />
+            <RowDefinition />
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" x:Name="TxtTitle" Style="{StaticResource Title}"/>
+        <!-- 自定义标题栏 -->
+        <Grid x:Name="AppTitleBar"
+              Background="{DynamicResource ApplicationPageBackgroundThemeBrush}">
+            <TextBlock Margin="10 0 0 0"
+                       x:Name="TxtTitle"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Left"
+                       FontSize="14"/>
+        </Grid>
 
-        <StackPanel Grid.Row="1"
-                    x:Name="PanelCheckUpdate"
-                    Width="220" 
-                    HorizontalAlignment="Center" 
-                    VerticalAlignment="Center">
-            <TextBlock Margin="0 0 0 15"
-                      HorizontalAlignment="Center"
-                      Text="{x:Static props:Resources.Checking}"/>
-            <ProgressBar IsIndeterminate="True"/>
-        </StackPanel>
+        <!-- 内容区 -->
+        <Grid Grid.Row="1"
+              Margin="10 20 10 5"
+              Background="{DynamicResource ApplicationPageBackgroundThemeBrush}">
 
-        <StackPanel Grid.Row="1"
-                    x:Name="PanelMessage"
-                    Width="300" 
-                    HorizontalAlignment="Center" 
-                    VerticalAlignment="Center"
-                    Visibility="Hidden">
-            <TextBlock  x:Name="TxtMessage" 
-                        TextWrapping="Wrap"
-                        HorizontalAlignment="Center" />
-            <Button x:Name="BtnRetry"
-                    Content="{x:Static props:Resources.Retry}"
-                    Click="BtnRetry_Click"
-                    HorizontalAlignment="Center"
-                    Margin="0 10 0 0" />
-        </StackPanel>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="60" />
+            </Grid.RowDefinitions>
 
-        <Button Grid.Row="2"
-                Content="{x:Static props:Resources.Close}"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Bottom"
-                Height="30"
-                Click="BtnCancel_Click"/>
+           
+            <!-- 更新中面板 -->
+            <StackPanel Grid.Row="0"
+                        x:Name="PanelCheckUpdate"
+                        Width="220"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                <TextBlock Margin="0 0 0 15"
+                           HorizontalAlignment="Center"
+                           Text="{x:Static props:Resources.Checking}"/>
+                <ProgressBar IsIndeterminate="True"/>
+            </StackPanel>
+
+            <!-- 消息面板 -->
+            <StackPanel Grid.Row="0"
+                        x:Name="PanelMessage"
+                        Width="300"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Visibility="Hidden">
+                <TextBlock x:Name="TxtMessage"
+                           TextWrapping="Wrap"
+                           HorizontalAlignment="Center"/>
+                <Button x:Name="BtnRetry"
+                        Content="{x:Static props:Resources.Retry}"
+                        Style="{StaticResource AccentButtonStyle}"
+                        Click="BtnRetry_Click"
+                        HorizontalAlignment="Center"
+                        Margin="0 10 0 0" />
+            </StackPanel>
+
+            <!-- 底部关闭按钮 -->
+            <Button Grid.Row="1"
+                    Content="{x:Static props:Resources.Close}"
+                    Style="{StaticResource DefaultButtonStyle}"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    Height="30"
+                    Click="BtnCancel_Click" />
+        </Grid>
     </Grid>
-
-</mui:ModernWindow>
+</Window>

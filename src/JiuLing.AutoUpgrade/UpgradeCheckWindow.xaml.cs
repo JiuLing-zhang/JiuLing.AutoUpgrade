@@ -1,5 +1,4 @@
-﻿using FirstFloor.ModernUI.Windows.Controls;
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -10,7 +9,7 @@ namespace JiuLing.AutoUpgrade
     /// <summary>
     /// UpgradeCheckWindow.xaml 的交互逻辑
     /// </summary>
-    public partial class UpgradeCheckWindow : ModernWindow
+    public partial class UpgradeCheckWindow : Window
     {
         public UpgradeCheckWindow()
         {
@@ -21,13 +20,13 @@ namespace JiuLing.AutoUpgrade
             }
         }
 
-        private async void ModernWindow_Loaded(object sender, RoutedEventArgs e)
+        private async void UpgradeCheckWindow_OnLoaded(object sender, RoutedEventArgs e)
         {
-            TxtTitle.Text = UpgradeInfo.MainProcess.Title;
+            TxtTitle.Text = $"{UpgradeInfo.MainProcess.Title} - {Properties.Resources.Title}";
             await CheckUpdateAsync();
         }
 
-        private void ModernWindow_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void UpgradeCheckWindow_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             DragMove();
         }
