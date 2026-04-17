@@ -4,6 +4,7 @@ using JiuLing.CommonLibs.ExtensionMethods;
 using JiuLing.CommonLibs.Model;
 using System;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace JiuLing.AutoUpgrade.Updater
@@ -20,7 +21,7 @@ namespace JiuLing.AutoUpgrade.Updater
         {
             _connectionConfig = connectionConfig;
         }
-        public override async Task<AppUpgradeInfo> GetUpgradeInfo()
+        public override async Task<AppUpdateInfo> GetUpgradeInfo()
         {
             try
             {
@@ -28,8 +29,12 @@ namespace JiuLing.AutoUpgrade.Updater
 
                 HttpClientHelper.HttpClient.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "http://developer.github.com/v3/#user-agent-required");
                 var result = await _clientHelper.GetReadString(url, _connectionConfig.Timeout);
-                var release = result.ToObject<GitHubReleaseResponse>();
-
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                    PropertyNameCaseInsensitive = true
+                };
+                var release = System.Text.Json.JsonSerializer.Deserialize<GitHubReleaseResponse>(result, options);
                 if (release?.Assets == null)
                 {
                     throw new Exception(Properties.Resources.NoUpdatesAvailable);
@@ -41,7 +46,7 @@ namespace JiuLing.AutoUpgrade.Updater
                     throw new Exception(Properties.Resources.NoUpdatesAvailable);
                 }
 
-                return new AppUpgradeInfo
+                return new AppUpdateInfo
                 {
                     Name = asset.Name,
                     Version = release.Name.TrimStart('v').TrimStart('V').Trim(),

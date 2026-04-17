@@ -5,6 +5,6 @@ namespace JiuLing.AutoUpgrade.Updater
 {
     internal abstract class UpdateStrategyBase
     {
-        public abstract Task<AppUpgradeInfo> GetUpgradeInfo();
+        public abstract Task<AppUpdateInfo> GetUpgradeInfo();
     }
 }

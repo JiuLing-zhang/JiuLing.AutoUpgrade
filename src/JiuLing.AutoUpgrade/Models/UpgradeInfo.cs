@@ -22,7 +22,7 @@ namespace JiuLing.AutoUpgrade.Models
         /// <summary>
         /// 新版本更新信息
         /// </summary>
-        public static AppUpgradeInfo AppNewVersion { get; set; }
+        public static AppUpdateInfo AppNewVersion { get; set; }
 
         /// <summary>
         /// 本次是否需要更新

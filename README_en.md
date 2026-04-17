@@ -79,6 +79,8 @@ await UpgradeFactory.CreateHttpApp("url").RunAsync();
 * `HTTP` and `FTP` model  
     **💠 The update API should return the following json format:**  
 
+    > Feel free to use either PascalCase or camelCase for JSON responses
+
     - Version: ❗[Required] The latest version number  
     - DownloadUrl: ❗[Required] The download URL of the application  
     - FileLength: File length (byte)  

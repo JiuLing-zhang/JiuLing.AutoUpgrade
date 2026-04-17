@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json;
 using System.Threading.Tasks;
 using JiuLing.AutoUpgrade.Models;
 using JiuLing.AutoUpgrade.Net;
@@ -22,12 +23,17 @@ namespace JiuLing.AutoUpgrade.Updater
             _timeout = connectionConfig.Timeout;
         }
 
-        public override async Task<AppUpgradeInfo> GetUpgradeInfo()
+        public override async Task<AppUpdateInfo> GetUpgradeInfo()
         {
             try
             {
                 var result = await _clientHelper.ReadFileText(_upgradePath, _timeout);
-                var upgradeInfo = result.ToObject<AppUpgradeInfo>();
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                    PropertyNameCaseInsensitive = true
+                };
+                var upgradeInfo = System.Text.Json.JsonSerializer.Deserialize<AppUpdateInfo>(result, options);
                 if (upgradeInfo == null)
                 {
                     throw new Exception(AutoUpgrade.Properties.Resources.DataError);

@@ -79,6 +79,8 @@ await UpgradeFactory.CreateHttpApp("url").RunAsync();
 * `HTTP` 和 `FTP` 方式  
     **💠 自动更新接口需要返回如下格式的 `json` 内容。**  
 
+    > 服务端可返回大驼峰或小驼峰格式的 JSON，客户端均能兼容。
+
     - Version: ❗[必须] 最新的版本号  
     - DownloadUrl: ❗[必须] 程序的下载路径  
     - FileLength: 文件大小，字节  
