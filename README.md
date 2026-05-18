@@ -113,7 +113,9 @@ await UpgradeFactory.CreateHttpApp("url").RunAsync();
 await UpgradeFactory.CreateHttpApp("url")
     .SetUpgrade(builder =>
     {
-        builder.WithIcon("path")
+        builder.WithTitle("title")
+        .WithFullPath("fullPath")
+        .WithIcon("path")
         .WithTimeout(60)
         .WithBackgroundCheck(true)
         .WithSignCheck(true)
@@ -122,6 +124,18 @@ await UpgradeFactory.CreateHttpApp("url")
         .WithVersionFormat(VersionFormatEnum.MajorMinorBuild);
     })
     .RunAsync();
+```
+
+🔥 设置标题   
+
+```C#
+setting.WithTitle("title");
+```
+
+🌈 设置应用程序启动路径   
+
+```C#
+setting.WithFullPath("fullPath");
 ```
 
 ⚡ 设置图标   

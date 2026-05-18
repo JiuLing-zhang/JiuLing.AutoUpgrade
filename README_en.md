@@ -113,7 +113,9 @@ await UpgradeFactory.CreateHttpApp("url").RunAsync();
 await UpgradeFactory.CreateHttpApp("url")
     .SetUpgrade(builder =>
     {
-        builder.WithIcon("path")
+        builder..WithTitle("title")
+        .WithFullPath("fullPath")
+        .WithIcon("path")
         .WithTimeout(60)
         .WithBackgroundCheck(true)
         .WithSignCheck(true)
@@ -122,6 +124,18 @@ await UpgradeFactory.CreateHttpApp("url")
         .WithVersionFormat(VersionFormatEnum.MajorMinorBuild);
     })
     .RunAsync();
+```
+
+🔥 Set title   
+
+```C#
+setting.WithTitle("title");
+```
+
+🌈 Set application full path   
+
+```C#
+setting.WithFullPath("fullPath");
 ```
 
 ⚡ Set icon  
