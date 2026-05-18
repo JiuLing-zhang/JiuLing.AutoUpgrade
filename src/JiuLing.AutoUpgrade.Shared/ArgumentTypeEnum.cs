@@ -6,9 +6,17 @@
     enum ArgumentTypeEnum
     {
         /// <summary>
-        /// 主进程参数
+        /// 主程序名称
         /// </summary>
-        p,
+        nameBase64,
+        /// <summary>
+        /// 主程序路径
+        /// </summary>
+        fullPathBase64,
+        /// <summary>
+        /// 主程序版本
+        /// </summary>
+        version,
         /// <summary>
         /// 超时时间
         /// </summary>

@@ -10,16 +10,16 @@ namespace JiuLing.AutoUpgrade.Updater
         /// 创建组件
         /// </summary>
         /// <returns></returns>
-        public static UpdateStrategyBase Create(UpgradeConfigInfo config)
+        public static UpdateStrategyBase Create(TargetAppUpgradeInfo upgradeInfo)
         {
-            switch (config.UpgradeMode)
+            switch (upgradeInfo.UpgradeMode)
             {
                 case UpgradeModeEnum.Http:
-                    return new HttpUpdateStrategy((HttpConnectionConfig)config.ConnectionConfig);
+                    return new HttpUpdateStrategy((HttpConnectionConfig)upgradeInfo.ConnectionConfig);
                 case UpgradeModeEnum.Ftp:
-                    return new FtpUpdateStrategy((FtpConnectionConfig)config.ConnectionConfig);
+                    return new FtpUpdateStrategy((FtpConnectionConfig)upgradeInfo.ConnectionConfig);
                 case UpgradeModeEnum.GitHub:
-                    return new GitHubUpdateStrategy((GitHubConnectionConfig)config.ConnectionConfig);
+                    return new GitHubUpdateStrategy((GitHubConnectionConfig)upgradeInfo.ConnectionConfig);
                 default:
                     throw new ArgumentException(Properties.Resources.UnsupportedUpdateMethod);
             }

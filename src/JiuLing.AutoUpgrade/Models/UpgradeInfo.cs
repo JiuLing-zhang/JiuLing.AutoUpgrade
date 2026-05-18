@@ -7,22 +7,17 @@ namespace JiuLing.AutoUpgrade.Models
         /// <summary>
         /// 自动更新的配置信息
         /// </summary>
-        public static UpgradeConfigInfo UpgradeConfig { get; set; }
-
-        /// <summary>
-        /// 主进程信息（待更新的程序进程）
-        /// </summary>
-        public static ProcessInfo MainProcess { get; set; }
-
-        /// <summary>
-        /// 主进程版本
-        /// </summary>
-        public static string MainAppVersion { get; set; }
+        public static TargetAppUpgradeInfo TargetAppUpgradeInfo { get; set; }
 
         /// <summary>
         /// 新版本更新信息
         /// </summary>
         public static AppUpdateInfo AppNewVersion { get; set; }
+
+        /// <summary>
+        /// 本次是否允许运行
+        /// </summary>
+        public static bool AllowRun { get; set; }
 
         /// <summary>
         /// 本次是否需要更新

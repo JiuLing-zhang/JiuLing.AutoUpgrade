@@ -3,6 +3,8 @@ using JiuLing.CommonLibs.ExtensionMethods;
 using JiuLing.CommonLibs.Security;
 using System;
 using System.Diagnostics;
+using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using JiuLing.AutoUpgrade.Downloader;
@@ -18,20 +20,19 @@ namespace JiuLing.AutoUpgrade
         public UpgradeWindow()
         {
             InitializeComponent();
-            if (UpgradeInfo.UpgradeConfig.Icon != null)
+            if (UpgradeInfo.TargetAppUpgradeInfo.Icon != null)
             {
-                this.Icon = UpgradeInfo.UpgradeConfig.Icon;
+                this.Icon = UpgradeInfo.TargetAppUpgradeInfo.Icon;
             }
         }
 
         private void UpgradeWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            TxtTitle.Text = $"{UpgradeInfo.MainProcess.Title} - {Properties.Resources.Title}";
+            TxtTitle.Text = $"{UpgradeInfo.TargetAppUpgradeInfo.Name} - {Properties.Resources.Title}";
 
-            var currentVersion = new Version(UpgradeInfo.MainAppVersion);
-            LblCurrentVersion.Text = currentVersion.ToFormatString(UpgradeInfo.UpgradeConfig.VersionFormat); ;
+            LblCurrentVersion.Text = UpgradeInfo.TargetAppUpgradeInfo.Version.ToFormatString(UpgradeInfo.TargetAppUpgradeInfo.VersionFormat);
             var version = new Version(UpgradeInfo.AppNewVersion.Version);
-            LblVersion.Text = version.ToFormatString(UpgradeInfo.UpgradeConfig.VersionFormat);
+            LblVersion.Text = version.ToFormatString(UpgradeInfo.TargetAppUpgradeInfo.VersionFormat);
 
             LblSize.Text = !UpgradeInfo.AppNewVersion.FileLength.HasValue ? "-" : $"{(decimal)UpgradeInfo.AppNewVersion.FileLength.Value / 1024 / 1024:N2} MB";
             LblTime.Text = !UpgradeInfo.AppNewVersion.CreateTime.HasValue ? "-" : UpgradeInfo.AppNewVersion.CreateTime.Value.ToString("yyyy-MM-dd");
@@ -42,7 +43,7 @@ namespace JiuLing.AutoUpgrade
                 log = AutoUpgrade.Properties.Resources.Nothing;
             }
             TxtLog.Text = log;
-            if (UpgradeInfo.MainProcess.AllowRun)
+            if (UpgradeInfo.AllowRun)
             {
                 TxtWarn.Visibility = Visibility.Collapsed;
             }
@@ -63,7 +64,7 @@ namespace JiuLing.AutoUpgrade
         {
             try
             {
-                if (UpgradeInfo.MainProcess?.AllowRun == false)
+                if (UpgradeInfo.AllowRun == false)
                 {
                     KillMainApp();
                 }
@@ -76,7 +77,8 @@ namespace JiuLing.AutoUpgrade
         }
         private void BtnSkip_Click(object sender, RoutedEventArgs e)
         {
-            var versionSkipChecker = new VersionSkipChecker(UpgradeInfo.UpgradeConfig.MainProcessName, UpgradeInfo.AppNewVersion.Version);
+            // TODO：考虑使用应用 hash 来充当唯一条件，避免重名版本被跳过
+            var versionSkipChecker = new VersionSkipChecker(UpgradeInfo.TargetAppUpgradeInfo.Name, UpgradeInfo.AppNewVersion.Version);
             versionSkipChecker.SetSkip();
             Application.Current.Shutdown();
         }
@@ -96,8 +98,9 @@ namespace JiuLing.AutoUpgrade
 
                 ((IProgress<float>)process).Report(0f);
 
-                await DownloaderFactory.Create(UpgradeInfo.UpgradeConfig)
-                    .Update(UpgradeInfo.AppNewVersion.DownloadUrl, GlobalArgs.MainAppPath, GlobalArgs.TempPackagePath, GlobalArgs.TempZipDirectory,
+                var targetAppDic = Path.GetDirectoryName(UpgradeInfo.TargetAppUpgradeInfo.FullPath);
+                await DownloaderFactory.Create(UpgradeInfo.TargetAppUpgradeInfo)
+                    .Update(UpgradeInfo.AppNewVersion.DownloadUrl, targetAppDic, TempPaths.ZipFilePath, TempPaths.ExtractedDir,
                         () =>
                         {
                             if (UpgradeInfo.UpgradeSetting.IsCheckSign)
@@ -106,10 +109,10 @@ namespace JiuLing.AutoUpgrade
                                 switch (UpgradeInfo.AppNewVersion.SignType.ToLower())
                                 {
                                     case "md5":
-                                        fileSign = MD5Utils.GetFileValueToLower(GlobalArgs.TempPackagePath);
+                                        fileSign = MD5Utils.GetFileValueToLower(TempPaths.ZipFilePath);
                                         break;
                                     case "sha1":
-                                        fileSign = SHA1Utils.GetFileValueToLower(GlobalArgs.TempPackagePath);
+                                        fileSign = SHA1Utils.GetFileValueToLower(TempPaths.ZipFilePath);
                                         break;
                                     default:
                                         fileSign = "";
@@ -136,18 +139,43 @@ namespace JiuLing.AutoUpgrade
 
         private void KillMainApp()
         {
-            foreach (var process in Process.GetProcesses())
+            var processes = Process.GetProcesses()
+                .Where(p =>
+                {
+                    try
+                    {
+                        return !p.HasExited && p.MainModule.FileName.Equals(UpgradeInfo.TargetAppUpgradeInfo.FullPath, StringComparison.OrdinalIgnoreCase);
+                    }
+                    catch
+                    {
+                        // 某些系统进程会拒绝访问 MainModule
+                        return false;
+                    }
+                }).ToList();
+
+            foreach (var process in processes)
             {
-                if (process.Id == UpgradeInfo.MainProcess.Id)
+                try
                 {
                     process.Kill();
-                    break;
+                    process.WaitForExit();
+                }
+                catch (Exception ex)
+                {
+                    ShowFinalMessage($"{AutoUpgrade.Properties.Resources.ExUpdateFailed}{ex.Message}");
                 }
             }
         }
         private void RunMainApp()
         {
-            Process.Start(UpgradeInfo.MainProcess.FileName);
+            try
+            {
+                Process.Start(UpgradeInfo.TargetAppUpgradeInfo.FullPath);
+            }
+            catch (Exception ex)
+            {
+                ShowFinalMessage($"{AutoUpgrade.Properties.Resources.ExUpdateFailed}{ex.Message}");
+            }
         }
 
         private void BtnCancel_Click(object sender, RoutedEventArgs e)

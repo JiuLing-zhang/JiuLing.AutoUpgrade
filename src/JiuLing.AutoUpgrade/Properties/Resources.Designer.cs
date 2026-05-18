@@ -180,9 +180,27 @@ namespace JiuLing.AutoUpgrade.Properties {
         /// <summary>
         ///   查找类似  的本地化字符串。
         /// </summary>
-        public static string MissingMainProcessParameter {
+        public static string MissingAppName {
             get {
-                return ResourceManager.GetString("MissingMainProcessParameter", resourceCulture);
+                return ResourceManager.GetString("MissingAppName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似  的本地化字符串。
+        /// </summary>
+        public static string MissingAppPath {
+            get {
+                return ResourceManager.GetString("MissingAppPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似  的本地化字符串。
+        /// </summary>
+        public static string MissingAppVersion {
+            get {
+                return ResourceManager.GetString("MissingAppVersion", resourceCulture);
             }
         }
         

@@ -20,6 +20,28 @@ namespace JiuLing.AutoUpgrade.Shell.Creator
         }
 
         /// <summary>
+        /// 设置应用名称
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public UpgradeSettingBuilder WithName(string value)
+        {
+            _upgradeSetting.Name = value;
+            return this;
+        }
+
+        /// <summary>
+        /// 设置应用完整路径
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public UpgradeSettingBuilder WithFullPath(string value)
+        {
+            _upgradeSetting.FullPath = value;
+            return this;
+        }
+
+        /// <summary>
         /// 是否在后台进行更新检查
         /// </summary>
         /// <param name="value"></param>

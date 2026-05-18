@@ -68,6 +68,10 @@
             TxtAssetName = new TextBox();
             TxtRepo = new TextBox();
             label13 = new Label();
+            label14 = new Label();
+            TxtName = new TextBox();
+            TxtFullPath = new TextBox();
+            label15 = new Label();
             groupBoxSetting.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numericUpDownTimeoutSecond).BeginInit();
             groupBox1.SuspendLayout();
@@ -130,7 +134,7 @@
             txtUpgradeUrl.Location = new Point(63, 6);
             txtUpgradeUrl.Multiline = true;
             txtUpgradeUrl.Name = "txtUpgradeUrl";
-            txtUpgradeUrl.Size = new Size(634, 60);
+            txtUpgradeUrl.Size = new Size(571, 60);
             txtUpgradeUrl.TabIndex = 5;
             txtUpgradeUrl.Text = "https://raw.githubusercontent.com/JiuLing-zhang/JiuLing.AutoUpgrade/refs/heads/main/src/JiuLing.AutoUpgrade.Test/AppInfo.json";
             // 
@@ -207,6 +211,10 @@
             // groupBoxSetting
             // 
             groupBoxSetting.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            groupBoxSetting.Controls.Add(TxtFullPath);
+            groupBoxSetting.Controls.Add(label15);
+            groupBoxSetting.Controls.Add(TxtName);
+            groupBoxSetting.Controls.Add(label14);
             groupBoxSetting.Controls.Add(comboBoxVersionFormat);
             groupBoxSetting.Controls.Add(label10);
             groupBoxSetting.Controls.Add(comboBoxIcon);
@@ -222,7 +230,7 @@
             groupBoxSetting.Margin = new Padding(2, 3, 2, 3);
             groupBoxSetting.Name = "groupBoxSetting";
             groupBoxSetting.Padding = new Padding(2, 3, 2, 3);
-            groupBoxSetting.Size = new Size(717, 197);
+            groupBoxSetting.Size = new Size(654, 197);
             groupBoxSetting.TabIndex = 14;
             groupBoxSetting.TabStop = false;
             groupBoxSetting.Text = "更新选项";
@@ -359,7 +367,7 @@
             groupBox1.Controls.Add(tabControl1);
             groupBox1.Location = new Point(12, 259);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(717, 271);
+            groupBox1.Size = new Size(654, 176);
             groupBox1.TabIndex = 15;
             groupBox1.TabStop = false;
             groupBox1.Text = "更新方式";
@@ -373,7 +381,7 @@
             tabControl1.Location = new Point(3, 19);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(711, 249);
+            tabControl1.Size = new Size(648, 154);
             tabControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -385,7 +393,7 @@
             tabPage1.Location = new Point(4, 26);
             tabPage1.Name = "tabPage1";
             tabPage1.Padding = new Padding(3);
-            tabPage1.Size = new Size(703, 219);
+            tabPage1.Size = new Size(640, 124);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "HTTP 方式";
             tabPage1.UseVisualStyleBackColor = true;
@@ -499,11 +507,46 @@
             label13.TabIndex = 19;
             label13.Text = "资源名称";
             // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.Location = new Point(352, 82);
+            label14.Margin = new Padding(2, 0, 2, 0);
+            label14.Name = "label14";
+            label14.Size = new Size(32, 17);
+            label14.TabIndex = 9;
+            label14.Text = "名称";
+            // 
+            // TxtName
+            // 
+            TxtName.Location = new Point(389, 76);
+            TxtName.Name = "TxtName";
+            TxtName.Size = new Size(177, 23);
+            TxtName.TabIndex = 10;
+            // 
+            // TxtFullPath
+            // 
+            TxtFullPath.Location = new Point(389, 134);
+            TxtFullPath.Multiline = true;
+            TxtFullPath.Name = "TxtFullPath";
+            TxtFullPath.Size = new Size(177, 53);
+            TxtFullPath.TabIndex = 12;
+            // 
+            // label15
+            // 
+            label15.AutoSize = true;
+            label15.Location = new Point(352, 111);
+            label15.Margin = new Padding(2, 0, 2, 0);
+            label15.Name = "label15";
+            label15.Size = new Size(80, 17);
+            label15.TabIndex = 11;
+            label15.Text = "应用完整路径";
+            // 
             // FmMain
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(738, 542);
+            ClientSize = new Size(675, 447);
             Controls.Add(groupBox1);
             Controls.Add(groupBoxSetting);
             Controls.Add(checkBoxDefaultConfig);
@@ -572,5 +615,9 @@
         private TextBox TxtAssetName;
         private TextBox TxtRepo;
         private Label label13;
+        private Label label14;
+        private TextBox TxtName;
+        private TextBox TxtFullPath;
+        private Label label15;
     }
 }

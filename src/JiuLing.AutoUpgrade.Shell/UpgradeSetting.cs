@@ -9,6 +9,21 @@ namespace JiuLing.AutoUpgrade.Shell
     public class UpgradeSetting
     {
         /// <summary>
+        /// 名称
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
+        /// 应用完整路径
+        /// </summary>
+        public string FullPath { get; set; }
+
+        /// <summary>
+        /// 版本
+        /// </summary>
+        public string Version { get; set; }
+
+        /// <summary>
         /// 是否在后台进行更新检查
         /// </summary>
         public bool IsBackgroundCheck { get; set; } = false;

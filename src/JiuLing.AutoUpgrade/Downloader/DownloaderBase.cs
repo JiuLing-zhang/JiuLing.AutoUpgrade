@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JiuLing.AutoUpgrade.Common;
+using System;
 using System.IO;
 using System.IO.Compression;
 using System.Text;
@@ -13,24 +14,24 @@ namespace JiuLing.AutoUpgrade.Downloader
         /// </summary>
         /// <param name="downloadUrl">更新包的下载地址</param>
         /// <param name="appPath">程序运行路径</param>
-        /// <param name="updatePackPath">更新包的路径</param>
-        /// <param name="tempZipDirectory">更新文件的临时解压路径</param>
+        /// <param name="updatePackageFile">更新包的完整路径</param>
+        /// <param name="tempExtractedDir">更新文件的临时解压路径</param>
         /// <param name="downloadCompleted">文件下载完成之后</param>
         /// <param name="progress">进度</param>
-        public async Task Update(string downloadUrl, string appPath, string updatePackPath, string tempZipDirectory, Action downloadCompleted, IProgress<float> progress)
+        public async Task Update(string downloadUrl, string appPath, string updatePackageFile, string tempExtractedDir, Action downloadCompleted, IProgress<float> progress)
         {
             try
             {
-                await DownloadApp(downloadUrl, updatePackPath, progress);
+                await DownloadApp(downloadUrl, updatePackageFile, progress);
                 downloadCompleted?.Invoke();
-                PublishZipFile(updatePackPath, tempZipDirectory);
+                PublishZipFile(updatePackageFile, tempExtractedDir);
 
-                CopyFiles(tempZipDirectory, appPath);
+                CopyFiles(tempExtractedDir, appPath);
 
             }
             finally
             {
-                ClearFileCache(updatePackPath, tempZipDirectory);
+                ClearTempFiles();
             }
         }
 
@@ -67,16 +68,21 @@ namespace JiuLing.AutoUpgrade.Downloader
             }
         }
 
-        private static void ClearFileCache(string updatePackPath, string tempZipDirectory)
+        /// <summary>
+        /// 清理临时文件
+        /// </summary>
+        private static void ClearTempFiles()
         {
-            if (File.Exists(updatePackPath))
+            try
             {
-                File.Delete(updatePackPath);
+                if (Directory.Exists(TempPaths.RootDir))
+                {
+                    Directory.Delete(TempPaths.RootDir, true);
+                }
             }
-
-            if (Directory.Exists(tempZipDirectory))
+            catch
             {
-                Directory.Delete(tempZipDirectory, true);
+                // 忽略删除异常
             }
         }
     }

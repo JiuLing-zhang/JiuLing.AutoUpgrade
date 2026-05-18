@@ -1,9 +1,10 @@
-using JiuLing.AutoUpgrade.Shared;
+﻿using JiuLing.AutoUpgrade.Shared;
 using JiuLing.AutoUpgrade.Shell;
 using JiuLing.AutoUpgrade.Shell.Creator;
 using JiuLing.AutoUpgrade.Shell.Enums;
 
 namespace JiuLing.AutoUpgrade.Test;
+
 public partial class FmMain : Form
 {
     private IUpgradeApp _upgradeApp;
@@ -103,6 +104,18 @@ public partial class FmMain : Form
     {
         builder.WithSignCheck(checkBoxSignCheck.Checked);
         builder.WithTimeout(Convert.ToInt32(numericUpDownTimeoutSecond.Value));
+
+        var name = TxtName.Text;
+        if (!string.IsNullOrEmpty(name))
+        {
+            builder.WithName(name);
+        }
+
+        var fullPath = TxtFullPath.Text;
+        if (!string.IsNullOrEmpty(fullPath))
+        {
+            builder.WithFullPath(fullPath);
+        }
 
         var theme = comboBoxTheme.Text;
         if (!string.IsNullOrEmpty(theme))

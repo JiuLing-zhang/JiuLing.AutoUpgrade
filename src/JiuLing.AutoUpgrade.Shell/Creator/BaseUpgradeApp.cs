@@ -2,6 +2,8 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Reflection;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -9,21 +11,19 @@ namespace JiuLing.AutoUpgrade.Shell.Creator
 {
     internal abstract class BaseUpgradeApp : IUpgradeApp
     {
-        protected readonly string _coreAppDirectory;
-        protected readonly string _coreAppFullFileName;
-        protected UpgradeSetting _upgradeSetting;
+        private readonly string _tempUpdaterExeFullPath;
+        private UpgradeSetting _upgradeSetting;
         private readonly UpgradeSettingBuilder _upgradeSettingBuilder;
-        protected static Mutex _mutex;
+        private static Mutex _mutex;
 
         internal BaseUpgradeApp()
         {
             _upgradeSetting = new UpgradeSetting();
             _upgradeSettingBuilder = new UpgradeSettingBuilder();
-            _coreAppDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "JiuLing.AutoUpgrade.Core.Temp");
-            _coreAppFullFileName = Path.Combine(_coreAppDirectory, "JiuLing.AutoUpgrade.exe");
+            _tempUpdaterExeFullPath = Path.Combine(Path.GetTempPath(), $"JiuLing.AutoUpgrade_{Guid.NewGuid():N}.exe");
         }
 
-        [Obsolete("已过时，请改用 lambda 方式调用")]
+        [Obsolete("已过时，请改用 lambda 方式调用", true)]
         public IUpgradeApp SetUpgrade(UpgradeSettingBuilder builder)
         {
             _upgradeSetting = builder.Build();
@@ -59,7 +59,7 @@ namespace JiuLing.AutoUpgrade.Shell.Creator
         private void CallUpgrade()
         {
             var process = new Process();
-            process.StartInfo.FileName = _coreAppFullFileName;
+            process.StartInfo.FileName = _tempUpdaterExeFullPath;
             process.StartInfo.Arguments = GenerateStartArguments();
             process.Start();
             process.WaitForExit();
@@ -87,7 +87,7 @@ namespace JiuLing.AutoUpgrade.Shell.Creator
         private async Task CallUpgradeAsync()
         {
             var process = new Process();
-            process.StartInfo.FileName = _coreAppFullFileName;
+            process.StartInfo.FileName = _tempUpdaterExeFullPath;
             process.StartInfo.Arguments = GenerateStartArguments();
             process.Start();
             await process.WaitForExitAsync();
@@ -107,18 +107,40 @@ namespace JiuLing.AutoUpgrade.Shell.Creator
 
         private string GenerateStartArguments()
         {
-            var arguments = GetProcessArgument();
+            var arguments = GetAppBaseArgument();
             arguments = arguments + " " + GetInnerArguments();
             arguments = arguments + " " + GetUpgradeSettingArguments();
             return arguments;
         }
         /// <summary>
-        /// 主进程参数
+        /// 获取主程序基础参数
         /// </summary>
         /// <returns></returns>
-        private string GetProcessArgument()
+        private string GetAppBaseArgument()
         {
-            return $"-{ArgumentTypeEnum.p} {Process.GetCurrentProcess().ProcessName}";
+            if (string.IsNullOrEmpty(_upgradeSetting.Name))
+            {
+                _upgradeSetting.Name = Process.GetCurrentProcess().ProcessName;
+            }
+
+            if (string.IsNullOrEmpty(_upgradeSetting.FullPath))
+            {
+                _upgradeSetting.FullPath = Process.GetCurrentProcess().MainModule?.FileName ?? throw new InvalidOperationException("无法获取主程序完整路径，无法执行更新。");
+            }
+
+            if (!File.Exists(_upgradeSetting.FullPath))
+            {
+                throw new FileNotFoundException($"主程序不存在, file does not exist. {_upgradeSetting.FullPath}");
+            }
+
+            _upgradeSetting.Version = Assembly.GetEntryAssembly()?.GetName().Version?.ToString() ?? throw new InvalidOperationException("无法获取主程序版本信息，无法执行更新。");
+
+            string nameBase64 = Convert.ToBase64String(Encoding.UTF8.GetBytes(_upgradeSetting.Name));
+            string pathBase64 = Convert.ToBase64String(Encoding.UTF8.GetBytes(_upgradeSetting.FullPath));
+
+            return $"-{ArgumentTypeEnum.nameBase64} {nameBase64} " +
+                   $"-{ArgumentTypeEnum.fullPathBase64} {pathBase64} " +
+                   $"-{ArgumentTypeEnum.version} {_upgradeSetting.Version}";
         }
         protected abstract string GetInnerArguments();
         private string GetUpgradeSettingArguments()
@@ -159,16 +181,19 @@ namespace JiuLing.AutoUpgrade.Shell.Creator
 
         private void ReleaseAutoUpgradeFiles()
         {
-            if (!Directory.Exists(_coreAppDirectory))
-            {
-                Directory.CreateDirectory(_coreAppDirectory);
-            }
-            File.WriteAllBytes(_coreAppFullFileName, Resource.AutoUpgrade_exe);
+            File.WriteAllBytes(_tempUpdaterExeFullPath, Resource.AutoUpgrade_exe);
         }
 
         private void DeleteMainApplication()
         {
-            Directory.Delete(_coreAppDirectory, true);
+            try
+            {
+                File.Delete(_tempUpdaterExeFullPath);
+            }
+            catch
+            {
+                // ignored 删除失败忽略错误
+            }
         }
     }
 }

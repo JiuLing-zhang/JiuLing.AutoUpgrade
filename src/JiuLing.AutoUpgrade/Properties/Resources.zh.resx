@@ -174,9 +174,6 @@
   <data name="ParameterException" xml:space="preserve">
     <value>参数配置异常。</value>
   </data>
-  <data name="MissingMainProcessParameter" xml:space="preserve">
-    <value>缺少主进程参数</value>
-  </data>
   <data name="HttpParameterError" xml:space="preserve">
     <value>Http 参数配置异常</value>
   </data>
@@ -224,5 +221,14 @@
   </data>
   <data name="NoUpdatesAvailable" xml:space="preserve">
     <value>没有可用的更新信息</value>
+  </data>
+  <data name="MissingAppName" xml:space="preserve">
+    <value>程序名称未正确加载</value>
+  </data>
+  <data name="MissingAppPath" xml:space="preserve">
+    <value>程序路径未正确加载</value>
+  </data>
+  <data name="MissingAppVersion" xml:space="preserve">
+    <value>程序版本加载失败</value>
   </data>
 </root>

@@ -214,8 +214,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Common\AppUtils.cs" />
-    <Compile Include="Common\GlobalArgs.cs" />
+    <Compile Include="Common\TempPaths.cs" />
     <Compile Include="Enums\UpgradeModeEnum.cs" />
     <Page Include="UpgradeWindow.xaml">
       <SubType>Designer</SubType>
@@ -223,8 +222,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\ProcessInfo.cs" />
-    <Compile Include="Models\UpgradeConfigInfo.cs" />
+    <Compile Include="Models\TargetAppUpgradeInfo.cs" />
     <Compile Include="Net\FtpClientHelper.cs" />
     <Compile Include="Net\HttpClientHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">

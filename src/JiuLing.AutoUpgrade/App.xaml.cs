@@ -27,8 +27,7 @@ namespace JiuLing.AutoUpgrade
         {
             try
             {
-                UpgradeInfo.UpgradeConfig = ReadUpgradeConfigFromCommandArgs();
-                UpgradeInfo.MainProcess = AppUtils.GetMainProcess(UpgradeInfo.UpgradeConfig.MainProcessName);
+                UpgradeInfo.TargetAppUpgradeInfo = ReadUpgradeConfigFromCommandArgs();
             }
             catch (Exception ex)
             {
@@ -97,12 +96,18 @@ namespace JiuLing.AutoUpgrade
         /// 解析本次的更新方式
         /// </summary>
         /// <returns></returns>
-        private UpgradeConfigInfo ReadUpgradeConfigFromCommandArgs()
+        private TargetAppUpgradeInfo ReadUpgradeConfigFromCommandArgs()
         {
 
             /******************参数说明*********************
-            * -p MainProcess
-              设置主进程,[MainProcess:主进程名称]
+            * -nameBase64 Base64Name
+              程序名称，Base64编码格式
+
+            * -fullPathBase64 Base64Path
+              程序完整路径，Base64编码格式
+
+            * -version 1.0.0
+              当前程序版本
 
             * -t 10
               超时时间,[10:10秒]
@@ -131,7 +136,7 @@ namespace JiuLing.AutoUpgrade
 
             CommandLineArgsHelper _commandLineArgsHelper = new CommandLineArgsHelper();
 
-            var upgradeConfig = new UpgradeConfigInfo();
+            var upgradeInfo = new TargetAppUpgradeInfo();
             if (_commandLineArgsHelper.TryGetCommandValue($"-{ArgumentTypeEnum.icon}", out List<string> iconArgs))
             {
                 var iconPath = iconArgs[0];
@@ -142,7 +147,7 @@ namespace JiuLing.AutoUpgrade
                         var tempFileName = Path.GetTempFileName();
                         File.Copy(iconPath, tempFileName, true);
                         Uri iconUri = new Uri(tempFileName, UriKind.RelativeOrAbsolute);
-                        upgradeConfig.Icon = BitmapFrame.Create(iconUri);
+                        upgradeInfo.Icon = BitmapFrame.Create(iconUri);
                     }
                     catch (Exception)
                     {
@@ -150,12 +155,23 @@ namespace JiuLing.AutoUpgrade
                 }
             }
 
-            if (!_commandLineArgsHelper.TryGetCommandValue($"-{ArgumentTypeEnum.p}", out List<string> mainProcessArgs))
+            if (!_commandLineArgsHelper.TryGetCommandValue($"-{ArgumentTypeEnum.nameBase64}", out List<string> nameBase64Args))
             {
-                throw new ArgumentException(AutoUpgrade.Properties.Resources.MissingMainProcessParameter);
+                throw new ArgumentException(AutoUpgrade.Properties.Resources.MissingAppName);
             }
-            upgradeConfig.MainProcessName = mainProcessArgs[0];
+            upgradeInfo.NameRaw = nameBase64Args[0];
 
+            if (!_commandLineArgsHelper.TryGetCommandValue($"-{ArgumentTypeEnum.fullPathBase64}", out List<string> fullPathBase64Args))
+            {
+                throw new ArgumentException(AutoUpgrade.Properties.Resources.MissingAppPath);
+            }
+            upgradeInfo.FullPathRaw = fullPathBase64Args[0];
+
+            if (!_commandLineArgsHelper.TryGetCommandValue($"-{ArgumentTypeEnum.version}", out List<string> versionArgs))
+            {
+                throw new ArgumentException(AutoUpgrade.Properties.Resources.MissingAppVersion);
+            }
+            upgradeInfo.VersionRaw = versionArgs[0];
 
             CultureInfo cultureInfo;
             try
@@ -204,20 +220,20 @@ namespace JiuLing.AutoUpgrade
 
             if (_commandLineArgsHelper.TryGetCommandValue($"-{ArgumentTypeEnum.versionFormat}", out List<string> versionFormat))
             {
-                upgradeConfig.VersionFormat = (VersionFormatEnum)Enum.Parse(typeof(VersionFormatEnum), versionFormat[0]);
+                upgradeInfo.VersionFormat = (VersionFormatEnum)Enum.Parse(typeof(VersionFormatEnum), versionFormat[0]);
             }
 
             if (_commandLineArgsHelper.TryGetCommandValue($"-{ArgumentTypeEnum.http}", out List<string> httpArgs))
             {
-                upgradeConfig.UpgradeMode = UpgradeModeEnum.Http;
+                upgradeInfo.UpgradeMode = UpgradeModeEnum.Http;
                 try
                 {
-                    upgradeConfig.ConnectionConfig = new HttpConnectionConfig()
+                    upgradeInfo.ConnectionConfig = new HttpConnectionConfig()
                     {
                         Timeout = timeout,
                         UpgradeUrl = httpArgs[0]
                     };
-                    return upgradeConfig;
+                    return upgradeInfo;
                 }
                 catch (Exception)
                 {
@@ -227,17 +243,17 @@ namespace JiuLing.AutoUpgrade
 
             if (_commandLineArgsHelper.TryGetCommandValue($"-{ArgumentTypeEnum.ftp}", out List<string> ftpArgs))
             {
-                upgradeConfig.UpgradeMode = UpgradeModeEnum.Ftp;
+                upgradeInfo.UpgradeMode = UpgradeModeEnum.Ftp;
                 try
                 {
-                    upgradeConfig.ConnectionConfig = new FtpConnectionConfig()
+                    upgradeInfo.ConnectionConfig = new FtpConnectionConfig()
                     {
                         Timeout = timeout,
                         UpgradePath = ftpArgs[0],
                         UserName = ftpArgs[1],
                         Password = ftpArgs[2]
                     };
-                    return upgradeConfig;
+                    return upgradeInfo;
                 }
                 catch (Exception)
                 {
@@ -247,17 +263,17 @@ namespace JiuLing.AutoUpgrade
 
             if (_commandLineArgsHelper.TryGetCommandValue($"-{ArgumentTypeEnum.github}", out List<string> gitHubArgs))
             {
-                upgradeConfig.UpgradeMode = UpgradeModeEnum.GitHub;
+                upgradeInfo.UpgradeMode = UpgradeModeEnum.GitHub;
                 try
                 {
-                    upgradeConfig.ConnectionConfig = new GitHubConnectionConfig()
+                    upgradeInfo.ConnectionConfig = new GitHubConnectionConfig()
                     {
                         Timeout = timeout,
                         User = gitHubArgs[0],
                         Repo = gitHubArgs[1],
                         AssetName = gitHubArgs[2]
                     };
-                    return upgradeConfig;
+                    return upgradeInfo;
                 }
                 catch (Exception)
                 {

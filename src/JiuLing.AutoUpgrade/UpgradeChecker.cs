@@ -11,27 +11,26 @@ namespace JiuLing.AutoUpgrade
     {
         public static async Task DoAsync()
         {
-            UpgradeInfo.MainAppVersion = AppUtils.GetMainAppVersion(UpgradeInfo.MainProcess);
-
-            var upgradeStrategy = UpdateStrategyFactory.Create(UpgradeInfo.UpgradeConfig);
+            var upgradeStrategy = UpdateStrategyFactory.Create(UpgradeInfo.TargetAppUpgradeInfo);
             UpgradeInfo.AppNewVersion = await new UpdateContext(upgradeStrategy).GetUpgradeInfo();
 
-            var versionSkipChecker = new VersionSkipChecker(UpgradeInfo.UpgradeConfig.MainProcessName, UpgradeInfo.AppNewVersion.Version);
+            // TODO：考虑使用应用 hash 来充当唯一条件，避免重名版本被跳过
+            var versionSkipChecker = new VersionSkipChecker(UpgradeInfo.TargetAppUpgradeInfo.Name, UpgradeInfo.AppNewVersion.Version);
             if (versionSkipChecker.CheckSkip())
             {
-                UpgradeInfo.MainProcess.AllowRun = true;
+                UpgradeInfo.AllowRun = true;
                 UpgradeInfo.IsNeedUpdate = false;
                 return;
             }
 
             if (UpgradeInfo.AppNewVersion.MinVersion.IsEmpty())
             {
-                UpgradeInfo.MainProcess.AllowRun = true;
-                UpgradeInfo.IsNeedUpdate = VersionUtils.CheckNeedUpdate(UpgradeInfo.MainAppVersion, UpgradeInfo.AppNewVersion.Version);
+                UpgradeInfo.AllowRun = true;
+                UpgradeInfo.IsNeedUpdate = VersionUtils.CheckNeedUpdate(UpgradeInfo.TargetAppUpgradeInfo.VersionRaw, UpgradeInfo.AppNewVersion.Version);
             }
             else
             {
-                (UpgradeInfo.IsNeedUpdate, UpgradeInfo.MainProcess.AllowRun) = VersionUtils.CheckNeedUpdate(UpgradeInfo.MainAppVersion, UpgradeInfo.AppNewVersion.Version, UpgradeInfo.AppNewVersion.MinVersion);
+                (UpgradeInfo.IsNeedUpdate, UpgradeInfo.AllowRun) = VersionUtils.CheckNeedUpdate(UpgradeInfo.TargetAppUpgradeInfo.VersionRaw, UpgradeInfo.AppNewVersion.Version, UpgradeInfo.AppNewVersion.MinVersion);
             }
         }
     }

@@ -14,15 +14,15 @@ namespace JiuLing.AutoUpgrade
         public UpgradeCheckWindow()
         {
             InitializeComponent();
-            if (UpgradeInfo.UpgradeConfig.Icon != null)
+            if (UpgradeInfo.TargetAppUpgradeInfo.Icon != null)
             {
-                this.Icon = UpgradeInfo.UpgradeConfig.Icon;
+                this.Icon = UpgradeInfo.TargetAppUpgradeInfo.Icon;
             }
         }
 
         private async void UpgradeCheckWindow_OnLoaded(object sender, RoutedEventArgs e)
         {
-            TxtTitle.Text = $"{UpgradeInfo.MainProcess.Title} - {Properties.Resources.Title}";
+            TxtTitle.Text = $"{UpgradeInfo.TargetAppUpgradeInfo.Name} - {Properties.Resources.Title}";
             await CheckUpdateAsync();
         }
 

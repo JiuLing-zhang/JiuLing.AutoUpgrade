@@ -174,9 +174,6 @@
   <data name="ParameterException" xml:space="preserve">
     <value>Parameter exception.</value>
   </data>
-  <data name="MissingMainProcessParameter" xml:space="preserve">
-    <value>Missing main process parameter</value>
-  </data>
   <data name="HttpParameterError" xml:space="preserve">
     <value>HTTP parameter error</value>
   </data>
@@ -224,5 +221,14 @@
   </data>
   <data name="NoUpdatesAvailable" xml:space="preserve">
     <value>No updates available.</value>
+  </data>
+  <data name="MissingAppName" xml:space="preserve">
+    <value>Missing app name</value>
+  </data>
+  <data name="MissingAppPath" xml:space="preserve">
+    <value>Missing app full path</value>
+  </data>
+  <data name="MissingAppVersion" xml:space="preserve">
+    <value>Missing app version</value>
   </data>
 </root>

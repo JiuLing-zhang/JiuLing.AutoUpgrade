@@ -10,14 +10,14 @@ namespace JiuLing.AutoUpgrade.Downloader
         /// 创建组件
         /// </summary>
         /// <returns></returns>
-        public static DownloaderBase Create(UpgradeConfigInfo config)
+        public static DownloaderBase Create(TargetAppUpgradeInfo upgradeInfo)
         {
-            switch (config.UpgradeMode)
+            switch (upgradeInfo.UpgradeMode)
             {
                 case UpgradeModeEnum.Http:
                     return new HttpDownloader();
                 case UpgradeModeEnum.Ftp:
-                    return new FtpDownloader((FtpConnectionConfig)config.ConnectionConfig);
+                    return new FtpDownloader((FtpConnectionConfig)upgradeInfo.ConnectionConfig);
                 case UpgradeModeEnum.GitHub:
                     return new GitHubDownloader();
                 default:
