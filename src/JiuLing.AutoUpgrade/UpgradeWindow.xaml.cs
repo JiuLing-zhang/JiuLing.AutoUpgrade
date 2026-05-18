@@ -71,14 +71,13 @@ namespace JiuLing.AutoUpgrade
             }
             catch (Exception)
             {
-                //出现异常时不能终止程序退出，所以
-                //TODO 这里可以考虑记录日志？
+                // 忽略错误
             }
         }
         private void BtnSkip_Click(object sender, RoutedEventArgs e)
         {
-            // TODO：考虑使用应用 hash 来充当唯一条件，避免重名版本被跳过
-            var versionSkipChecker = new VersionSkipChecker(UpgradeInfo.TargetAppUpgradeInfo.Title, UpgradeInfo.AppNewVersion.Version);
+            var versionKey = UpgradeInfo.AppNewVersion.SignValue.IsEmpty() ? UpgradeInfo.TargetAppUpgradeInfo.Title : UpgradeInfo.AppNewVersion.SignValue;
+            var versionSkipChecker = new VersionSkipChecker(versionKey, UpgradeInfo.AppNewVersion.Version);
             versionSkipChecker.SetSkip();
             Application.Current.Shutdown();
         }

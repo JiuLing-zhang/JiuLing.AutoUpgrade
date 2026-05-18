@@ -9,7 +9,7 @@ namespace JiuLing.AutoUpgrade
     {
         private readonly string _version;
         private readonly string _skipPath;
-        public VersionSkipChecker(string processName, string version)
+        public VersionSkipChecker(string versionKey, string version)
         {
             _version = version;
             string skipDirectory = Path.Combine(Path.GetTempPath(), "JiuLing.AutoUpgrade");
@@ -17,8 +17,8 @@ namespace JiuLing.AutoUpgrade
             {
                 Directory.CreateDirectory(skipDirectory);
             }
-            //为了防止非法文件名，对 processName 进行一个 md5
-            var fileName = $"skip_{MD5Utils.GetStringValueToLower(processName)}.tmp";
+            //为了防止非法文件名，对 versionKey 进行一个 md5
+            var fileName = $"skip_{MD5Utils.GetStringValueToLower(versionKey)}.tmp";
             _skipPath = Path.Combine(skipDirectory, fileName);
 
         }

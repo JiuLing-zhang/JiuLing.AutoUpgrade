@@ -14,8 +14,8 @@ namespace JiuLing.AutoUpgrade
             var upgradeStrategy = UpdateStrategyFactory.Create(UpgradeInfo.TargetAppUpgradeInfo);
             UpgradeInfo.AppNewVersion = await new UpdateContext(upgradeStrategy).GetUpgradeInfo();
 
-            // TODO：考虑使用应用 hash 来充当唯一条件，避免重名版本被跳过
-            var versionSkipChecker = new VersionSkipChecker(UpgradeInfo.TargetAppUpgradeInfo.Title, UpgradeInfo.AppNewVersion.Version);
+            var versionKey = UpgradeInfo.AppNewVersion.SignValue.IsEmpty() ? UpgradeInfo.TargetAppUpgradeInfo.Title : UpgradeInfo.AppNewVersion.SignValue;
+            var versionSkipChecker = new VersionSkipChecker(versionKey, UpgradeInfo.AppNewVersion.Version);
             if (versionSkipChecker.CheckSkip())
             {
                 UpgradeInfo.AllowRun = true;
