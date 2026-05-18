@@ -96,7 +96,6 @@ namespace JiuLing.AutoUpgrade.Models
         /// </summary>
         public UpgradeModeEnum UpgradeMode { get; set; }
 
-        // TODO：这个属性定义的位置是否合理？
         /// <summary>
         /// 请求连接配置
         /// </summary>
