@@ -136,8 +136,11 @@ namespace JiuLing.AutoUpgrade
             }
         }
 
+        private bool _hasKilled = false;
         private void KillMainApp()
         {
+            if (_hasKilled) return;
+
             var processes = Process.GetProcesses()
                 .Where(p =>
                 {
@@ -158,6 +161,7 @@ namespace JiuLing.AutoUpgrade
                 {
                     process.Kill();
                     process.WaitForExit();
+                    _hasKilled = true;
                 }
                 catch (Exception ex)
                 {
