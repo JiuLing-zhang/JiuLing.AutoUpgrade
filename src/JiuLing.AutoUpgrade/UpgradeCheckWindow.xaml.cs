@@ -22,7 +22,7 @@ namespace JiuLing.AutoUpgrade
 
         private async void UpgradeCheckWindow_OnLoaded(object sender, RoutedEventArgs e)
         {
-            TxtTitle.Text = $"{UpgradeInfo.TargetAppUpgradeInfo.Name} - {Properties.Resources.Title}";
+            TxtTitle.Text = $"{UpgradeInfo.TargetAppUpgradeInfo.Title}";
             await CheckUpdateAsync();
         }
 

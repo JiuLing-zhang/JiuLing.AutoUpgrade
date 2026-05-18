@@ -28,7 +28,7 @@ namespace JiuLing.AutoUpgrade
 
         private void UpgradeWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            TxtTitle.Text = $"{UpgradeInfo.TargetAppUpgradeInfo.Name} - {Properties.Resources.Title}";
+            TxtTitle.Text = $"{UpgradeInfo.TargetAppUpgradeInfo.Title}";
 
             LblCurrentVersion.Text = UpgradeInfo.TargetAppUpgradeInfo.Version.ToFormatString(UpgradeInfo.TargetAppUpgradeInfo.VersionFormat);
             var version = new Version(UpgradeInfo.AppNewVersion.Version);
@@ -78,7 +78,7 @@ namespace JiuLing.AutoUpgrade
         private void BtnSkip_Click(object sender, RoutedEventArgs e)
         {
             // TODO：考虑使用应用 hash 来充当唯一条件，避免重名版本被跳过
-            var versionSkipChecker = new VersionSkipChecker(UpgradeInfo.TargetAppUpgradeInfo.Name, UpgradeInfo.AppNewVersion.Version);
+            var versionSkipChecker = new VersionSkipChecker(UpgradeInfo.TargetAppUpgradeInfo.Title, UpgradeInfo.AppNewVersion.Version);
             versionSkipChecker.SetSkip();
             Application.Current.Shutdown();
         }

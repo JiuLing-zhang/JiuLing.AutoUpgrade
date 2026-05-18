@@ -9,9 +9,9 @@ namespace JiuLing.AutoUpgrade.Shell
     public class UpgradeSetting
     {
         /// <summary>
-        /// 名称
+        /// 标题
         /// </summary>
-        public string Name { get; set; }
+        public string Title { get; set; }
 
         /// <summary>
         /// 应用完整路径

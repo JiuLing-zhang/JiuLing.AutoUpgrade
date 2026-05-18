@@ -13,23 +13,23 @@ namespace JiuLing.AutoUpgrade.Models
     internal class TargetAppUpgradeInfo
     {
         /// <summary>
-        /// 名称（原始）
+        /// 标题（原始）
         /// </summary>
-        public string NameRaw { get; set; } = "";
+        public string TitleRaw { get; set; } = "";
         /// <summary>
-        /// 名称
+        /// 标题
         /// </summary>
-        public string Name
+        public string Title
         {
             get
             {
-                if (NameRaw.IsEmpty())
+                if (TitleRaw.IsEmpty())
                 {
                     throw new ArgumentException("应用名称格式错误");
                 }
                 try
                 {
-                    var bytes = Convert.FromBase64String(NameRaw);
+                    var bytes = Convert.FromBase64String(TitleRaw);
                     return Encoding.UTF8.GetString(bytes);
                 }
                 catch

@@ -69,7 +69,7 @@
             TxtRepo = new TextBox();
             label13 = new Label();
             label14 = new Label();
-            TxtName = new TextBox();
+            TxtTitle = new TextBox();
             TxtFullPath = new TextBox();
             label15 = new Label();
             groupBoxSetting.SuspendLayout();
@@ -213,7 +213,7 @@
             groupBoxSetting.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             groupBoxSetting.Controls.Add(TxtFullPath);
             groupBoxSetting.Controls.Add(label15);
-            groupBoxSetting.Controls.Add(TxtName);
+            groupBoxSetting.Controls.Add(TxtTitle);
             groupBoxSetting.Controls.Add(label14);
             groupBoxSetting.Controls.Add(comboBoxVersionFormat);
             groupBoxSetting.Controls.Add(label10);
@@ -517,12 +517,12 @@
             label14.TabIndex = 9;
             label14.Text = "名称";
             // 
-            // TxtName
+            // TxtTitle
             // 
-            TxtName.Location = new Point(389, 76);
-            TxtName.Name = "TxtName";
-            TxtName.Size = new Size(177, 23);
-            TxtName.TabIndex = 10;
+            TxtTitle.Location = new Point(389, 76);
+            TxtTitle.Name = "TxtTitle";
+            TxtTitle.Size = new Size(177, 23);
+            TxtTitle.TabIndex = 10;
             // 
             // TxtFullPath
             // 
@@ -616,7 +616,7 @@
         private TextBox TxtRepo;
         private Label label13;
         private Label label14;
-        private TextBox TxtName;
+        private TextBox TxtTitle;
         private TextBox TxtFullPath;
         private Label label15;
     }

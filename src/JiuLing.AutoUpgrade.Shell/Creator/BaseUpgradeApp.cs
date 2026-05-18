@@ -118,9 +118,9 @@ namespace JiuLing.AutoUpgrade.Shell.Creator
         /// <returns></returns>
         private string GetAppBaseArgument()
         {
-            if (string.IsNullOrEmpty(_upgradeSetting.Name))
+            if (string.IsNullOrEmpty(_upgradeSetting.Title))
             {
-                _upgradeSetting.Name = Process.GetCurrentProcess().ProcessName;
+                _upgradeSetting.Title = Process.GetCurrentProcess().ProcessName;
             }
 
             if (string.IsNullOrEmpty(_upgradeSetting.FullPath))
@@ -135,10 +135,10 @@ namespace JiuLing.AutoUpgrade.Shell.Creator
 
             _upgradeSetting.Version = Assembly.GetEntryAssembly()?.GetName().Version?.ToString() ?? throw new InvalidOperationException("无法获取主程序版本信息，无法执行更新。");
 
-            string nameBase64 = Convert.ToBase64String(Encoding.UTF8.GetBytes(_upgradeSetting.Name));
+            string titleBase64 = Convert.ToBase64String(Encoding.UTF8.GetBytes(_upgradeSetting.Title));
             string pathBase64 = Convert.ToBase64String(Encoding.UTF8.GetBytes(_upgradeSetting.FullPath));
 
-            return $"-{ArgumentTypeEnum.nameBase64} {nameBase64} " +
+            return $"-{ArgumentTypeEnum.titleBase64} {titleBase64} " +
                    $"-{ArgumentTypeEnum.fullPathBase64} {pathBase64} " +
                    $"-{ArgumentTypeEnum.version} {_upgradeSetting.Version}";
         }

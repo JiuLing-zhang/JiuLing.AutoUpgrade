@@ -8,7 +8,7 @@
         /// <summary>
         /// 主程序名称
         /// </summary>
-        nameBase64,
+        titleBase64,
         /// <summary>
         /// 主程序路径
         /// </summary>

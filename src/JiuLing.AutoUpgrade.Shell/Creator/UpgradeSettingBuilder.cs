@@ -20,13 +20,13 @@ namespace JiuLing.AutoUpgrade.Shell.Creator
         }
 
         /// <summary>
-        /// 设置应用名称
+        /// 设置应用名称（更新程序的标题）
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public UpgradeSettingBuilder WithName(string value)
+        public UpgradeSettingBuilder WithTitle(string value)
         {
-            _upgradeSetting.Name = value;
+            _upgradeSetting.Title = value;
             return this;
         }
 

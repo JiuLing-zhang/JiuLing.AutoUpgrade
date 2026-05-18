@@ -105,10 +105,10 @@ public partial class FmMain : Form
         builder.WithSignCheck(checkBoxSignCheck.Checked);
         builder.WithTimeout(Convert.ToInt32(numericUpDownTimeoutSecond.Value));
 
-        var name = TxtName.Text;
+        var name = TxtTitle.Text;
         if (!string.IsNullOrEmpty(name))
         {
-            builder.WithName(name);
+            builder.WithTitle(name);
         }
 
         var fullPath = TxtFullPath.Text;

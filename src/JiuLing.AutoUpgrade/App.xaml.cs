@@ -31,7 +31,7 @@ namespace JiuLing.AutoUpgrade
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"{AutoUpgrade.Properties.Resources.ExUpdateFailed}{AutoUpgrade.Properties.Resources.ParameterException}{ex.Message}", AutoUpgrade.Properties.Resources.Title, MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"{AutoUpgrade.Properties.Resources.ExUpdateFailed}{AutoUpgrade.Properties.Resources.ParameterException}{ex.Message}", UpgradeInfo.TargetAppUpgradeInfo.Title, MessageBoxButton.OK, MessageBoxImage.Error);
                 App.Current.Shutdown();
                 return;
             }
@@ -155,11 +155,11 @@ namespace JiuLing.AutoUpgrade
                 }
             }
 
-            if (!_commandLineArgsHelper.TryGetCommandValue($"-{ArgumentTypeEnum.nameBase64}", out List<string> nameBase64Args))
+            if (!_commandLineArgsHelper.TryGetCommandValue($"-{ArgumentTypeEnum.titleBase64}", out List<string> titleBase64Args))
             {
-                throw new ArgumentException(AutoUpgrade.Properties.Resources.MissingAppName);
+                throw new ArgumentException(AutoUpgrade.Properties.Resources.MissingAppTitle);
             }
-            upgradeInfo.NameRaw = nameBase64Args[0];
+            upgradeInfo.TitleRaw = titleBase64Args[0];
 
             if (!_commandLineArgsHelper.TryGetCommandValue($"-{ArgumentTypeEnum.fullPathBase64}", out List<string> fullPathBase64Args))
             {
