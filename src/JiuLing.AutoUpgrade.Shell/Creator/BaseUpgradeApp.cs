@@ -14,8 +14,7 @@ namespace JiuLing.AutoUpgrade.Shell.Creator
         private readonly string _tempUpdaterExeFullPath;
         private UpgradeSetting _upgradeSetting;
         private readonly UpgradeSettingBuilder _upgradeSettingBuilder;
-        private static Mutex _mutex;
-
+        private static int _running = 0;
         internal BaseUpgradeApp()
         {
             _upgradeSetting = new UpgradeSetting();
@@ -39,8 +38,10 @@ namespace JiuLing.AutoUpgrade.Shell.Creator
 
         public void Run()
         {
-            if (CheckLock())
+            // 已在运行则拒绝
+            if (Interlocked.Exchange(ref _running, 1) == 1)
             {
+                Debug.WriteLine("重复调用被阻止");
                 return;
             }
 
@@ -53,8 +54,8 @@ namespace JiuLing.AutoUpgrade.Shell.Creator
             // 删除主应用程序文件
             DeleteMainApplication();
 
-            // 释放互斥锁
-            _mutex.ReleaseMutex();
+            // 释放状态
+            Interlocked.Exchange(ref _running, 0);
         }
         private void CallUpgrade()
         {
@@ -67,8 +68,10 @@ namespace JiuLing.AutoUpgrade.Shell.Creator
 #if NET5_0_OR_GREATER
         public async Task RunAsync()
         {
-            if (CheckLock())
+            // 已在运行则拒绝
+            if (Interlocked.Exchange(ref _running, 1) == 1)
             {
+                Debug.WriteLine("重复调用被阻止");
                 return;
             }
 
@@ -81,8 +84,8 @@ namespace JiuLing.AutoUpgrade.Shell.Creator
             // 删除主应用程序文件
             DeleteMainApplication();
 
-            // 释放互斥锁
-            _mutex.ReleaseMutex();
+            // 释放状态
+            Interlocked.Exchange(ref _running, 0);
         }
         private async Task CallUpgradeAsync()
         {
@@ -93,17 +96,6 @@ namespace JiuLing.AutoUpgrade.Shell.Creator
             await process.WaitForExitAsync();
         }
 #endif
-        private bool CheckLock()
-        {
-            // 检查并创建互斥锁，防止多个实例同时运行
-            _mutex = new Mutex(false, $"JiuLing.AutoUpgrade.{Process.GetCurrentProcess().ProcessName}");
-            if (!_mutex.WaitOne(0, false))
-            {
-                Debug.WriteLine("不允许同一个程序的自动更新组件同时运行。");
-                return true;
-            }
-            return false;
-        }
 
         private string GenerateStartArguments()
         {
